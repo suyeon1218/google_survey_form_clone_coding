@@ -10,7 +10,7 @@ export default ({ mode }) => {
 	return defineConfig({
 		plugins: [react(), svgr()],
 		resolve: {
-			alias: [{ find: '~', replacement: path.resolve(__dirname, 'src') }],
-		},
+			alias: [{ find: '~', replacement: path.resolve(__dirname, 'src') }]
+		}
 	});
 };
