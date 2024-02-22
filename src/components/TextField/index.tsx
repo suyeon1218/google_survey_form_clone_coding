@@ -3,9 +3,10 @@ import * as S from './index.style';
 
 interface TextFieldProps {
 	value: string;
+	isTitle?: boolean;
 }
 
-const TextField = ({ value }: TextFieldProps) => {
+const TextField = ({ value, isTitle = false }: TextFieldProps) => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	const handleChangeValue = () => {
@@ -22,6 +23,8 @@ const TextField = ({ value }: TextFieldProps) => {
 
 	return (
 		<S.Container
+			rows={1}
+			isTitle={isTitle}
 			ref={textareaRef}
 			onInput={handleChangeValue}
 			defaultValue={value}></S.Container>
