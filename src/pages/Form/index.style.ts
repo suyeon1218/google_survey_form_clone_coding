@@ -11,7 +11,7 @@ export const Header = styled.header`
 	width: 100%;
 	height: 65px;
 	display: flex;
-	position: relative;
+	position: fixed;
 	align-items: center;
 	background-color: ${({ theme }) => theme.colors.white};
 	border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
@@ -35,4 +35,11 @@ export const IconContainer = styled.div`
 
 export const PreviewTooltip = styled(Tooltip)`
 	border-radius: 5px;
+`;
+
+export const Main = styled.main`
+	width: 100%;
+	height: calc(100vh - 65px);
+	overflow: scroll;
+	background-color: ${({ theme }) => theme.colors.purple[50]};
 `;

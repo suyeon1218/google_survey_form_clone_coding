@@ -14,7 +14,7 @@ const Form = () => {
 					</S.IconContainer>
 				</S.PreviewTooltip>
 			</S.Header>
-			<main></main>
+			<S.Main />
 		</S.Container>
 	);
 };
