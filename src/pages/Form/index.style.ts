@@ -17,6 +17,18 @@ export const Header = styled.header`
 	border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
 `;
 
+export const Main = styled.main`
+	width: 100%;
+	height: calc(100vh - 65px);
+	position: absolute;
+	top: 65px;
+	overflow: scroll;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: ${({ theme }) => theme.colors.purple[50]};
+`;
+
 export const IconContainer = styled.div`
 	width: 50px;
 	height: 50px;
@@ -35,11 +47,4 @@ export const IconContainer = styled.div`
 
 export const PreviewTooltip = styled(Tooltip)`
 	border-radius: 5px;
-`;
-
-export const Main = styled.main`
-	width: 100%;
-	height: calc(100vh - 65px);
-	overflow: scroll;
-	background-color: ${({ theme }) => theme.colors.purple[50]};
 `;
