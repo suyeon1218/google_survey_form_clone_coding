@@ -1,6 +1,6 @@
-import DropDown from '../DropDown';
-import TextField from '../TextField';
-import { QuestionType, cardMenu } from './../../store/index';
+import CardFooter from '../CardFooter';
+import CardHeader from '../CardHeader';
+import { QuestionType } from './../../store/index';
 import * as S from './index.style';
 
 interface CardProps {
@@ -11,18 +11,12 @@ interface CardProps {
 const Card = ({ title, type }: CardProps) => {
 	return (
 		<S.Container>
-			<S.Header>
-				<TextField
-					value={title}
-					isTitle={true}
-				/>
-				<DropDown
-					menuList={cardMenu}
-					defaultValue={cardMenu[type]}
-				/>
-			</S.Header>
+			<CardHeader
+				title={title}
+				type={type}
+			/>
 			<S.Body></S.Body>
-			<S.Footer></S.Footer>
+			<CardFooter />
 		</S.Container>
 	);
 };
