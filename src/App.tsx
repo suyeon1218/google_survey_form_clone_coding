@@ -1,7 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Form from './pages/Form';
 
-function App() {
+const App = () => {
 	return (
 		<Router>
 			<Routes>
@@ -12,6 +12,6 @@ function App() {
 			</Routes>
 		</Router>
 	);
-}
+};
 
 export default App;
