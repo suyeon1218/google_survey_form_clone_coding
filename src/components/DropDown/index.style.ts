@@ -8,7 +8,8 @@ interface ItemProps {
 export const Container = styled(Menu)``;
 
 export const Button = styled(MenuButton)`
-	width: 150px;
+	width: 100%;
+	max-width: 200px;
 	background-color: ${({ theme }) => theme.colors.white};
 	border: 1px solid ${({ theme }) => theme.colors.gray[200]};
 	text-align: left;

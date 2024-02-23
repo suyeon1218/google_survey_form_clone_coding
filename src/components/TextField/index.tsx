@@ -22,12 +22,14 @@ const TextField = ({ value, isTitle = false }: TextFieldProps) => {
 	}, []);
 
 	return (
-		<S.Container
-			rows={1}
-			isTitle={isTitle}
-			ref={textareaRef}
-			onInput={handleChangeValue}
-			defaultValue={value}></S.Container>
+		<S.Container>
+			<S.TextArea
+				rows={1}
+				isTitle={isTitle}
+				ref={textareaRef}
+				onInput={handleChangeValue}
+				defaultValue={value}></S.TextArea>
+		</S.Container>
 	);
 };
 

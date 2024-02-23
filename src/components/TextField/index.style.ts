@@ -4,7 +4,9 @@ interface ContainerProps {
 	isTitle: boolean;
 }
 
-export const Container = styled.textarea<ContainerProps>`
+export const Container = styled.div``;
+
+export const TextArea = styled.textarea<ContainerProps>`
 	box-sizing: border-box;
 	resize: none;
 	width: 100%;
