@@ -1,5 +1,6 @@
 import CardFooter from '../CardFooter';
 import CardHeader from '../CardHeader';
+import InputShort from '../InputShort';
 import { QuestionType } from './../../store/index';
 import * as S from './index.style';
 
@@ -15,7 +16,9 @@ const Card = ({ title, type }: CardProps) => {
 				title={title}
 				type={type}
 			/>
-			<S.Body></S.Body>
+			<S.Body>
+				<InputShort />
+			</S.Body>
 			<CardFooter />
 		</S.Container>
 	);

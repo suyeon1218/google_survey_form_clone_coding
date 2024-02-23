@@ -4,8 +4,9 @@ import styled from '@emotion/styled';
 
 export const Header = styled(CardHeader)`
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 	width: 100%;
+	padding: 10px 0px;
 	gap: 10px;
 
 	${css`

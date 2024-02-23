@@ -2,8 +2,8 @@ import { CardFooter } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 export const Footer = styled(CardFooter)`
-	width: 90%;
-	height: 60px;
+	width: 100%;
+	height: 50px;
 	border-top: 1px solid ${({ theme }) => theme.colors.gray[100]};
 	display: flex;
 	justify-content: flex-end;
