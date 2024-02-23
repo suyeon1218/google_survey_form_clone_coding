@@ -1,5 +1,6 @@
 import { ViewIcon } from '@chakra-ui/icons';
 import * as S from './index.style';
+import Card from '~/components/Card';
 
 const Form = () => {
 	return (
@@ -14,7 +15,12 @@ const Form = () => {
 					</S.IconContainer>
 				</S.PreviewTooltip>
 			</S.Header>
-			<S.Main />
+			<S.Main>
+				<Card
+					title='test'
+					type='checkbox'
+				/>
+			</S.Main>
 		</S.Container>
 	);
 };
