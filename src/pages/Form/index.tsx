@@ -18,7 +18,11 @@ const Form = () => {
 			<S.Main>
 				<Card
 					title='test'
-					type='checkbox'
+					type='short'
+				/>
+				<Card
+					title='test'
+					type='long'
 				/>
 			</S.Main>
 		</S.Container>

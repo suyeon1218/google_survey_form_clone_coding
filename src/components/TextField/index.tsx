@@ -2,11 +2,16 @@ import { useEffect, useRef } from 'react';
 import * as S from './index.style';
 
 interface TextFieldProps {
-	value: string;
+	value?: string;
 	isTitle?: boolean;
+	placeholder?: string;
 }
 
-const TextField = ({ value, isTitle = false }: TextFieldProps) => {
+const TextField = ({
+	value = '',
+	isTitle = false,
+	placeholder = ''
+}: TextFieldProps) => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	const handleChangeValue = () => {
@@ -27,6 +32,7 @@ const TextField = ({ value, isTitle = false }: TextFieldProps) => {
 				rows={1}
 				isTitle={isTitle}
 				ref={textareaRef}
+				placeholder={placeholder}
 				onInput={handleChangeValue}
 				defaultValue={value}></S.TextArea>
 		</S.Container>
