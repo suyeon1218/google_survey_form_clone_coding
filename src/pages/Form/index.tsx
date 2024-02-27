@@ -24,6 +24,10 @@ const Form = () => {
 					title='체크박스 input'
 					type='checkbox'
 				/>
+				<Card
+					title='드롭다운 input'
+					type='dropdown'
+				/>
 			</S.Main>
 		</S.Container>
 	);

@@ -1,6 +1,7 @@
 import CardFooter from '../CardFooter';
 import CardHeader from '../CardHeader';
 import InputCheckBox from '../InputCheckBox';
+import InputDropDown from '../InputDropDown';
 import InputLong from '../InputLong';
 import InputRadio from '../InputRadio';
 import InputShort from '../InputShort';
@@ -24,6 +25,7 @@ const Card = ({ title, type }: CardProps) => {
 				{type === 'long' && <InputLong />}
 				{type === 'radio' && <InputRadio />}
 				{type === 'checkbox' && <InputCheckBox />}
+				{type === 'dropdown' && <InputDropDown />}
 			</S.Body>
 			<CardFooter />
 		</S.Container>
