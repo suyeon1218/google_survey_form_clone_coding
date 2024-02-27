@@ -24,6 +24,10 @@ const Form = () => {
 					title='test'
 					type='long'
 				/>
+				<Card
+					title='test'
+					type='radio'
+				/>
 			</S.Main>
 		</S.Container>
 	);

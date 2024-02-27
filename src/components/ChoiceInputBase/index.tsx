@@ -2,15 +2,19 @@ import { CloseIcon } from '@chakra-ui/icons';
 import * as S from './index.style';
 
 interface ChoiceInputBaseProps {
-	PrefixComponent: JSX.Element;
+	PrefixComponent?: JSX.Element | null;
+	onChange?: () => void;
+	onDelete?: () => void;
 	deletable?: boolean;
 	value?: string;
 	placeholder?: string;
 }
 
 const ChoiceInputBase = ({
-	PrefixComponent,
+	PrefixComponent = null,
 	deletable = true,
+	onDelete = () => {},
+	onChange = () => {},
 	value = '',
 	placeholder = ''
 }: ChoiceInputBaseProps) => {
@@ -18,12 +22,13 @@ const ChoiceInputBase = ({
 		<S.InputContainer>
 			{PrefixComponent}
 			<S.OptionInput
+				onChange={onChange}
 				value={value}
 				variant='flushed'
 				placeholder={placeholder}
 			/>
 			{deletable && (
-				<S.DeleteButton>
+				<S.DeleteButton onClick={onDelete}>
 					<CloseIcon />
 				</S.DeleteButton>
 			)}

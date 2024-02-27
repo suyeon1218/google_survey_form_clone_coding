@@ -1,6 +1,7 @@
 import CardFooter from '../CardFooter';
 import CardHeader from '../CardHeader';
 import InputLong from '../InputLong';
+import InputRadio from '../InputRadio';
 import InputShort from '../InputShort';
 import { QuestionType } from './../../store/index';
 import * as S from './index.style';
@@ -20,6 +21,7 @@ const Card = ({ title, type }: CardProps) => {
 			<S.Body>
 				{type === 'short' && <InputShort />}
 				{type === 'long' && <InputLong />}
+				{type === 'radio' && <InputRadio />}
 			</S.Body>
 			<CardFooter />
 		</S.Container>
