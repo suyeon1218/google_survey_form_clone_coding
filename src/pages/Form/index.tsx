@@ -1,8 +1,12 @@
 import { ViewIcon } from '@chakra-ui/icons';
+import { useSelector } from 'react-redux';
+import { RootStateType } from '~/store';
 import * as S from './index.style';
 import Card from '~/components/Card';
 
 const Form = () => {
+	const cards = useSelector((state: RootStateType) => state.cards);
+
 	return (
 		<S.Container>
 			<S.Header>
@@ -16,18 +20,13 @@ const Form = () => {
 				</S.PreviewTooltip>
 			</S.Header>
 			<S.Main>
-				<Card
-					title='test'
-					type='radio'
-				/>
-				<Card
-					title='체크박스 input'
-					type='checkbox'
-				/>
-				<Card
-					title='드롭다운 input'
-					type='dropdown'
-				/>
+				{cards.map((card, index) => (
+					<Card
+						key={card.id}
+						id={card.id}
+						index={index}
+					/>
+				))}
 			</S.Main>
 		</S.Container>
 	);

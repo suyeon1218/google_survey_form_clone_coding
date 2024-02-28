@@ -1,7 +1,11 @@
 import TextField from '../TextField';
 
-const InputLong = () => {
-	return <TextField placeholder='내 답변' />;
+interface InputLongProps {
+	placeholder?: string;
+}
+
+const InputLong = ({ placeholder = '내 답변' }: InputLongProps) => {
+	return <TextField placeholder={placeholder} />;
 };
 
 export default InputLong;
