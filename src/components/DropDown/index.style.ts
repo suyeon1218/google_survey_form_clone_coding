@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 interface ItemProps {
-	selected: string;
+	isSelect: boolean;
 }
 
 export const Container = styled(Menu)``;
@@ -18,8 +18,8 @@ export const Button = styled(MenuButton)`
 export const List = styled(MenuList)``;
 
 export const Item = styled(MenuItem)<ItemProps>`
-	background-color: ${({ theme, selected }) =>
-		selected === 'true' ? theme.colors.gray[100] : theme.colors.white};
+	background-color: ${({ theme, isSelect }) =>
+		isSelect === true ? theme.colors.gray[100] : theme.colors.white};
 
 	&:hover {
 		background-color: ${({ theme }) => theme.colors.gray[100]};

@@ -32,7 +32,7 @@ const Card = ({ id }: CardProps) => {
 	return (
 		<S.Container
 			onClick={handleClickCard}
-			focus={String(isFocused)}>
+			isFocus={isFocused}>
 			<CardHeader id={id} />
 			<S.Body>
 				{type === 'title' && <InputLong placeholder={'설명을 작성해주세요'} />}
@@ -42,7 +42,7 @@ const Card = ({ id }: CardProps) => {
 				{type === 'checkbox' && <InputCheckBox />}
 				{type === 'dropdown' && <InputDropDown />}
 			</S.Body>
-			{type !== 'title' && <CardFooter />}
+			{type !== 'title' && isFocused && <CardFooter />}
 		</S.Container>
 	);
 };
