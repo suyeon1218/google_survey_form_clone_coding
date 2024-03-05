@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import * as S from './index.style';
 
 interface TextFieldProps {
@@ -21,10 +21,6 @@ const TextField = ({
 				textareaRef.current.scrollHeight + 'px';
 		}
 	};
-
-	useEffect(() => {
-		handleChangeValue();
-	}, []);
 
 	return (
 		<S.Container>

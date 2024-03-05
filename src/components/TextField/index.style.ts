@@ -10,11 +10,13 @@ export const TextArea = styled.textarea<ContainerProps>`
 	box-sizing: border-box;
 	resize: none;
 	width: 100%;
+	height: auto;
 	padding: 8px 0px;
 	overflow-y: hidden;
 	outline: 0px;
-	border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
 	transition: 0.2s all;
+	border-bottom: ${({ theme, isTitle }) =>
+		isTitle ? `1px solid ${theme.colors.gray[100]}` : ''};
 	font-size: ${({ isTitle, theme }) =>
 		isTitle ? theme.fontSizes['3xl'] : theme.fontSizes['md']};
 

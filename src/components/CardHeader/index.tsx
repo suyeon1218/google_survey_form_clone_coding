@@ -22,7 +22,7 @@ const CardHeader = ({ id }: CardHeaderProps) => {
 		<S.Header>
 			<TextField
 				value={title}
-				isTitle={true}
+				isTitle={isFocused || type === 'title'}
 			/>
 			{type !== 'title' && isFocused && (
 				<DropDown
