@@ -1,4 +1,5 @@
 import { useSelector, shallowEqual } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import CardFooter from '../CardFooter';
 import CardHeader from '../CardHeader';
 import InputCheckBox from '../InputCheckBox';
@@ -6,7 +7,7 @@ import InputDropDown from '../InputDropDown';
 import InputLong from '../InputLong';
 import InputRadio from '../InputRadio';
 import InputShort from '../InputShort';
-import { CardType, RootStateType } from './../../store/index';
+import { CardType, RootStateType, focus } from './../../store/index';
 import * as S from './index.style';
 
 interface CardProps {
@@ -15,6 +16,7 @@ interface CardProps {
 }
 
 const Card = ({ id }: CardProps) => {
+	const dispatch = useDispatch();
 	const { isFocused, type } = useSelector((state: RootStateType) => {
 		const currentCard = state.cards.find((card) => card.id === id) as CardType;
 		return {
@@ -23,8 +25,14 @@ const Card = ({ id }: CardProps) => {
 		};
 	}, shallowEqual);
 
+	const handleClickCard = () => {
+		dispatch(focus({ id }));
+	};
+
 	return (
-		<S.Container focus={String(isFocused)}>
+		<S.Container
+			onClick={handleClickCard}
+			focus={String(isFocused)}>
 			<CardHeader id={id} />
 			<S.Body>
 				{type === 'title' && <InputLong placeholder={'설명을 작성해주세요'} />}

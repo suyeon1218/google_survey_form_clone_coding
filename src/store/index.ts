@@ -45,6 +45,15 @@ const cardSlice = createSlice({
 	name: 'card',
 	initialState: initialCards,
 	reducers: {
+		focus: (state, action) => {
+			const { id } = action.payload;
+			const nextState = state.map((card) => ({
+				...card,
+				isFocused: id === card.id ? true : false
+			}));
+
+			return nextState;
+		},
 		addCard: (state) => {
 			const newCard: CardType = {
 				id: generateID(),
@@ -72,6 +81,6 @@ const store = configureStore({
 });
 
 export type RootStateType = ReturnType<typeof store.getState>;
-export const { addCard } = cardSlice.actions;
+export const { focus, addCard } = cardSlice.actions;
 
 export default store;

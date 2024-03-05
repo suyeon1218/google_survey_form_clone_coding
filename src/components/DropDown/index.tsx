@@ -45,7 +45,7 @@ const DropDown = ({ defaultValue, menuList }: CardMenuProps) => {
 				{Object.entries(menuList).map(([key, value]) => (
 					<S.Item
 						key={key}
-						isSelected={value === selectedValue}
+						selected={String(value === selectedValue)}
 						onClick={handleClickItem}
 						data-key={key}>
 						{value}

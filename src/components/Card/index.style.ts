@@ -13,7 +13,8 @@ export const Container = styled(Card)<ContainerProps>`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	border-left: 2px solid ${({ theme }) => theme.colors.purple};
+	border-left: ${({ theme, focus }) =>
+		focus === 'true' ? `5px solid ${theme.colors.purple[600]}` : ``};
 `;
 
 export const Body = styled(CardBody)`
