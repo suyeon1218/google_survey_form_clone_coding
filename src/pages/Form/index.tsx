@@ -2,6 +2,7 @@ import { ViewIcon } from '@chakra-ui/icons';
 import { useSelector } from 'react-redux';
 import { RootStateType } from '~/store';
 import * as S from './index.style';
+import AddButton from '~/components/AddButton';
 import Card from '~/components/Card';
 
 const Form = () => {
@@ -20,13 +21,16 @@ const Form = () => {
 				</S.PreviewTooltip>
 			</S.Header>
 			<S.Main>
-				{cards.map((card, index) => (
-					<Card
-						key={card.id}
-						id={card.id}
-						index={index}
-					/>
-				))}
+				<S.CardsContainer>
+					{cards.map((card, index) => (
+						<Card
+							key={card.id}
+							id={card.id}
+							index={index}
+						/>
+					))}
+				</S.CardsContainer>
+				<AddButton />
 			</S.Main>
 		</S.Container>
 	);

@@ -24,8 +24,7 @@ export const Main = styled.main`
 	top: 65px;
 	overflow: scroll;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
+	justify-content: center;
 	background-color: ${({ theme }) => theme.colors.purple[50]};
 `;
 
@@ -47,4 +46,11 @@ export const IconContainer = styled.div`
 
 export const PreviewTooltip = styled(Tooltip)`
 	border-radius: 5px;
+`;
+
+export const CardsContainer = styled.section`
+	display: flex;
+	flex-direction: column;
+	max-width: 768px;
+	width: 100%;
 `;

@@ -35,14 +35,32 @@ const titleCard: CardType = {
 	required: false
 };
 
+const generateID = () => {
+	return Math.random().toString(36).substring(2, 16);
+};
+
 const initialCards: CardsType = [titleCard];
 
 const cardSlice = createSlice({
 	name: 'card',
 	initialState: initialCards,
 	reducers: {
-		focusCard: (state, action) => {
-			const nextState = state.map((card) => ({ ...card, isFocused: false }));
+		addCard: (state) => {
+			const newCard: CardType = {
+				id: generateID(),
+				title: '제목없는 질문',
+				type: 'radio',
+				required: false,
+				isFocused: false,
+				options: [
+					{
+						id: generateID(),
+						content: '옵션 1',
+						checked: false
+					}
+				]
+			};
+			state.push(newCard);
 		}
 	}
 });
@@ -54,5 +72,6 @@ const store = configureStore({
 });
 
 export type RootStateType = ReturnType<typeof store.getState>;
+export const { addCard } = cardSlice.actions;
 
 export default store;
