@@ -15,7 +15,7 @@ export const Container = styled(Card)<ContainerProps>`
 	flex-direction: column;
 	align-items: center;
 	border-left: ${({ theme, isFocus }) =>
-		isFocus === true ? `5px solid ${theme.colors.purple[600]}` : ``};
+		isFocus === true ? `5px solid ${theme.colors.blue[500]}` : ``};
 `;
 
 export const Body = styled(CardBody)`
