@@ -31,6 +31,7 @@ const Card = ({ id }: CardProps) => {
 
 	return (
 		<S.Container
+			id={isFocused ? 'focus' : ''}
 			onClick={handleClickCard}
 			isFocus={isFocused}>
 			<CardHeader id={id} />

@@ -54,13 +54,16 @@ const cardSlice = createSlice({
 
 			return nextState;
 		},
-		addCard: (state) => {
+		addCard: (state, action) => {
+			const nextState = state.map((card) => ({ ...card, isFocused: false }));
+			const { id } = action.payload;
+			const insertIndex = nextState.findIndex((card) => card.id === id);
 			const newCard: CardType = {
 				id: generateID(),
 				title: '제목없는 질문',
 				type: 'radio',
 				required: false,
-				isFocused: false,
+				isFocused: true,
 				options: [
 					{
 						id: generateID(),
@@ -69,7 +72,10 @@ const cardSlice = createSlice({
 					}
 				]
 			};
-			state.push(newCard);
+
+			nextState.splice(insertIndex + 1, 0, newCard);
+
+			return nextState;
 		}
 	}
 });
