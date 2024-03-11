@@ -35,9 +35,15 @@ const titleCard: CardType = {
 	required: false
 };
 
-const generateID = () => {
-	return Math.random().toString(36).substring(2, 16);
+const baseOption: OptionType = {
+	id: generateID(),
+	content: '옵션 1',
+	checked: false
 };
+
+function generateID() {
+	return Math.random().toString(36).substring(2, 16);
+}
 
 const initialCards: CardsType = [titleCard];
 
@@ -64,18 +70,31 @@ const cardSlice = createSlice({
 				type: 'radio',
 				required: false,
 				isFocused: true,
-				options: [
-					{
-						id: generateID(),
-						content: '옵션 1',
-						checked: false
-					}
-				]
+				options: [{ ...baseOption }]
 			};
 
 			nextState.splice(insertIndex + 1, 0, newCard);
 
 			return nextState;
+		},
+		changeCardType: (state, action) => {
+			const { id, type } = action.payload;
+			const targetCard = state.find((card) => card.id === id) as CardType;
+
+			if (
+				(targetCard.type === 'long' || targetCard.type === 'short') &&
+				(type === 'radio' || type === 'checkbox' || type === 'dropdown')
+			) {
+				targetCard.options?.push({ ...baseOption });
+			} else if (
+				(targetCard.type === 'radio' ||
+					targetCard.type === 'checkbox' ||
+					targetCard.type === 'dropdown') &&
+				(type === 'long' || type === 'short')
+			) {
+				targetCard.options = [];
+			}
+			targetCard.type = type;
 		}
 	}
 });
@@ -87,6 +106,6 @@ const store = configureStore({
 });
 
 export type RootStateType = ReturnType<typeof store.getState>;
-export const { focus, addCard } = cardSlice.actions;
+export const { focus, addCard, changeCardType } = cardSlice.actions;
 
 export default store;

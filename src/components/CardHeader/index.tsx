@@ -1,5 +1,5 @@
-import { useSelector, shallowEqual } from 'react-redux';
-import { CardType, RootStateType, cardMenu } from '~/store';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { CardType, RootStateType, cardMenu, changeCardType } from '~/store';
 import DropDown from '../DropDown';
 import TextField from '../TextField';
 import * as S from './index.style';
@@ -9,6 +9,7 @@ interface CardHeaderProps {
 }
 
 const CardHeader = ({ id }: CardHeaderProps) => {
+	const dispatch = useDispatch();
 	const { title, type, isFocused } = useSelector((state: RootStateType) => {
 		const currentCard = state.cards.find((card) => card.id === id) as CardType;
 		return {
@@ -17,6 +18,10 @@ const CardHeader = ({ id }: CardHeaderProps) => {
 			type: currentCard?.type
 		};
 	}, shallowEqual);
+
+	const handleClickItem = (item: string) => {
+		dispatch(changeCardType({ id, type: item }));
+	};
 
 	return (
 		<S.Header>
@@ -28,6 +33,7 @@ const CardHeader = ({ id }: CardHeaderProps) => {
 				<DropDown
 					menuList={cardMenu}
 					defaultValue={cardMenu[type]}
+					onClick={handleClickItem}
 				/>
 			)}
 		</S.Header>

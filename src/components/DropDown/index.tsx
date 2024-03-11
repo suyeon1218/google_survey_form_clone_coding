@@ -6,9 +6,10 @@ import * as S from './index.style';
 interface CardMenuProps {
 	menuList: string[] | { [key: string]: string };
 	defaultValue?: string;
+	onClick?: (item: string) => void;
 }
 
-const DropDown = ({ defaultValue, menuList }: CardMenuProps) => {
+const DropDown = ({ defaultValue, menuList, onClick }: CardMenuProps) => {
 	const [selectedValue, setSelectedValue] = useState(
 		Array.isArray(menuList) && defaultValue === undefined
 			? menuList[0]
@@ -18,19 +19,15 @@ const DropDown = ({ defaultValue, menuList }: CardMenuProps) => {
 	);
 
 	const handleClickItem = (event: MouseEvent<HTMLButtonElement>) => {
-		const target = event.target;
+		const target = event.target as HTMLElement;
+		const key = target.dataset.key as string;
 
-		if (target instanceof HTMLElement) {
-			const { key } = target.dataset;
-
-			if (key === undefined) {
-				return;
-			}
-			if (Array.isArray(menuList)) {
-				setSelectedValue(menuList[Number(key)]);
-			} else {
-				setSelectedValue(menuList[key]);
-			}
+		if (Array.isArray(menuList)) {
+			setSelectedValue(menuList[Number(key)]);
+			onClick && onClick(key);
+		} else {
+			setSelectedValue(menuList[key]);
+			onClick && onClick(key);
 		}
 	};
 
