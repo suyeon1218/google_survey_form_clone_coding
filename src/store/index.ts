@@ -18,7 +18,7 @@ export interface CardType {
 	title: string;
 	type: CardMenuType;
 	required: boolean;
-	options?: OptionType[];
+	options: OptionType[];
 }
 
 export interface OptionType {
@@ -27,18 +27,19 @@ export interface OptionType {
 	checked: boolean;
 }
 
+const baseOption: OptionType = {
+	id: generateID(),
+	content: '옵션 1',
+	checked: false
+};
+
 const titleCard: CardType = {
 	id: 'titleQuestion',
 	title: '제목 없는 설문지',
 	isFocused: true,
 	type: 'title',
-	required: false
-};
-
-const baseOption: OptionType = {
-	id: generateID(),
-	content: '옵션 1',
-	checked: false
+	required: false,
+	options: [{ ...baseOption }]
 };
 
 function generateID() {
