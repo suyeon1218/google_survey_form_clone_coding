@@ -63,7 +63,6 @@ const cardSlice = createSlice({
 				...card,
 				isFocused: id === card.id ? true : false
 			}));
-
 			return nextState;
 		},
 		addCard: (state, action) => {
@@ -125,6 +124,17 @@ const cardSlice = createSlice({
 			nextState.splice(cardIndex, 0, newCard);
 
 			return nextState;
+		},
+		deleteCard: (state, action) => {
+			const { id } = action.payload;
+			const cardIndex = state.findIndex((card) => card.id === id);
+			const nextState = state.map((card, index) => ({
+				...card,
+				isFocused: index === cardIndex - 1 ? true : false
+			}));
+			nextState.splice(cardIndex, 1);
+
+			return nextState;
 		}
 	}
 });
@@ -142,7 +152,8 @@ export const {
 	changeCardType,
 	changeTitle,
 	changeInputValue,
-	copyCard
+	copyCard,
+	deleteCard
 } = cardSlice.actions;
 
 export default store;

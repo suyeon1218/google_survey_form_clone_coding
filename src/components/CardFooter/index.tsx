@@ -1,7 +1,8 @@
 import { CopyIcon, DeleteIcon } from '@chakra-ui/icons';
 import { Divider, FormLabel, Switch } from '@chakra-ui/react';
+import { MouseEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { copyCard } from '~/store';
+import { copyCard, deleteCard } from '~/store';
 import * as S from './index.style';
 
 interface CardFooterProps {
@@ -11,19 +12,25 @@ interface CardFooterProps {
 const CardFooter = ({ id }: CardFooterProps) => {
 	const dispatch = useDispatch();
 
-	const handleClickCopy = () => {
+	const handleCopyCard = (event: MouseEvent<HTMLDivElement>) => {
+		event.stopPropagation();
 		dispatch(copyCard({ id }));
+	};
+
+	const handleDeleteCard = (event: MouseEvent<HTMLDivElement>) => {
+		event.stopPropagation();
+		dispatch(deleteCard({ id }));
 	};
 
 	return (
 		<S.Footer>
-			<S.IconContainer onClick={handleClickCopy}>
+			<S.IconContainer onClick={handleCopyCard}>
 				<CopyIcon
 					boxSize={5}
 					color={'gray'}
 				/>
 			</S.IconContainer>
-			<S.IconContainer>
+			<S.IconContainer onClick={handleDeleteCard}>
 				<DeleteIcon
 					boxSize={5}
 					color={'gray'}
