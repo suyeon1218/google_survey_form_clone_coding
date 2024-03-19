@@ -1,24 +1,30 @@
-import { useRef } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import * as S from './index.style';
 
 interface TextFieldProps {
 	value?: string;
 	isTitle?: boolean;
 	placeholder?: string;
+	onChange?: (value: string) => void;
 }
 
 const TextField = ({
 	value = '',
 	isTitle = false,
-	placeholder = ''
+	placeholder = '',
+	onChange
 }: TextFieldProps) => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-	const handleChangeValue = () => {
+	const handleChangeValue = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (textareaRef.current) {
 			textareaRef.current.style.height = 'auto';
 			textareaRef.current.style.height =
 				textareaRef.current.scrollHeight + 'px';
+		}
+		if (onChange) {
+			const { value } = event.target;
+			onChange(value);
 		}
 	};
 
@@ -29,7 +35,7 @@ const TextField = ({
 				isTitle={isTitle}
 				ref={textareaRef}
 				placeholder={placeholder}
-				onInput={handleChangeValue}
+				onChange={handleChangeValue}
 				defaultValue={value}></S.TextArea>
 		</S.Container>
 	);

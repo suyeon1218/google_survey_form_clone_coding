@@ -96,6 +96,12 @@ const cardSlice = createSlice({
 				targetCard.options = [];
 			}
 			targetCard.type = type;
+		},
+		changeTitle: (state, action) => {
+			const { id, value } = action.payload;
+			const targetCard = state.find((card) => card.id === id) as CardType;
+
+			targetCard.title = value;
 		}
 	}
 });
@@ -107,6 +113,7 @@ const store = configureStore({
 });
 
 export type RootStateType = ReturnType<typeof store.getState>;
-export const { focus, addCard, changeCardType } = cardSlice.actions;
+export const { focus, addCard, changeCardType, changeTitle } =
+	cardSlice.actions;
 
 export default store;

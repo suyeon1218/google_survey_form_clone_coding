@@ -1,5 +1,11 @@
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { CardType, RootStateType, cardMenu, changeCardType } from '~/store';
+import {
+	CardType,
+	RootStateType,
+	cardMenu,
+	changeCardType,
+	changeTitle
+} from '~/store';
 import DropDown from '../DropDown';
 import TextField from '../TextField';
 import * as S from './index.style';
@@ -23,11 +29,16 @@ const CardHeader = ({ id }: CardHeaderProps) => {
 		dispatch(changeCardType({ id, type: item }));
 	};
 
+	const handleChangeTitle = (value: string) => {
+		dispatch(changeTitle({ id, value }));
+	};
+
 	return (
 		<S.Header>
 			<TextField
 				value={title}
 				isTitle={isFocused || type === 'title'}
+				onChange={handleChangeTitle}
 			/>
 			{type !== 'title' && isFocused && (
 				<DropDown
