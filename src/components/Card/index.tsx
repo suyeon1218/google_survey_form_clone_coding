@@ -42,7 +42,7 @@ const Card = ({ id }: CardProps) => {
 						placeholder={'설명을 작성해주세요'}
 					/>
 				)}
-				{type === 'short' && <InputShort />}
+				{type === 'short' && <InputShort id={id} />}
 				{type === 'long' && <InputLong id={id} />}
 				{type === 'radio' && <InputRadio />}
 				{type === 'checkbox' && <InputCheckBox />}
