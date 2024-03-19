@@ -39,7 +39,7 @@ const titleCard: CardType = {
 	isFocused: true,
 	type: 'title',
 	required: false,
-	options: [{ ...baseOption }]
+	options: [{ ...baseOption, content: '' }]
 };
 
 function generateID() {
@@ -93,7 +93,7 @@ const cardSlice = createSlice({
 					targetCard.type === 'dropdown') &&
 				(type === 'long' || type === 'short')
 			) {
-				targetCard.options = [];
+				targetCard.options = [{ ...baseOption }];
 			}
 			targetCard.type = type;
 		},
@@ -102,6 +102,15 @@ const cardSlice = createSlice({
 			const targetCard = state.find((card) => card.id === id) as CardType;
 
 			targetCard.title = value;
+		},
+		changeInputValue: (state, action) => {
+			const { cardId, optionId, value } = action.payload;
+			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const option = targetCard.options.find(
+				(option) => option.id === optionId
+			) as OptionType;
+
+			option.content = value;
 		}
 	}
 });
@@ -113,7 +122,7 @@ const store = configureStore({
 });
 
 export type RootStateType = ReturnType<typeof store.getState>;
-export const { focus, addCard, changeCardType, changeTitle } =
+export const { focus, addCard, changeCardType, changeTitle, changeInputValue } =
 	cardSlice.actions;
 
 export default store;

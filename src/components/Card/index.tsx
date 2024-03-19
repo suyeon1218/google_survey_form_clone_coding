@@ -36,9 +36,14 @@ const Card = ({ id }: CardProps) => {
 			isFocus={isFocused}>
 			<CardHeader id={id} />
 			<S.Body>
-				{type === 'title' && <InputLong placeholder={'설명을 작성해주세요'} />}
+				{type === 'title' && (
+					<InputLong
+						id={id}
+						placeholder={'설명을 작성해주세요'}
+					/>
+				)}
 				{type === 'short' && <InputShort />}
-				{type === 'long' && <InputLong />}
+				{type === 'long' && <InputLong id={id} />}
 				{type === 'radio' && <InputRadio />}
 				{type === 'checkbox' && <InputCheckBox />}
 				{type === 'dropdown' && <InputDropDown />}
