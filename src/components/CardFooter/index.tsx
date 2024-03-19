@@ -1,11 +1,23 @@
 import { CopyIcon, DeleteIcon } from '@chakra-ui/icons';
 import { Divider, FormLabel, Switch } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { copyCard } from '~/store';
 import * as S from './index.style';
 
-const CardFooter = () => {
+interface CardFooterProps {
+	id: string;
+}
+
+const CardFooter = ({ id }: CardFooterProps) => {
+	const dispatch = useDispatch();
+
+	const handleClickCopy = () => {
+		dispatch(copyCard({ id }));
+	};
+
 	return (
 		<S.Footer>
-			<S.IconContainer>
+			<S.IconContainer onClick={handleClickCopy}>
 				<CopyIcon
 					boxSize={5}
 					color={'gray'}

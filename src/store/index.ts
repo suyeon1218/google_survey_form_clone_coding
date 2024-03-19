@@ -27,19 +27,24 @@ export interface OptionType {
 	checked: boolean;
 }
 
-const baseOption: OptionType = {
-	id: generateID(),
+const baseOption: Omit<OptionType, 'id'> = {
 	content: '옵션 1',
 	checked: false
 };
 
+const baseCard: Omit<CardType, 'id' | 'options'> = {
+	title: '제목없는 질문',
+	type: 'radio',
+	required: false,
+	isFocused: true
+};
+
 const titleCard: CardType = {
+	...baseCard,
 	id: 'titleQuestion',
 	title: '제목 없는 설문지',
-	isFocused: true,
 	type: 'title',
-	required: false,
-	options: [{ ...baseOption, content: '' }]
+	options: [{ ...baseOption, content: '', id: generateID() }]
 };
 
 function generateID() {
@@ -66,12 +71,9 @@ const cardSlice = createSlice({
 			const { id } = action.payload;
 			const insertIndex = nextState.findIndex((card) => card.id === id);
 			const newCard: CardType = {
+				...baseCard,
 				id: generateID(),
-				title: '제목없는 질문',
-				type: 'radio',
-				required: false,
-				isFocused: true,
-				options: [{ ...baseOption }]
+				options: [{ ...baseOption, id: generateID() }]
 			};
 
 			nextState.splice(insertIndex + 1, 0, newCard);
@@ -86,14 +88,14 @@ const cardSlice = createSlice({
 				(targetCard.type === 'long' || targetCard.type === 'short') &&
 				(type === 'radio' || type === 'checkbox' || type === 'dropdown')
 			) {
-				targetCard.options?.push({ ...baseOption });
+				targetCard.options?.push({ ...baseOption, id: generateID() });
 			} else if (
 				(targetCard.type === 'radio' ||
 					targetCard.type === 'checkbox' ||
 					targetCard.type === 'dropdown') &&
 				(type === 'long' || type === 'short')
 			) {
-				targetCard.options = [{ ...baseOption }];
+				targetCard.options = [{ ...baseOption, id: generateID() }];
 			}
 			targetCard.type = type;
 		},
@@ -111,6 +113,18 @@ const cardSlice = createSlice({
 			) as OptionType;
 
 			option.content = value;
+		},
+		copyCard: (state, action) => {
+			const { id } = action.payload;
+			const nextState = state.map((card) => ({ ...card, isFocused: false }));
+			const cardIndex = state.findIndex((card) => card.id === id);
+			const newCard: CardType = {
+				...state[cardIndex],
+				id: generateID()
+			};
+			nextState.splice(cardIndex, 0, newCard);
+
+			return nextState;
 		}
 	}
 });
@@ -122,7 +136,13 @@ const store = configureStore({
 });
 
 export type RootStateType = ReturnType<typeof store.getState>;
-export const { focus, addCard, changeCardType, changeTitle, changeInputValue } =
-	cardSlice.actions;
+export const {
+	focus,
+	addCard,
+	changeCardType,
+	changeTitle,
+	changeInputValue,
+	copyCard
+} = cardSlice.actions;
 
 export default store;

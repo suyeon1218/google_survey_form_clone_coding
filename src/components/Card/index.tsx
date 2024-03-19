@@ -48,7 +48,7 @@ const Card = ({ id }: CardProps) => {
 				{type === 'checkbox' && <InputCheckBox />}
 				{type === 'dropdown' && <InputDropDown />}
 			</S.Body>
-			{type !== 'title' && isFocused && <CardFooter />}
+			{type !== 'title' && isFocused && <CardFooter id={id} />}
 		</S.Container>
 	);
 };
