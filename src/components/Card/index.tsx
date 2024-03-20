@@ -44,7 +44,7 @@ const Card = ({ id }: CardProps) => {
 				)}
 				{type === 'short' && <InputShort id={id} />}
 				{type === 'long' && <InputLong id={id} />}
-				{type === 'radio' && <InputRadio />}
+				{type === 'radio' && <InputRadio id={id} />}
 				{type === 'checkbox' && <InputCheckBox />}
 				{type === 'dropdown' && <InputDropDown />}
 			</S.Body>

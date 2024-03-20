@@ -1,10 +1,9 @@
 import { Input } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
-export const InputContainer = styled.div`
-	height: 40px;
+export const OptionContainer = styled.div`
 	display: flex;
-	align-items: center;
+	flex-direction: column;
 	gap: 5px;
 `;
 
