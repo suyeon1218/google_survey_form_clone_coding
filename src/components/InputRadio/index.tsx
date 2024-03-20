@@ -13,10 +13,11 @@ const InputRadio = ({ id }: InputRadioProps) => {
 	const [value, setValue] = useState('');
 	// ! required 인 경우 value = 1, 아닐 경우 undefined
 	// ! useArrayField 로 관리해서 없애야 한다
-	const options = useSelector((state: RootStateType) => {
+	const { options, isFocused } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
+		const { options, isFocused } = targetCard;
 
-		return targetCard.options;
+		return { options, isFocused };
 	}, shallowEqual);
 
 	const handleDelete = () => {};
@@ -37,11 +38,13 @@ const InputRadio = ({ id }: InputRadioProps) => {
 						PrefixComponent={<Radio value={''} />}
 					/>
 				))}
-				<ChoiceInputBase
-					PrefixComponent={<Radio />}
-					value={''}
-					isLastOption={true}
-				/>
+				{isFocused && (
+					<ChoiceInputBase
+						PrefixComponent={<Radio />}
+						value={''}
+						isLastOption={true}
+					/>
+				)}
 			</S.OptionContainer>
 		</RadioGroup>
 	);
