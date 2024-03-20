@@ -8,6 +8,7 @@ interface ChoiceInputBaseProps {
 	deletable?: boolean;
 	value?: string;
 	placeholder?: string;
+	isLastOption?: boolean;
 }
 
 const ChoiceInputBase = ({
@@ -16,17 +17,26 @@ const ChoiceInputBase = ({
 	onDelete = () => {},
 	onChange = () => {},
 	value = '',
-	placeholder = ''
+	placeholder = '',
+	isLastOption = false
 }: ChoiceInputBaseProps) => {
 	return (
 		<S.InputContainer>
 			{PrefixComponent}
-			<S.OptionInput
-				onChange={onChange}
-				value={value}
-				variant='flushed'
-				placeholder={placeholder}
-			/>
+			{isLastOption ? (
+				<S.LastOptionContainer>
+					<S.AddOptionButton>옵션 추가</S.AddOptionButton>
+					또는
+					<S.AddEtcButton>기타 추가</S.AddEtcButton>
+				</S.LastOptionContainer>
+			) : (
+				<S.OptionInput
+					onChange={onChange}
+					value={value}
+					variant='flushed'
+					placeholder={placeholder}
+				/>
+			)}
 			{deletable && (
 				<S.DeleteButton onClick={onDelete}>
 					<CloseIcon />
