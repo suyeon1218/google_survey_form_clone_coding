@@ -1,8 +1,14 @@
 import { CopyIcon, DeleteIcon } from '@chakra-ui/icons';
 import { Divider, FormLabel, Switch } from '@chakra-ui/react';
 import { MouseEvent } from 'react';
-import { useDispatch } from 'react-redux';
-import { copyCard, deleteCard } from '~/store';
+import { useDispatch, shallowEqual, useSelector } from 'react-redux';
+import {
+	CardType,
+	RootStateType,
+	copyCard,
+	deleteCard,
+	setRequired
+} from '~/store';
 import * as S from './index.style';
 
 interface CardFooterProps {
@@ -11,6 +17,12 @@ interface CardFooterProps {
 
 const CardFooter = ({ id }: CardFooterProps) => {
 	const dispatch = useDispatch();
+	const required = useSelector((state: RootStateType) => {
+		const targetCard = state.cards.find((card) => card.id === id) as CardType;
+		const { required } = targetCard;
+
+		return required;
+	}, shallowEqual);
 
 	const handleCopyCard = (event: MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation();
@@ -20,6 +32,13 @@ const CardFooter = ({ id }: CardFooterProps) => {
 	const handleDeleteCard = (event: MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation();
 		dispatch(deleteCard({ id }));
+	};
+
+	const handleSetRequire = (event: MouseEvent<HTMLDivElement>) => {
+		event.stopPropagation();
+		event.preventDefault();
+
+		dispatch(setRequired({ id }));
 	};
 
 	return (
@@ -37,9 +56,12 @@ const CardFooter = ({ id }: CardFooterProps) => {
 				/>
 			</S.IconContainer>
 			<Divider orientation='vertical' />
-			<S.SwitchContainer>
+			<S.SwitchContainer onClick={handleSetRequire}>
 				<FormLabel htmlFor='required'>필수</FormLabel>
-				<Switch id='required' />
+				<Switch
+					id='required'
+					isChecked={required}
+				/>
 			</S.SwitchContainer>
 		</S.Footer>
 	);

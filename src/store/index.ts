@@ -135,6 +135,12 @@ const cardSlice = createSlice({
 			nextState.splice(cardIndex, 1);
 
 			return nextState;
+		},
+		setRequired: (state, action) => {
+			const { id } = action.payload;
+			const targetCard = state.find((card) => card.id === id) as CardType;
+
+			targetCard.required = !targetCard.required;
 		}
 	}
 });
@@ -153,7 +159,8 @@ export const {
 	changeTitle,
 	changeInputValue,
 	copyCard,
-	deleteCard
+	deleteCard,
+	setRequired
 } = cardSlice.actions;
 
 export default store;

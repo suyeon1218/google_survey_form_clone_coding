@@ -19,6 +19,7 @@ const Card = ({ id }: CardProps) => {
 	const dispatch = useDispatch();
 	const { isFocused, type } = useSelector((state: RootStateType) => {
 		const currentCard = state.cards.find((card) => card.id === id) as CardType;
+
 		return {
 			isFocused: currentCard?.isFocused,
 			type: currentCard?.type
