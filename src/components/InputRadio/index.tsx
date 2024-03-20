@@ -35,6 +35,7 @@ const InputRadio = ({ id }: InputRadioProps) => {
 						onChange={handleTextChange}
 						onDelete={handleDelete}
 						value={option.content}
+						deletable={options.length > 1}
 						PrefixComponent={<Radio value={''} />}
 					/>
 				))}
@@ -43,6 +44,7 @@ const InputRadio = ({ id }: InputRadioProps) => {
 						PrefixComponent={<Radio />}
 						value={''}
 						isLastOption={true}
+						deletable={false}
 					/>
 				)}
 			</S.OptionContainer>
