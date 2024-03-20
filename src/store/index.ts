@@ -36,7 +36,7 @@ const baseCard: Omit<CardType, 'id' | 'options'> = {
 	title: '제목없는 질문',
 	type: 'radio',
 	required: false,
-	isFocused: true
+	isFocused: false
 };
 
 const titleCard: CardType = {
@@ -44,6 +44,7 @@ const titleCard: CardType = {
 	id: 'titleQuestion',
 	title: '제목 없는 설문지',
 	type: 'title',
+	isFocused: true,
 	options: [{ ...baseOption, content: '', id: generateID() }]
 };
 
@@ -51,7 +52,14 @@ function generateID() {
 	return Math.random().toString(36).substring(2, 16);
 }
 
-const initialCards: CardsType = [titleCard];
+const initialCards: CardsType = [
+	titleCard,
+	{
+		...baseCard,
+		id: generateID(),
+		options: [{ ...baseOption, id: generateID() }]
+	}
+];
 
 const cardSlice = createSlice({
 	name: 'card',
