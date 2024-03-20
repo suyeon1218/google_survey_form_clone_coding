@@ -39,7 +39,10 @@ const ChoiceInputBase = ({
 			)}
 			{deletable && (
 				<S.DeleteButton onClick={onDelete}>
-					<CloseIcon />
+					<CloseIcon
+						color={'gray'}
+						boxSize={3}
+					/>
 				</S.DeleteButton>
 			)}
 		</S.InputContainer>
