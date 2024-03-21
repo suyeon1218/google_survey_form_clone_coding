@@ -31,6 +31,7 @@ const InputRadio = ({ id }: InputRadioProps) => {
 			<S.OptionContainer>
 				{options.map((option) => (
 					<ChoiceInputBase
+						id={id}
 						key={option.id}
 						onChange={handleTextChange}
 						onDelete={handleDelete}
@@ -41,6 +42,7 @@ const InputRadio = ({ id }: InputRadioProps) => {
 				))}
 				{isFocused && (
 					<ChoiceInputBase
+						id={id}
 						PrefixComponent={<Radio />}
 						value={''}
 						isLastOption={true}

@@ -149,6 +149,16 @@ const cardSlice = createSlice({
 			const targetCard = state.find((card) => card.id === id) as CardType;
 
 			targetCard.required = !targetCard.required;
+		},
+		addOption: (state, action) => {
+			const { id } = action.payload;
+			const targetCard = state.find((card) => card.id === id) as CardType;
+
+			targetCard.options.push({
+				...baseOption,
+				content: `옵션${targetCard.options.length + 1}`,
+				id: generateID()
+			});
 		}
 	}
 });
@@ -168,7 +178,8 @@ export const {
 	changeInputValue,
 	copyCard,
 	deleteCard,
-	setRequired
+	setRequired,
+	addOption
 } = cardSlice.actions;
 
 export default store;

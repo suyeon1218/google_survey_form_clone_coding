@@ -1,7 +1,10 @@
 import { CloseIcon } from '@chakra-ui/icons';
+import { useDispatch } from 'react-redux';
+import { addOption } from '~/store';
 import * as S from './index.style';
 
 interface ChoiceInputBaseProps {
+	id: string;
 	PrefixComponent?: JSX.Element | null;
 	onChange?: () => void;
 	onDelete?: () => void;
@@ -12,6 +15,7 @@ interface ChoiceInputBaseProps {
 }
 
 const ChoiceInputBase = ({
+	id,
 	PrefixComponent = null,
 	deletable = true,
 	onDelete = () => {},
@@ -20,12 +24,20 @@ const ChoiceInputBase = ({
 	placeholder = '',
 	isLastOption = false
 }: ChoiceInputBaseProps) => {
+	const dispatch = useDispatch();
+
+	const handleAddOption = () => {
+		dispatch(addOption({ id }));
+	};
+
 	return (
 		<S.InputContainer>
 			{PrefixComponent}
 			{isLastOption ? (
 				<S.LastOptionContainer>
-					<S.AddOptionButton>옵션 추가</S.AddOptionButton>
+					<S.AddOptionButton onClick={handleAddOption}>
+						옵션 추가
+					</S.AddOptionButton>
 					또는
 					<S.AddEtcButton>기타 추가</S.AddEtcButton>
 				</S.LastOptionContainer>
