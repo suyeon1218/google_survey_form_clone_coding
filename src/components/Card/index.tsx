@@ -2,10 +2,8 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import CardFooter from '../CardFooter';
 import CardHeader from '../CardHeader';
-import InputCheckBox from '../InputCheckBox';
-import InputDropDown from '../InputDropDown';
 import InputLong from '../InputLong';
-import InputRadio from '../InputRadio';
+import InputOption from '../InputOption';
 import InputShort from '../InputShort';
 import { CardType, RootStateType, focus } from './../../store/index';
 import * as S from './index.style';
@@ -45,9 +43,9 @@ const Card = ({ id }: CardProps) => {
 				)}
 				{type === 'short' && <InputShort id={id} />}
 				{type === 'long' && <InputLong id={id} />}
-				{type === 'radio' && <InputRadio id={id} />}
-				{type === 'checkbox' && <InputCheckBox />}
-				{type === 'dropdown' && <InputDropDown />}
+				{(type === 'radio' || type === 'checkbox' || type === 'dropdown') && (
+					<InputOption id={id} />
+				)}
 			</S.Body>
 			{type !== 'title' && isFocused && <CardFooter id={id} />}
 		</S.Container>
