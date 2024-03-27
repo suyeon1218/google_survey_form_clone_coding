@@ -1,12 +1,13 @@
 import { CloseIcon } from '@chakra-ui/icons';
 import { Checkbox, Radio, Stack } from '@chakra-ui/react';
-import { MouseEvent } from 'react';
+import { ChangeEvent, MouseEvent } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import {
 	CardType,
 	RootStateType,
 	addOption,
-	deleteOption
+	deleteOption,
+	inputOption
 } from './../../store/index';
 import * as S from './index.style';
 
@@ -29,7 +30,6 @@ const InputOption = ({ id }: InputOptionProps) => {
 	const handleDeleteOption = (event: MouseEvent<HTMLButtonElement>) => {
 		if (event.target instanceof HTMLElement) {
 			const { optionId } = event.target.dataset;
-			console.log(event.target.dataset);
 
 			dispatch(deleteOption({ cardId: id, optionId }));
 		}
@@ -37,6 +37,15 @@ const InputOption = ({ id }: InputOptionProps) => {
 
 	const handleAddOption = () => {
 		dispatch(addOption({ id }));
+	};
+
+	const handleInputOptionValue = (event: ChangeEvent<HTMLInputElement>) => {
+		if (event.target instanceof HTMLElement) {
+			const { optionId } = event.target.dataset;
+			const { value } = event.target;
+
+			dispatch(inputOption({ cardId: id, optionId, value }));
+		}
 	};
 
 	return (
@@ -47,6 +56,8 @@ const InputOption = ({ id }: InputOptionProps) => {
 					{type === 'checkbox' && <Checkbox />}
 					{type === 'dropdown' && <div>{index + 1}</div>}
 					<S.OptionInput
+						data-option-id={option.id}
+						onInput={handleInputOptionValue}
 						value={option.content}
 						variant='flushed'
 					/>

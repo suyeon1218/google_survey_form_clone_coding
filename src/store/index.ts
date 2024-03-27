@@ -168,6 +168,15 @@ const cardSlice = createSlice({
 			);
 
 			targetCard.options.splice(targetOptionIndex, 1);
+		},
+		inputOption: (state, action) => {
+			const { cardId, optionId, value } = action.payload;
+			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const targetOption = targetCard.options.find(
+				(option) => option.id === optionId
+			) as OptionType;
+
+			targetOption.content = value;
 		}
 	}
 });
@@ -189,7 +198,8 @@ export const {
 	deleteCard,
 	setRequired,
 	addOption,
-	deleteOption
+	deleteOption,
+	inputOption
 } = cardSlice.actions;
 
 export default store;
