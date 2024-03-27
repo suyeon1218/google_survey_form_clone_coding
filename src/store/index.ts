@@ -159,6 +159,15 @@ const cardSlice = createSlice({
 				content: `옵션${targetCard.options.length + 1}`,
 				id: generateID()
 			});
+		},
+		deleteOption: (state, action) => {
+			const { cardId, optionId } = action.payload;
+			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const targetOptionIndex = targetCard.options.findIndex(
+				(option) => option.id === optionId
+			);
+
+			targetCard.options.splice(targetOptionIndex, 1);
 		}
 	}
 });
@@ -179,7 +188,8 @@ export const {
 	copyCard,
 	deleteCard,
 	setRequired,
-	addOption
+	addOption,
+	deleteOption
 } = cardSlice.actions;
 
 export default store;
