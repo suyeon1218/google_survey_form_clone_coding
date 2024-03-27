@@ -45,7 +45,7 @@ const InputOption = ({ id }: InputOptionProps) => {
 				<S.InputContainer data-option-id={option.id}>
 					{type === 'radio' && <Radio />}
 					{type === 'checkbox' && <Checkbox />}
-					{type === 'dropdown' && <div>{index}</div>}
+					{type === 'dropdown' && <div>{index + 1}</div>}
 					<S.OptionInput
 						value={option.content}
 						variant='flushed'
