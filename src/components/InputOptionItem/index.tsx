@@ -22,7 +22,7 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 	const createAuthority = useSelector((state: RootStateType) => {
 		return state.createAuthority;
 	});
-	const { option, isDeletable, type, optionIndex } = useSelector(
+	const { option, isDeletable, type, optionIndex, isFocused } = useSelector(
 		(state: RootStateType) => {
 			const targetCard = state.cards.find(
 				(card) => card.id === cardId
@@ -35,7 +35,8 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 				option: targetCard.options[targetOptionIndex],
 				isDeletable: targetCard.options.length > 1,
 				type: targetCard.type,
-				optionIndex: targetOptionIndex
+				optionIndex: targetOptionIndex,
+				isFocused: targetCard.isFocused
 			};
 		},
 		shallowEqual
@@ -83,7 +84,7 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 				value={option.content}
 				variant='flushed'
 			/>
-			{isDeletable && (
+			{isDeletable && isFocused && (
 				<S.DeleteButton
 					data-option-id={option.id}
 					onClick={handleDeleteOption}>
