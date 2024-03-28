@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { CardType, RootStateType, changeInputValue } from '~/store';
 import * as S from './index.style';
 
@@ -14,7 +14,10 @@ const InputShort = ({ id }: InputShortProps) => {
 		const { options } = targetCard;
 
 		return options[0];
-	});
+	}, shallowEqual);
+	const createAuthority = useSelector((state: RootStateType) => {
+		return state.createAuthority;
+	}, shallowEqual);
 
 	const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
 		const { value } = event.target;
@@ -24,6 +27,7 @@ const InputShort = ({ id }: InputShortProps) => {
 
 	return (
 		<S.InputShort
+			readOnly={createAuthority === true}
 			onChange={handleChangeValue}
 			value={option.content}
 			variant='flushed'

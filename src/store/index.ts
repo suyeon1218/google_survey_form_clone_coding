@@ -48,6 +48,13 @@ const titleCard: CardType = {
 	options: [{ ...baseOption, content: '', id: generateID() }]
 };
 
+const getCreateAuthority = () => {
+	const { pathname } = location;
+
+	console.log(pathname);
+	return pathname === '/' ? true : false;
+};
+
 function generateID() {
 	return Math.random().toString(36).substring(2, 16);
 }
@@ -181,9 +188,16 @@ const cardSlice = createSlice({
 	}
 });
 
+const createAuthoritySlice = createSlice({
+	name: 'createAuthority',
+	initialState: getCreateAuthority(),
+	reducers: {}
+});
+
 const store = configureStore({
 	reducer: {
-		cards: cardSlice.reducer
+		cards: cardSlice.reducer,
+		createAuthority: createAuthoritySlice.reducer
 	}
 });
 
