@@ -26,6 +26,9 @@ const InputOption = ({ id }: InputOptionProps) => {
 			isFocused: currentCard.isFocused
 		};
 	}, shallowEqual);
+	const createAuthority = useSelector((state: RootStateType) => {
+		return state.createAuthority;
+	});
 
 	const handleDeleteOption = (event: MouseEvent<HTMLButtonElement>) => {
 		if (event.target instanceof HTMLElement) {
@@ -52,8 +55,10 @@ const InputOption = ({ id }: InputOptionProps) => {
 		<Stack direction={'column'}>
 			{options.map((option, index) => (
 				<S.InputContainer data-option-id={option.id}>
-					{type === 'radio' && <Radio />}
-					{type === 'checkbox' && <Checkbox />}
+					{type === 'radio' && <Radio isDisabled={createAuthority === true} />}
+					{type === 'checkbox' && (
+						<Checkbox isDisabled={createAuthority === true} />
+					)}
 					{type === 'dropdown' && <div>{index + 1}</div>}
 					<S.OptionInput
 						data-option-id={option.id}
