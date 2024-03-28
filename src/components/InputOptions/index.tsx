@@ -36,13 +36,13 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 					key={option.id}
 				/>
 			))}
-			<S.InputContainer>
-				{type === 'radio' && <Radio isDisabled={createAuthority === true} />}
-				{type === 'checkbox' && (
-					<Checkbox isDisabled={createAuthority === true} />
-				)}
-				{type === 'dropdown' && <div>{options.length + 1}</div>}
-				{isFocused && (
+			{isFocused && (
+				<S.InputContainer>
+					{type === 'radio' && <Radio isDisabled={createAuthority === true} />}
+					{type === 'checkbox' && (
+						<Checkbox isDisabled={createAuthority === true} />
+					)}
+					{type === 'dropdown' && <div>{options.length + 1}</div>}
 					<S.LastOptionContainer>
 						<S.AddOptionButton onClick={handleAddOption}>
 							옵션 추가
@@ -50,8 +50,8 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 						<span>또는</span>
 						<S.AddEtcButton>기타 추가</S.AddEtcButton>
 					</S.LastOptionContainer>
-				)}
-			</S.InputContainer>
+				</S.InputContainer>
+			)}
 		</Stack>
 	);
 };
