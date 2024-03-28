@@ -1,11 +1,16 @@
 import { Input, Button } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
-export const InputContainer = styled.div`
+interface InputContainerProps {
+	isDragging: boolean;
+}
+
+export const InputContainer = styled.div<InputContainerProps>`
 	height: 40px;
 	display: flex;
 	align-items: center;
 	gap: 5px;
+	opacity: ${({ isDragging }) => (isDragging ? 0.5 : 1)};
 `;
 
 export const OptionInput = styled(Input)`

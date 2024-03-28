@@ -187,12 +187,22 @@ const cardSlice = createSlice({
 		dragCard: (state, action) => {
 			const { itemIndex, hoverIndex } = action.payload;
 			const nextState = [...state];
-			nextState.splice(itemIndex, 1);
-
 			const changeCard = state[itemIndex];
+
+			nextState.splice(itemIndex, 1);
 			nextState.splice(hoverIndex, 0, changeCard);
 
 			return nextState;
+		},
+		dragOption: (state, action) => {
+			const { cardId, itemIndex, hoverIndex } = action.payload;
+			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const nextOption = [...targetCard.options];
+			const changeOption = nextOption[itemIndex];
+
+			nextOption.splice(itemIndex, 1);
+			nextOption.splice(hoverIndex, 0, changeOption);
+			targetCard.options = nextOption;
 		}
 	}
 });
@@ -223,7 +233,8 @@ export const {
 	addOption,
 	deleteOption,
 	inputOption,
-	dragCard
+	dragCard,
+	dragOption
 } = cardSlice.actions;
 
 export default store;

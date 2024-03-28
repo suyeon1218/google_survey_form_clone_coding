@@ -2,8 +2,15 @@ import { CloseIcon } from '@chakra-ui/icons';
 import { Checkbox, Radio } from '@chakra-ui/react';
 import { ChangeEvent, MouseEvent } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
-import { CardType, RootStateType, deleteOption, inputOption } from '~/store';
+import {
+	CardType,
+	RootStateType,
+	deleteOption,
+	dragOption,
+	inputOption
+} from '~/store';
 import * as S from './index.style';
+import useDraggable from '~/hooks/useDraggable';
 
 interface InputOptionItemProps {
 	cardId: string;
@@ -33,6 +40,15 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 		},
 		shallowEqual
 	);
+	const handleDragOption = (itemIndex: number, hoverIndex: number) => {
+		dispatch(dragOption({ cardId, itemIndex, hoverIndex }));
+	};
+	const { dragRef, isDragging } = useDraggable({
+		id: optionId,
+		itemName: 'option',
+		itemIndex: optionIndex,
+		onDrag: handleDragOption
+	});
 
 	const handleDeleteOption = (event: MouseEvent<HTMLButtonElement>) => {
 		if (event.target instanceof HTMLElement) {
@@ -52,7 +68,10 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 	};
 
 	return (
-		<S.InputContainer data-option-id={option.id}>
+		<S.InputContainer
+			ref={dragRef}
+			isDragging={isDragging}
+			data-option-id={option.id}>
 			{type === 'radio' && <Radio isDisabled={createAuthority === true} />}
 			{type === 'checkbox' && (
 				<Checkbox isDisabled={createAuthority === true} />
