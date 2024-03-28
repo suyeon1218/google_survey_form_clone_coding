@@ -1,4 +1,6 @@
 import { ViewIcon } from '@chakra-ui/icons';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector } from 'react-redux';
 import { RootStateType } from '~/store';
 import * as S from './index.style';
@@ -22,13 +24,15 @@ const Form = () => {
 			</S.Header>
 			<S.Main>
 				<S.CardsContainer>
-					{cards.map((card, index) => (
-						<Card
-							key={card.id}
-							id={card.id}
-							index={index}
-						/>
-					))}
+					<DndProvider backend={HTML5Backend}>
+						{cards.map((card, index) => (
+							<Card
+								key={card.id}
+								id={card.id}
+								index={index}
+							/>
+						))}
+					</DndProvider>
 				</S.CardsContainer>
 				<AddButton />
 			</S.Main>

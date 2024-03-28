@@ -5,8 +5,9 @@ import CardHeader from '../CardHeader';
 import InputLong from '../InputLong';
 import InputOption from '../InputOption';
 import InputShort from '../InputShort';
-import { CardType, RootStateType, focus } from './../../store/index';
+import { CardType, RootStateType, focus, dragCard } from './../../store/index';
 import * as S from './index.style';
+import useDraggable from '~/hooks/useDraggable';
 
 interface CardProps {
 	id: string;
@@ -15,14 +16,26 @@ interface CardProps {
 
 const Card = ({ id }: CardProps) => {
 	const dispatch = useDispatch();
-	const { isFocused, type } = useSelector((state: RootStateType) => {
-		const currentCard = state.cards.find((card) => card.id === id) as CardType;
+	const { isFocused, type, index } = useSelector((state: RootStateType) => {
+		const index = state.cards.findIndex((card) => card.id === id);
+		const targetCard = state.cards[index] as CardType;
 
 		return {
-			isFocused: currentCard?.isFocused,
-			type: currentCard?.type
+			index,
+			isFocused: targetCard.isFocused,
+			type: targetCard.type
 		};
 	}, shallowEqual);
+
+	const handleCardSort = (itemIndex: number, hoverIndex: number) => {
+		dispatch(dragCard({ itemIndex, hoverIndex }));
+	};
+	const { dragRef } = useDraggable({
+		id: id,
+		itemIndex: index,
+		itemName: 'card',
+		onDrag: handleCardSort
+	});
 
 	const handleClickCard = () => {
 		dispatch(focus({ id }));
@@ -30,6 +43,7 @@ const Card = ({ id }: CardProps) => {
 
 	return (
 		<S.Container
+			ref={dragRef}
 			id={isFocused ? 'focus' : ''}
 			onClick={handleClickCard}
 			isFocus={isFocused}>

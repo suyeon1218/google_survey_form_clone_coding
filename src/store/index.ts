@@ -51,7 +51,6 @@ const titleCard: CardType = {
 const getCreateAuthority = () => {
 	const { pathname } = location;
 
-	console.log(pathname);
 	return pathname === '/' ? true : false;
 };
 
@@ -184,6 +183,16 @@ const cardSlice = createSlice({
 			) as OptionType;
 
 			targetOption.content = value;
+		},
+		dragCard: (state, action) => {
+			const { itemIndex, hoverIndex } = action.payload;
+			const nextState = [...state];
+			nextState.splice(itemIndex, 1);
+
+			const changeCard = state[itemIndex];
+			nextState.splice(hoverIndex, 0, changeCard);
+
+			return nextState;
 		}
 	}
 });
@@ -213,7 +222,8 @@ export const {
 	setRequired,
 	addOption,
 	deleteOption,
-	inputOption
+	inputOption,
+	dragCard
 } = cardSlice.actions;
 
 export default store;
