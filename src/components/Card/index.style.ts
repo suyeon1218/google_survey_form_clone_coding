@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 interface ContainerProps {
 	isFocus: boolean;
+	isDragging?: boolean;
 }
 
 export const Container = styled(Card)<ContainerProps>`
@@ -16,6 +17,7 @@ export const Container = styled(Card)<ContainerProps>`
 	align-items: center;
 	border-left: ${({ theme, isFocus }) =>
 		isFocus === true ? `5px solid ${theme.colors.blue[500]}` : ``};
+	opacity: ${({ isDragging }) => (isDragging ? 0.5 : 1)};
 `;
 
 export const Body = styled(CardBody)`

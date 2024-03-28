@@ -30,7 +30,7 @@ const Card = ({ id }: CardProps) => {
 	const handleCardSort = (itemIndex: number, hoverIndex: number) => {
 		dispatch(dragCard({ itemIndex, hoverIndex }));
 	};
-	const { dragRef } = useDraggable({
+	const { dragRef, isDragging } = useDraggable({
 		id: id,
 		itemIndex: index,
 		itemName: 'card',
@@ -46,6 +46,7 @@ const Card = ({ id }: CardProps) => {
 			ref={dragRef}
 			id={isFocused ? 'focus' : ''}
 			onClick={handleClickCard}
+			isDragging={isDragging}
 			isFocus={isFocused}>
 			<CardHeader id={id} />
 			<S.Body>
