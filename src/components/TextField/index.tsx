@@ -6,13 +6,15 @@ interface TextFieldProps {
 	isTitle?: boolean;
 	placeholder?: string;
 	onChange?: (value: string) => void;
+	readOnly?: boolean;
 }
 
 const TextField = ({
 	value = '',
 	isTitle = false,
 	placeholder = '',
-	onChange
+	onChange,
+	readOnly = true
 }: TextFieldProps) => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -31,6 +33,7 @@ const TextField = ({
 	return (
 		<S.Container>
 			<S.TextArea
+				readOnly={readOnly}
 				rows={1}
 				isTitle={isTitle}
 				ref={textareaRef}
