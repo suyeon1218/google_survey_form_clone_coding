@@ -41,7 +41,7 @@ const baseCard: Omit<CardType, 'id' | 'options'> = {
 
 const titleCard: CardType = {
 	...baseCard,
-	id: 'titleQuestion',
+	id: 'titleCard',
 	title: '제목 없는 설문지',
 	type: 'title',
 	isFocused: true,

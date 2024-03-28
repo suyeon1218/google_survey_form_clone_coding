@@ -24,6 +24,9 @@ const CardHeader = ({ id }: CardHeaderProps) => {
 			type: currentCard?.type
 		};
 	}, shallowEqual);
+	const createAuthority = useSelector((state: RootStateType) => {
+		return state.createAuthority;
+	}, shallowEqual);
 
 	const handleClickItem = (item: string) => {
 		dispatch(changeCardType({ id, type: item }));
@@ -39,6 +42,7 @@ const CardHeader = ({ id }: CardHeaderProps) => {
 				value={title}
 				isTitle={isFocused || type === 'title'}
 				onChange={handleChangeTitle}
+				readOnly={createAuthority === false}
 			/>
 			{type !== 'title' && isFocused && (
 				<DropDown

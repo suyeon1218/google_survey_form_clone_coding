@@ -26,7 +26,7 @@ const InputLong = ({ id, placeholder = '내 답변' }: InputLongProps) => {
 
 	return (
 		<TextField
-			readOnly={createAuthority === true}
+			readOnly={id !== 'titleCard' && createAuthority === true}
 			value={option.content}
 			onChange={handleChangeValue}
 			placeholder={placeholder}
