@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import CardFooter from '../CardFooter';
 import CardHeader from '../CardHeader';
 import InputLong from '../InputLong';
-import InputOption from '../InputOption';
+import InputOption from '../InputOptions';
 import InputShort from '../InputShort';
 import { CardType, RootStateType, focus, dragCard } from './../../store/index';
 import * as S from './index.style';
