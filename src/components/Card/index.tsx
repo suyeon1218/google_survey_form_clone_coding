@@ -43,7 +43,7 @@ const Card = ({ id }: CardProps) => {
 
 	return (
 		<S.Container
-			ref={dragRef}
+			ref={id !== 'titleCard' ? dragRef : null}
 			id={isFocused ? 'focus' : ''}
 			onClick={handleClickCard}
 			isDragging={isDragging}
