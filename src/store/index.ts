@@ -23,13 +23,15 @@ export interface CardType {
 
 export interface OptionType {
 	id: string;
+	type: 'normal' | 'etc';
 	content: string;
 	checked: boolean;
 }
 
 const baseOption: Omit<OptionType, 'id'> = {
 	content: '옵션 1',
-	checked: false
+	checked: false,
+	type: 'normal'
 };
 
 const baseCard: Omit<CardType, 'id' | 'options'> = {
