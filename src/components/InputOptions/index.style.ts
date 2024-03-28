@@ -26,3 +26,10 @@ export const AddEtcButton = styled.button`
 		background-color: ${({ theme }) => theme.colors.gray[50]};
 	}
 `;
+
+export const InputContainer = styled.div`
+	height: 40px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+`;
