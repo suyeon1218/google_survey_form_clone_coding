@@ -1,6 +1,5 @@
 import { Input, Button } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import { OptionType } from '~/store';
 
 interface InputContainerProps {
 	isDragging: boolean;

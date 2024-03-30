@@ -161,12 +161,21 @@ const cardSlice = createSlice({
 		addOption: (state, action) => {
 			const { id } = action.payload;
 			const targetCard = state.find((card) => card.id === id) as CardType;
+			const lastOption = targetCard.options[targetCard.options.length - 1];
+
+			if (lastOption.type === 'etc') {
+				targetCard.options.pop();
+			}
 
 			targetCard.options.push({
 				...baseOption,
 				content: `옵션${targetCard.options.length + 1}`,
 				id: generateID()
 			});
+
+			if (lastOption.type === 'etc') {
+				targetCard.options.push(lastOption);
+			}
 		},
 		deleteOption: (state, action) => {
 			const { cardId, optionId } = action.payload;
