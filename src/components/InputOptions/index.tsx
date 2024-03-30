@@ -1,4 +1,5 @@
 import { Stack, Radio, Checkbox } from '@chakra-ui/react';
+import { useMemo } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import {
 	CardType,
@@ -27,6 +28,9 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 			isFocused: targetCard.isFocused
 		};
 	}, shallowEqual);
+	const lastOption = useMemo(() => {
+		return options[options.length - 1];
+	}, [options]);
 
 	const handleAddOption = () => {
 		dispatch(addOption({ id }));
@@ -56,8 +60,14 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 						<S.AddOptionButton onClick={handleAddOption}>
 							옵션 추가
 						</S.AddOptionButton>
-						<span>또는</span>
-						<S.AddEtcButton onClick={handleEtcOption}>기타 추가</S.AddEtcButton>
+						{lastOption.type === 'normal' && type !== 'dropdown' && (
+							<>
+								<span>또는</span>
+								<S.AddEtcButton onClick={handleEtcOption}>
+									기타 추가
+								</S.AddEtcButton>
+							</>
+						)}
 					</S.LastOptionContainer>
 				</S.InputContainer>
 			)}
