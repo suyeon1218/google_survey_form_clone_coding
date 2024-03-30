@@ -22,7 +22,7 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 	const createAuthority = useSelector((state: RootStateType) => {
 		return state.createAuthority;
 	});
-	const { option, isDeletable, type, optionIndex, isFocused } = useSelector(
+	const { option, isDeletable, cardType, optionIndex, isFocused } = useSelector(
 		(state: RootStateType) => {
 			const targetCard = state.cards.find(
 				(card) => card.id === cardId
@@ -34,7 +34,7 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 			return {
 				option: targetCard.options[targetOptionIndex],
 				isDeletable: targetCard.options.length > 1,
-				type: targetCard.type,
+				cardType: targetCard.type,
 				optionIndex: targetOptionIndex,
 				isFocused: targetCard.isFocused
 			};
@@ -73,16 +73,22 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 			ref={dragRef}
 			isDragging={isDragging}
 			data-option-id={option.id}>
-			{type === 'radio' && <Radio isDisabled={createAuthority === true} />}
-			{type === 'checkbox' && (
+			{cardType === 'radio' && <Radio isDisabled={createAuthority === true} />}
+			{cardType === 'checkbox' && (
 				<Checkbox isDisabled={createAuthority === true} />
 			)}
-			{type === 'dropdown' && <div>{optionIndex + 1}</div>}
+			{cardType === 'dropdown' && <div>{optionIndex + 1}</div>}
+			{createAuthority === false && option.type === 'etc' ? (
+				<span>기타:</span>
+			) : null}
 			<S.OptionInput
+				type={option.type}
 				data-option-id={option.id}
 				onInput={handleInputOptionValue}
 				value={option.content}
-				variant='flushed'
+				placeholder={option.type === 'etc' ? '기타...' : ''}
+				variant='unstyle'
+				readOnly={createAuthority === true && option.type === 'etc'}
 			/>
 			{isDeletable && isFocused && (
 				<S.DeleteButton

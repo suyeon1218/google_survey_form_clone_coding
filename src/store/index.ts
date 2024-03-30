@@ -205,6 +205,17 @@ const cardSlice = createSlice({
 			nextOption.splice(itemIndex, 1);
 			nextOption.splice(hoverIndex, 0, changeOption);
 			targetCard.options = nextOption;
+		},
+		addEtcOption: (state, action) => {
+			const { id } = action.payload;
+			const targetCard = state.find((card) => card.id === id) as CardType;
+
+			targetCard.options.push({
+				...baseOption,
+				type: 'etc',
+				id: generateID(),
+				content: ''
+			});
 		}
 	}
 });
@@ -236,7 +247,8 @@ export const {
 	deleteOption,
 	inputOption,
 	dragCard,
-	dragOption
+	dragOption,
+	addEtcOption
 } = cardSlice.actions;
 
 export default store;

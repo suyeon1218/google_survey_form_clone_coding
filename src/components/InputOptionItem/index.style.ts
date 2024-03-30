@@ -1,8 +1,13 @@
 import { Input, Button } from '@chakra-ui/react';
 import styled from '@emotion/styled';
+import { OptionType } from '~/store';
 
 interface InputContainerProps {
 	isDragging: boolean;
+}
+
+interface OptionInputProps {
+	type: 'etc' | 'normal';
 }
 
 export const InputContainer = styled.div<InputContainerProps>`
@@ -13,11 +18,18 @@ export const InputContainer = styled.div<InputContainerProps>`
 	opacity: ${({ isDragging }) => (isDragging ? 0.5 : 1)};
 `;
 
-export const OptionInput = styled(Input)`
-	max-width: 300px;
+export const OptionInput = styled(Input)<OptionInputProps>`
+	width: 100%;
+	border-radius: 0px;
 	&:focus {
 		outline: none;
 		border-bottom: 2px solid ${({ theme }) => theme.colors.purple[500]};
+	}
+	&:hover {
+		border-bottom-width: 1px;
+		border-bottom-style: ${({ type }) =>
+			type === 'normal' ? 'solid' : 'dashed'};
+		border-bottom-color: ${({ theme }) => theme.colors.gray[200]};
 	}
 `;
 

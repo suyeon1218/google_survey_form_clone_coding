@@ -1,6 +1,11 @@
 import { Stack, Radio, Checkbox } from '@chakra-ui/react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { CardType, RootStateType, addOption } from '../../store/index';
+import {
+	CardType,
+	RootStateType,
+	addEtcOption,
+	addOption
+} from '../../store/index';
 import InputOptionItem from '../InputOptionItem';
 import * as S from './index.style';
 
@@ -27,6 +32,10 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 		dispatch(addOption({ id }));
 	};
 
+	const handleEtcOption = () => {
+		dispatch(addEtcOption({ id }));
+	};
+
 	return (
 		<Stack direction={'column'}>
 			{options.map((option) => (
@@ -48,7 +57,7 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 							옵션 추가
 						</S.AddOptionButton>
 						<span>또는</span>
-						<S.AddEtcButton>기타 추가</S.AddEtcButton>
+						<S.AddEtcButton onClick={handleEtcOption}>기타 추가</S.AddEtcButton>
 					</S.LastOptionContainer>
 				</S.InputContainer>
 			)}
