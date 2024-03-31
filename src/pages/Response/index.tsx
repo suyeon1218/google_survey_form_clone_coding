@@ -1,8 +1,8 @@
-import { ViewIcon } from '@chakra-ui/icons';
 import { useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { RootStateType, changeAuthority } from '~/store';
 import * as S from './index.style';
 import AddButton from '~/components/AddButton';
@@ -19,14 +19,11 @@ const Response = () => {
 	return (
 		<S.Container>
 			<S.Header>
-				<S.PreviewTooltip label='미리보기'>
-					<S.IconContainer>
-						<ViewIcon
-							boxSize={7}
-							color={'grey'}
-						/>
-					</S.IconContainer>
-				</S.PreviewTooltip>
+				<S.SubmitTooltip label='보내기'>
+					<S.SubmitButton>
+						<Link to='result'>보내기</Link>
+					</S.SubmitButton>
+				</S.SubmitTooltip>
 			</S.Header>
 			<S.Main>
 				<S.CardsContainer>

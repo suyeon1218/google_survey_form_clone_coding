@@ -1,4 +1,4 @@
-import { Tooltip } from '@chakra-ui/react';
+import { Button, Tooltip } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
@@ -29,24 +29,22 @@ export const Main = styled.main`
 	background-color: ${({ theme }) => theme.colors.purple[50]};
 `;
 
-export const IconContainer = styled.div`
-	width: 50px;
-	height: 50px;
-	position: absolute;
-	right: 200px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	&:hover {
-		cursor: pointer;
-		border-radius: 100%;
-		background-color: ${({ theme }) => theme.colors.gray[100]};
-	}
+export const SubmitTooltip = styled(Tooltip)`
+	border-radius: 5px;
 `;
 
-export const PreviewTooltip = styled(Tooltip)`
-	border-radius: 5px;
+export const SubmitButton = styled(Button)`
+	position: absolute;
+	right: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: ${({ theme }) => theme.colors.purple[600]};
+	color: ${({ theme }) => theme.colors.white};
+
+	&:hover {
+		background-color: ${({ theme }) => theme.colors.purple[400]};
+	}
 `;
 
 export const CardsContainer = styled.section`
