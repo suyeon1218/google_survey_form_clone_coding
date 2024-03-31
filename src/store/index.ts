@@ -104,14 +104,24 @@ const cardSlice = createSlice({
 				(targetCard.type === 'long' || targetCard.type === 'short') &&
 				(type === 'radio' || type === 'checkbox' || type === 'dropdown')
 			) {
-				targetCard.options?.push({ ...baseOption, id: generateID() });
+				targetCard.options = [{ ...baseOption, id: generateID() }];
 			} else if (
 				(targetCard.type === 'radio' ||
 					targetCard.type === 'checkbox' ||
 					targetCard.type === 'dropdown') &&
 				(type === 'long' || type === 'short')
 			) {
-				targetCard.options = [{ ...baseOption, id: generateID() }];
+				targetCard.options = [{ ...baseOption, content: '', id: generateID() }];
+			} else if (
+				(targetCard.type === 'radio' || targetCard.type === 'checkbox') &&
+				type === 'dropdown'
+			) {
+				const lastOptionType =
+					targetCard.options[targetCard.options.length - 1].type;
+
+				if (lastOptionType === 'etc') {
+					targetCard.options.pop();
+				}
 			}
 			targetCard.type = type;
 		},
