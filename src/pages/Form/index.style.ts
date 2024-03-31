@@ -19,7 +19,8 @@ export const Header = styled.header`
 
 export const Main = styled.main`
 	width: 100%;
-	height: calc(100vh - 65px);
+	min-height: calc(100vh - 65px);
+	overflow-x: hidden;
 	position: absolute;
 	top: 65px;
 	overflow: scroll;
@@ -53,4 +54,5 @@ export const CardsContainer = styled.section`
 	flex-direction: column;
 	max-width: 768px;
 	width: 100%;
+	padding-bottom: 30px;
 `;
