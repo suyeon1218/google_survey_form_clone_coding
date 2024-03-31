@@ -19,16 +19,18 @@ export const InputContainer = styled.div<InputContainerProps>`
 
 export const OptionInput = styled(Input)<OptionInputProps>`
 	width: 100%;
+	padding-left: 0px;
 	border-radius: 0px;
-	&:focus {
-		outline: none;
-		border-bottom: 2px solid ${({ theme }) => theme.colors.purple[500]};
-	}
 	&:hover {
 		border-bottom-width: 1px;
 		border-bottom-style: ${({ type }) =>
 			type === 'normal' ? 'solid' : 'dashed'};
 		border-bottom-color: ${({ theme }) => theme.colors.gray[200]};
+	}
+	&:focus {
+		outline: none;
+		border-bottom: ${({ type, theme }) =>
+			type === 'normal' ? `2px solid ${theme.colors.purple[500]}` : ''};
 	}
 `;
 
