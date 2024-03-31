@@ -46,6 +46,7 @@ const Card = ({ id }: CardProps) => {
 			ref={id !== 'titleCard' ? dragRef : null}
 			id={isFocused ? 'focus' : ''}
 			onClick={handleClickCard}
+			isTitle={type === 'title'}
 			isDragging={isDragging}
 			isFocus={isFocused}>
 			<CardHeader id={id} />
