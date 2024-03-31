@@ -84,14 +84,15 @@ const cardSlice = createSlice({
 		addCard: (state, action) => {
 			const nextState = state.map((card) => ({ ...card, isFocused: false }));
 			const { id } = action.payload;
-			const insertIndex = nextState.findIndex((card) => card.id === id);
+			const targetCardIndex = nextState.findIndex((card) => card.id === id);
 			const newCard: CardType = {
 				...baseCard,
 				id: generateID(),
+				isFocused: true,
 				options: [{ ...baseOption, id: generateID() }]
 			};
 
-			nextState.splice(insertIndex + 1, 0, newCard);
+			nextState.splice(targetCardIndex + 1, 0, newCard);
 
 			return nextState;
 		},
