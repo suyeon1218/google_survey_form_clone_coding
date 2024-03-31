@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootStateType, changeAuthority } from '~/store';
 import * as S from './index.style';
-import AddButton from '~/components/AddButton';
 import Card from '~/components/Card';
 
 const Response = () => {
@@ -37,7 +36,6 @@ const Response = () => {
 						))}
 					</DndProvider>
 				</S.CardsContainer>
-				<AddButton />
 			</S.Main>
 		</S.Container>
 	);
