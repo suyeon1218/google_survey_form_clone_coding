@@ -16,8 +16,8 @@ interface InputOptionsProps {
 
 const InputOptions = ({ id }: InputOptionsProps) => {
 	const dispatch = useDispatch();
-	const createAuthority = useSelector((state: RootStateType) => {
-		return state.createAuthority;
+	const authority = useSelector((state: RootStateType) => {
+		return state.authority;
 	});
 	const { options, isFocused, type } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
@@ -51,9 +51,9 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 			))}
 			{isFocused && (
 				<S.InputContainer>
-					{type === 'radio' && <Radio isDisabled={createAuthority === true} />}
+					{type === 'radio' && <Radio isDisabled={authority !== 'write'} />}
 					{type === 'checkbox' && (
-						<Checkbox isDisabled={createAuthority === true} />
+						<Checkbox isDisabled={authority !== 'write'} />
 					)}
 					{type === 'dropdown' && (
 						<S.IndexContainer>{options.length + 1}</S.IndexContainer>

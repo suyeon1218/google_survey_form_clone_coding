@@ -16,8 +16,8 @@ const InputLong = ({ id, placeholder = '내 답변' }: InputLongProps) => {
 
 		return options[0];
 	});
-	const createAuthority = useSelector((state: RootStateType) => {
-		return state.createAuthority;
+	const authority = useSelector((state: RootStateType) => {
+		return state.authority;
 	}, shallowEqual);
 
 	const handleChangeValue = (value: string) => {
@@ -26,7 +26,7 @@ const InputLong = ({ id, placeholder = '내 답변' }: InputLongProps) => {
 
 	return (
 		<TextField
-			readOnly={id !== 'titleCard' && createAuthority === true}
+			readOnly={id !== 'titleCard' && authority !== 'write'}
 			value={option.content}
 			onChange={handleChangeValue}
 			placeholder={placeholder}

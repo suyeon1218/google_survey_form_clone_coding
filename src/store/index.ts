@@ -28,6 +28,10 @@ export interface OptionType {
 	checked: boolean;
 }
 
+export interface AuthorityType {
+	authority: 'create' | 'write' | 'read';
+}
+
 const baseOption: Omit<OptionType, 'id'> = {
 	content: '옵션 1',
 	checked: false,
@@ -50,10 +54,16 @@ const titleCard: CardType = {
 	options: [{ ...baseOption, content: '', id: generateID() }]
 };
 
-const getCreateAuthority = () => {
+const getAuthority = () => {
 	const { pathname } = location;
 
-	return pathname === '/' ? true : false;
+	if (pathname === '/') {
+		return 'create';
+	} else if (pathname === 'response') {
+		return 'write';
+	}
+
+	return 'read';
 };
 
 function generateID() {
@@ -240,16 +250,20 @@ const cardSlice = createSlice({
 	}
 });
 
-const createAuthoritySlice = createSlice({
-	name: 'createAuthority',
-	initialState: getCreateAuthority(),
-	reducers: {}
+const authoritySlice = createSlice({
+	name: 'authority',
+	initialState: getAuthority(),
+	reducers: {
+		changeAuthority: () => {
+			return getAuthority();
+		}
+	}
 });
 
 const store = configureStore({
 	reducer: {
 		cards: cardSlice.reducer,
-		createAuthority: createAuthoritySlice.reducer
+		authority: authoritySlice.reducer
 	}
 });
 
@@ -270,5 +284,7 @@ export const {
 	dragOption,
 	addEtcOption
 } = cardSlice.actions;
+
+export const { changeAuthority } = authoritySlice.actions;
 
 export default store;

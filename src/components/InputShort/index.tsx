@@ -15,8 +15,8 @@ const InputShort = ({ id }: InputShortProps) => {
 
 		return options[0];
 	}, shallowEqual);
-	const createAuthority = useSelector((state: RootStateType) => {
-		return state.createAuthority;
+	const authority = useSelector((state: RootStateType) => {
+		return state.authority;
 	}, shallowEqual);
 
 	const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +27,7 @@ const InputShort = ({ id }: InputShortProps) => {
 
 	return (
 		<S.InputShort
-			readOnly={createAuthority === true}
+			readOnly={authority !== 'write'}
 			onChange={handleChangeValue}
 			value={option.content}
 			variant='flushed'

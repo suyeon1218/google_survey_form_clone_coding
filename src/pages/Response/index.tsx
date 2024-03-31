@@ -1,27 +1,30 @@
 import { ViewIcon } from '@chakra-ui/icons';
+import { useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { RootStateType } from '~/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootStateType, changeAuthority } from '~/store';
 import * as S from './index.style';
 import AddButton from '~/components/AddButton';
 import Card from '~/components/Card';
 
-const Form = () => {
+const Response = () => {
 	const cards = useSelector((state: RootStateType) => state.cards);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(changeAuthority());
+	}, []);
 
 	return (
 		<S.Container>
 			<S.Header>
 				<S.PreviewTooltip label='미리보기'>
 					<S.IconContainer>
-						<Link to={'/response'}>
-							<ViewIcon
-								boxSize={7}
-								color={'grey'}
-							/>
-						</Link>
+						<ViewIcon
+							boxSize={7}
+							color={'grey'}
+						/>
 					</S.IconContainer>
 				</S.PreviewTooltip>
 			</S.Header>
@@ -43,4 +46,4 @@ const Form = () => {
 	);
 };
 
-export default Form;
+export default Response;
