@@ -8,7 +8,7 @@ export const LastOptionContainer = styled.div`
 export const AddOptionButton = styled.button`
 	color: ${({ theme }) => theme.colors.gray[600]};
 	background-color: ${({ theme }) => theme.colors.white};
-	margin: 0px 10px;
+	margin-right: 10px;
 
 	&:hover {
 		border-bottom: 1px solid ${({ theme }) => theme.colors.gray[400]};
@@ -32,4 +32,12 @@ export const InputContainer = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 5px;
+`;
+
+export const IndexContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 16px;
+	height: 16px;
 `;

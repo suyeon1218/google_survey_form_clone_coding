@@ -44,3 +44,11 @@ export const DeleteButton = styled(Button)`
 		background-color: ${({ theme }) => theme.colors.gray[50]};
 	}
 `;
+
+export const IndexContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 16px;
+	height: 16px;
+`;

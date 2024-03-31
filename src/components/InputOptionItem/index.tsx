@@ -77,7 +77,9 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 			{cardType === 'checkbox' && (
 				<Checkbox isDisabled={createAuthority === true} />
 			)}
-			{cardType === 'dropdown' && <div>{optionIndex + 1}</div>}
+			{cardType === 'dropdown' && (
+				<S.IndexContainer>{optionIndex + 1}</S.IndexContainer>
+			)}
 			{createAuthority === false && option.type === 'etc' ? (
 				<span>기타:</span>
 			) : null}

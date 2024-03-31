@@ -55,7 +55,9 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 					{type === 'checkbox' && (
 						<Checkbox isDisabled={createAuthority === true} />
 					)}
-					{type === 'dropdown' && <div>{options.length + 1}</div>}
+					{type === 'dropdown' && (
+						<S.IndexContainer>{options.length + 1}</S.IndexContainer>
+					)}
 					<S.LastOptionContainer>
 						<S.AddOptionButton onClick={handleAddOption}>
 							옵션 추가
