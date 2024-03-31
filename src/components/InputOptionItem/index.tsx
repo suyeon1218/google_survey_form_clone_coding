@@ -70,7 +70,7 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 
 	return (
 		<S.InputContainer
-			ref={dragRef}
+			ref={option.type === 'normal' ? dragRef : null}
 			isDragging={isDragging}
 			data-option-id={option.id}>
 			{cardType === 'radio' && <Radio isDisabled={createAuthority === true} />}
