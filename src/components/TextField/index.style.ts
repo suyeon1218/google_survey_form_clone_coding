@@ -26,6 +26,6 @@ export const TextArea = styled.textarea<ContainerProps>`
 	&:read-only {
 		outline: none;
 		border-bottom: 1px solid ${({ theme }) => theme.colors.gray[100]};
-		cursor: not-allowed;
+		cursor: default;
 	}
 `;

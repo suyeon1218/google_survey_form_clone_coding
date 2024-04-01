@@ -1,7 +1,6 @@
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { CardType, RootStateType, changeInputValue } from '~/store';
 import TextField from '../TextField';
-import {} from 'react-redux';
 
 interface InputLongProps {
 	id: string;
@@ -16,8 +15,8 @@ const InputLong = ({ id, placeholder = '내 답변' }: InputLongProps) => {
 
 		return options[0];
 	});
-	const authority = useSelector((state: RootStateType) => {
-		return state.authority;
+	const focusedCard = useSelector((state: RootStateType) => {
+		return state.focusedCard.id;
 	}, shallowEqual);
 
 	const handleChangeValue = (value: string) => {
@@ -26,7 +25,10 @@ const InputLong = ({ id, placeholder = '내 답변' }: InputLongProps) => {
 
 	return (
 		<TextField
-			readOnly={id !== 'titleCard' && authority !== 'write'}
+			readOnly={
+				!(typeof focusedCard === 'string' && id === 'titleCard') ||
+				(focusedCard !== null && id !== 'titleCard')
+			}
 			value={option.content}
 			onChange={handleChangeValue}
 			placeholder={placeholder}

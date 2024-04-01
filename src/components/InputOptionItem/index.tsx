@@ -19,10 +19,10 @@ interface InputOptionItemProps {
 
 const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 	const dispatch = useDispatch();
-	const authority = useSelector((state: RootStateType) => {
-		return state.authority;
+	const focusedCard = useSelector((state: RootStateType) => {
+		return state.focusedCard.id;
 	});
-	const { option, isDeletable, cardType, optionIndex, isFocused } = useSelector(
+	const { option, isDeletable, cardType, optionIndex } = useSelector(
 		(state: RootStateType) => {
 			const targetCard = state.cards.find(
 				(card) => card.id === cardId
@@ -35,8 +35,7 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 				option: targetCard.options[targetOptionIndex],
 				isDeletable: targetCard.options.length > 1,
 				cardType: targetCard.type,
-				optionIndex: targetOptionIndex,
-				isFocused: targetCard.isFocused
+				optionIndex: targetOptionIndex
 			};
 		},
 		shallowEqual
@@ -73,15 +72,15 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 			ref={option.type === 'normal' ? dragRef : null}
 			isDragging={isDragging}
 			data-option-id={option.id}>
-			{cardType === 'radio' && <Radio isDisabled={authority !== 'write'} />}
+			{cardType === 'radio' && <Radio isDisabled={focusedCard !== null} />}
 			{cardType === 'checkbox' && (
-				<Checkbox isDisabled={authority !== 'write'} />
+				<Checkbox isDisabled={focusedCard !== null} />
 			)}
 			{cardType === 'dropdown' && (
 				<S.IndexContainer>{optionIndex + 1}</S.IndexContainer>
 			)}
-			{authority !== 'create' && option.type === 'etc' ? (
-				<span>기타:</span>
+			{typeof focusedCard !== 'string' && option.type === 'etc' ? (
+				<S.EtcSpan>기타:</S.EtcSpan>
 			) : null}
 			<S.OptionInput
 				type={option.type}
@@ -90,9 +89,9 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 				value={option.content}
 				placeholder={option.type === 'etc' ? '기타...' : ''}
 				variant='unstyle'
-				readOnly={authority === 'create' && option.type === 'etc'}
+				readOnly={typeof focusedCard !== 'string' || option.type === 'etc'}
 			/>
-			{isDeletable && isFocused && (
+			{isDeletable && typeof focusedCard === 'string' && (
 				<S.DeleteButton
 					data-option-id={option.id}
 					onClick={handleDeleteOption}>

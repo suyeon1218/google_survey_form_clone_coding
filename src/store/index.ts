@@ -14,7 +14,6 @@ export type CardsType = CardType[];
 
 export interface CardType {
 	id: string;
-	isFocused: boolean;
 	title: string;
 	type: CardMenuType;
 	required: boolean;
@@ -28,10 +27,6 @@ export interface OptionType {
 	checked: boolean;
 }
 
-export interface AuthorityType {
-	authority: 'create' | 'write' | 'read';
-}
-
 const baseOption: Omit<OptionType, 'id'> = {
 	content: '옵션 1',
 	checked: false,
@@ -41,8 +36,7 @@ const baseOption: Omit<OptionType, 'id'> = {
 const baseCard: Omit<CardType, 'id' | 'options'> = {
 	title: '제목없는 질문',
 	type: 'radio',
-	required: false,
-	isFocused: false
+	required: false
 };
 
 const titleCard: CardType = {
@@ -50,20 +44,7 @@ const titleCard: CardType = {
 	id: 'titleCard',
 	title: '제목 없는 설문지',
 	type: 'title',
-	isFocused: true,
 	options: [{ ...baseOption, content: '', id: generateID() }]
-};
-
-const getAuthority = () => {
-	const { pathname } = location;
-
-	if (pathname === '/') {
-		return 'create';
-	} else if (pathname === 'response') {
-		return 'write';
-	}
-
-	return 'read';
 };
 
 function generateID() {
@@ -79,32 +60,31 @@ const initialCards: CardsType = [
 	}
 ];
 
+function getInitialFocusedCard() {
+	const { pathname } = location;
+
+	if (pathname === '/') {
+		return 'titleCard';
+	} else if (pathname === '/response') {
+		return null;
+	}
+	return undefined;
+}
+
 const cardSlice = createSlice({
 	name: 'card',
 	initialState: initialCards,
 	reducers: {
-		focus: (state, action) => {
-			const { id } = action.payload;
-			const nextState = state.map((card) => ({
-				...card,
-				isFocused: id === card.id ? true : false
-			}));
-			return nextState;
-		},
 		addCard: (state, action) => {
-			const nextState = state.map((card) => ({ ...card, isFocused: false }));
 			const { id } = action.payload;
-			const targetCardIndex = nextState.findIndex((card) => card.id === id);
+			const targetCardIndex = state.findIndex((card) => card.id === id);
 			const newCard: CardType = {
 				...baseCard,
 				id: generateID(),
-				isFocused: true,
 				options: [{ ...baseOption, id: generateID() }]
 			};
 
-			nextState.splice(targetCardIndex + 1, 0, newCard);
-
-			return nextState;
+			state.splice(targetCardIndex + 1, 0, newCard);
 		},
 		changeCardType: (state, action) => {
 			const { id, type } = action.payload;
@@ -152,15 +132,13 @@ const cardSlice = createSlice({
 		},
 		copyCard: (state, action) => {
 			const { id } = action.payload;
-			const nextState = state.map((card) => ({ ...card, isFocused: false }));
-			const cardIndex = state.findIndex((card) => card.id === id);
+			const targetCardIndex = state.findIndex((card) => card.id === id);
 			const newCard: CardType = {
-				...state[cardIndex],
+				...state[targetCardIndex],
 				id: generateID()
 			};
-			nextState.splice(cardIndex, 0, newCard);
 
-			return nextState;
+			state.splice(targetCardIndex, 0, newCard);
 		},
 		deleteCard: (state, action) => {
 			const { id } = action.payload;
@@ -250,12 +228,12 @@ const cardSlice = createSlice({
 	}
 });
 
-const authoritySlice = createSlice({
-	name: 'authority',
-	initialState: getAuthority(),
+const focusedCard = createSlice({
+	name: 'focusedCard',
+	initialState: { id: getInitialFocusedCard() },
 	reducers: {
-		changeAuthority: () => {
-			return getAuthority();
+		focus: (state) => {
+			state.id = getInitialFocusedCard();
 		}
 	}
 });
@@ -263,13 +241,12 @@ const authoritySlice = createSlice({
 const store = configureStore({
 	reducer: {
 		cards: cardSlice.reducer,
-		authority: authoritySlice.reducer
+		focusedCard: focusedCard.reducer
 	}
 });
 
 export type RootStateType = ReturnType<typeof store.getState>;
 export const {
-	focus,
 	addCard,
 	changeCardType,
 	changeTitle,
@@ -285,6 +262,6 @@ export const {
 	addEtcOption
 } = cardSlice.actions;
 
-export const { changeAuthority } = authoritySlice.actions;
+export const { focus } = focusedCard.actions;
 
 export default store;

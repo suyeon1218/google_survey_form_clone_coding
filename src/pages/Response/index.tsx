@@ -3,16 +3,16 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { RootStateType, changeAuthority } from '~/store';
+import { RootStateType, focus } from '~/store';
 import * as S from './index.style';
 import Card from '~/components/Card';
 
 const Response = () => {
-	const cards = useSelector((state: RootStateType) => state.cards);
 	const dispatch = useDispatch();
+	const cards = useSelector((state: RootStateType) => state.cards);
 
 	useEffect(() => {
-		dispatch(changeAuthority());
+		dispatch(focus());
 	}, []);
 
 	return (

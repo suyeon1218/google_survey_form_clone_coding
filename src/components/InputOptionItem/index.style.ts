@@ -32,6 +32,9 @@ export const OptionInput = styled(Input)<OptionInputProps>`
 		border-bottom: ${({ type, theme }) =>
 			type === 'normal' ? `2px solid ${theme.colors.purple[500]}` : ''};
 	}
+	&:read-only {
+		border-bottom: none;
+	}
 `;
 
 export const DeleteButton = styled(Button)`
@@ -51,4 +54,8 @@ export const IndexContainer = styled.div`
 	align-items: center;
 	width: 16px;
 	height: 16px;
+`;
+
+export const EtcSpan = styled.span`
+	width: 50px;
 `;

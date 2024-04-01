@@ -16,16 +16,15 @@ interface InputOptionsProps {
 
 const InputOptions = ({ id }: InputOptionsProps) => {
 	const dispatch = useDispatch();
-	const authority = useSelector((state: RootStateType) => {
-		return state.authority;
+	const focusedCard = useSelector((state: RootStateType) => {
+		return state.focusedCard.id;
 	});
-	const { options, isFocused, type } = useSelector((state: RootStateType) => {
+	const { options, type } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 		return {
 			type: targetCard.type,
-			options: targetCard.options,
-			isFocused: targetCard.isFocused
+			options: targetCard.options
 		};
 	}, shallowEqual);
 	const lastOption = useMemo(() => {
@@ -49,11 +48,11 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 					key={option.id}
 				/>
 			))}
-			{isFocused && (
+			{focusedCard === id && (
 				<S.InputContainer>
-					{type === 'radio' && <Radio isDisabled={authority !== 'write'} />}
+					{type === 'radio' && <Radio isDisabled={focusedCard !== 'write'} />}
 					{type === 'checkbox' && (
-						<Checkbox isDisabled={authority !== 'write'} />
+						<Checkbox isDisabled={focusedCard !== 'write'} />
 					)}
 					{type === 'dropdown' && (
 						<S.IndexContainer>{options.length + 1}</S.IndexContainer>

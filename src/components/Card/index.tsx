@@ -5,7 +5,7 @@ import CardHeader from '../CardHeader';
 import InputLong from '../InputLong';
 import InputOption from '../InputOptions';
 import InputShort from '../InputShort';
-import { CardType, RootStateType, focus, dragCard } from './../../store/index';
+import { CardType, RootStateType, dragCard, focus } from './../../store/index';
 import * as S from './index.style';
 import useDraggable from '~/hooks/useDraggable';
 
@@ -16,15 +16,17 @@ interface CardProps {
 
 const Card = ({ id }: CardProps) => {
 	const dispatch = useDispatch();
-	const { isFocused, type, index } = useSelector((state: RootStateType) => {
+	const { type, index } = useSelector((state: RootStateType) => {
 		const index = state.cards.findIndex((card) => card.id === id);
 		const targetCard = state.cards[index] as CardType;
 
 		return {
 			index,
-			isFocused: targetCard.isFocused,
 			type: targetCard.type
 		};
+	}, shallowEqual);
+	const focusedCard = useSelector((state: RootStateType) => {
+		return state.focusedCard.id;
 	}, shallowEqual);
 
 	const handleCardSort = (itemIndex: number, hoverIndex: number) => {
@@ -38,17 +40,17 @@ const Card = ({ id }: CardProps) => {
 	});
 
 	const handleClickCard = () => {
-		dispatch(focus({ id }));
+		dispatch(focus());
 	};
 
 	return (
 		<S.Container
 			ref={id !== 'titleCard' ? dragRef : null}
-			id={isFocused ? 'focus' : ''}
+			id={id}
 			onClick={handleClickCard}
 			isTitle={type === 'title'}
-			isDragging={isDragging}
-			isFocus={isFocused}>
+			isFocus={focusedCard === id}
+			isDragging={isDragging}>
 			<CardHeader id={id} />
 			<S.Body>
 				{type === 'title' && (
@@ -63,7 +65,9 @@ const Card = ({ id }: CardProps) => {
 					<InputOption id={id} />
 				)}
 			</S.Body>
-			{type !== 'title' && isFocused && <CardFooter id={id} />}
+			{type !== 'title' && typeof focusedCard === 'string' && (
+				<CardFooter id={id} />
+			)}
 		</S.Container>
 	);
 };

@@ -1,23 +1,18 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { CardType, RootStateType, addCard } from '~/store';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { RootStateType, addCard } from '~/store';
 import * as S from './index.style';
 
 const AddButton = () => {
 	const buttonRef = useRef<HTMLDivElement | null>();
 	const dispatch = useDispatch();
 	const focusedCard = useSelector((state: RootStateType) => {
-		const focusedCard = state.cards.find(
-			(card) => card.isFocused === true
-		) as CardType;
-
-		return focusedCard;
-	});
+		return state.focusedCard.id;
+	}, shallowEqual);
 
 	useEffect(() => {
-		const $card = document.querySelector('#focus') as HTMLElement;
+		const $card = document.querySelector(`#${focusedCard}`) as HTMLElement;
 
 		if (buttonRef.current && $card) {
 			buttonRef.current.style.top = $card.offsetTop + 'px';
@@ -26,7 +21,7 @@ const AddButton = () => {
 	}, [focusedCard]);
 
 	const handleAddCard = () => {
-		dispatch(addCard({ id: focusedCard.id }));
+		dispatch(addCard({ id: focusedCard }));
 	};
 
 	return (
