@@ -232,8 +232,12 @@ const focusedCard = createSlice({
 	name: 'focusedCard',
 	initialState: { id: getInitialFocusedCard() },
 	reducers: {
-		focus: (state) => {
+		initFocus: (state) => {
 			state.id = getInitialFocusedCard();
+		},
+		focus: (state, action) => {
+			const { id } = action.payload;
+			state.id = id;
 		}
 	}
 });
@@ -262,6 +266,6 @@ export const {
 	addEtcOption
 } = cardSlice.actions;
 
-export const { focus } = focusedCard.actions;
+export const { focus, initFocus } = focusedCard.actions;
 
 export default store;

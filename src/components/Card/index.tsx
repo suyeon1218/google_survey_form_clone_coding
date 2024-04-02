@@ -40,7 +40,7 @@ const Card = ({ id }: CardProps) => {
 	});
 
 	const handleClickCard = () => {
-		dispatch(focus());
+		dispatch(focus({ id }));
 	};
 
 	return (
@@ -65,9 +65,7 @@ const Card = ({ id }: CardProps) => {
 					<InputOption id={id} />
 				)}
 			</S.Body>
-			{type !== 'title' && typeof focusedCard === 'string' && (
-				<CardFooter id={id} />
-			)}
+			{type !== 'title' && focusedCard === id && <CardFooter id={id} />}
 		</S.Container>
 	);
 };
