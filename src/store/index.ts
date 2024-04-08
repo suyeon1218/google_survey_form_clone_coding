@@ -224,6 +224,15 @@ const cardSlice = createSlice({
 				id: generateID(),
 				content: ''
 			});
+		},
+		checkOption: (state, action) => {
+			const { cardId, optionId } = action.payload;
+			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const targetOption = targetCard.options.find(
+				(option) => option.id === optionId
+			) as OptionType;
+
+			targetOption.checked = !targetOption.checked;
 		}
 	}
 });
@@ -238,7 +247,11 @@ const focusedCard = createSlice({
 		focus: (state, action) => {
 			const { id } = action.payload;
 
-			state.id === null ? null : id;
+			if (state.id === null) {
+				state.id = null;
+			} else {
+				state.id = id;
+			}
 		}
 	}
 });
@@ -264,7 +277,8 @@ export const {
 	inputOption,
 	dragCard,
 	dragOption,
-	addEtcOption
+	addEtcOption,
+	checkOption
 } = cardSlice.actions;
 
 export const { focus, initFocus } = focusedCard.actions;

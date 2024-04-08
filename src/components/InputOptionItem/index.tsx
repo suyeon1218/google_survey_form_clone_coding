@@ -5,6 +5,7 @@ import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import {
 	CardType,
 	RootStateType,
+	checkOption,
 	deleteOption,
 	dragOption,
 	inputOption
@@ -50,20 +51,21 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 		onDrag: handleDragOption
 	});
 
-	const handleDeleteOption = (event: MouseEvent<HTMLButtonElement>) => {
-		if (event.target instanceof HTMLElement) {
-			const { optionId } = event.target.dataset;
-
-			dispatch(deleteOption({ cardId, optionId }));
-		}
+	const handleDeleteOption = () => {
+		dispatch(deleteOption({ cardId, optionId }));
 	};
 
 	const handleInputOptionValue = (event: ChangeEvent<HTMLInputElement>) => {
-		if (event.target instanceof HTMLElement) {
-			const { optionId } = event.target.dataset;
-			const { value } = event.target;
+		const { value } = event.target;
 
-			dispatch(inputOption({ cardId, optionId, value }));
+		dispatch(inputOption({ cardId, optionId, value }));
+	};
+
+	const handleCheckOption = (event: MouseEvent<HTMLDivElement>) => {
+		event.preventDefault();
+
+		if (focusedCard === null) {
+			dispatch(checkOption({ cardId, optionId }));
 		}
 	};
 
@@ -71,10 +73,18 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 		<S.InputContainer
 			ref={option.type === 'normal' ? dragRef : null}
 			isDragging={isDragging}
-			data-option-id={option.id}>
-			{cardType === 'radio' && <Radio isDisabled={focusedCard !== null} />}
+			onClick={handleCheckOption}>
+			{cardType === 'radio' && (
+				<Radio
+					isChecked={option.checked}
+					isDisabled={focusedCard !== null}
+				/>
+			)}
 			{cardType === 'checkbox' && (
-				<Checkbox isDisabled={focusedCard !== null} />
+				<Checkbox
+					isChecked={option.checked}
+					isDisabled={focusedCard !== null}
+				/>
 			)}
 			{cardType === 'dropdown' && (
 				<S.IndexContainer>{optionIndex + 1}</S.IndexContainer>
@@ -92,9 +102,7 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 				readOnly={typeof focusedCard !== 'string' || option.type === 'etc'}
 			/>
 			{isDeletable && typeof focusedCard === 'string' && (
-				<S.DeleteButton
-					data-option-id={option.id}
-					onClick={handleDeleteOption}>
+				<S.DeleteButton onClick={handleDeleteOption}>
 					<CloseIcon
 						color={'gray'}
 						boxSize={3}
