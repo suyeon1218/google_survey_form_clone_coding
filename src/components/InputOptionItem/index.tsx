@@ -72,35 +72,67 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 	return (
 		<S.InputContainer
 			ref={option.type === 'normal' ? dragRef : null}
-			isDragging={isDragging}
-			onClick={handleCheckOption}>
-			{cardType === 'radio' && (
-				<Radio
-					isChecked={option.checked}
-					isDisabled={focusedCard !== null}
+			isDragging={isDragging}>
+			{typeof focusedCard === 'string' ? (
+				<>
+					{cardType === 'radio' && (
+						<Radio
+							isChecked={option.checked}
+							isDisabled={focusedCard !== null}
+						/>
+					)}
+					{cardType === 'checkbox' && (
+						<Checkbox
+							isChecked={option.checked}
+							isDisabled={focusedCard !== null}
+						/>
+					)}
+					{cardType === 'dropdown' && (
+						<S.IndexContainer>{optionIndex + 1}</S.IndexContainer>
+					)}
+					<S.OptionInput
+						type={option.type}
+						data-option-id={option.id}
+						onInput={handleInputOptionValue}
+						value={option.content}
+						placeholder={option.type === 'etc' ? '기타...' : ''}
+						variant='unstyle'
+						readOnly={
+							typeof focusedCard !== 'string' ||
+							(typeof focusedCard === 'string' && option.type === 'etc')
+						}
+					/>
+				</>
+			) : (
+				<S.OptionText onClick={handleCheckOption}>
+					{cardType === 'radio' && (
+						<Radio
+							isChecked={option.checked}
+							isDisabled={focusedCard !== null}
+						/>
+					)}
+					{cardType === 'checkbox' && (
+						<Checkbox
+							isChecked={option.checked}
+							isDisabled={focusedCard !== null}
+						/>
+					)}
+					{cardType === 'dropdown' && (
+						<S.IndexContainer>{optionIndex + 1}</S.IndexContainer>
+					)}
+					{option.type === 'normal' ? option.content : '기타: '}
+				</S.OptionText>
+			)}
+			{focusedCard === null && option.type === 'etc' && (
+				<S.EtcInput
+					type={'normal'}
+					data-option-id={option.id}
+					onInput={handleInputOptionValue}
+					value={option.content}
+					variant='unstyle'
+					readOnly={typeof focusedCard === 'string' && option.type === 'etc'}
 				/>
 			)}
-			{cardType === 'checkbox' && (
-				<Checkbox
-					isChecked={option.checked}
-					isDisabled={focusedCard !== null}
-				/>
-			)}
-			{cardType === 'dropdown' && (
-				<S.IndexContainer>{optionIndex + 1}</S.IndexContainer>
-			)}
-			{typeof focusedCard !== 'string' && option.type === 'etc' ? (
-				<S.EtcSpan>기타:</S.EtcSpan>
-			) : null}
-			<S.OptionInput
-				type={option.type}
-				data-option-id={option.id}
-				onInput={handleInputOptionValue}
-				value={option.content}
-				placeholder={option.type === 'etc' ? '기타...' : ''}
-				variant='unstyle'
-				readOnly={typeof focusedCard !== 'string' || option.type === 'etc'}
-			/>
 			{isDeletable && typeof focusedCard === 'string' && (
 				<S.DeleteButton onClick={handleDeleteOption}>
 					<CloseIcon

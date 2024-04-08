@@ -37,6 +37,29 @@ export const OptionInput = styled(Input)<OptionInputProps>`
 	}
 `;
 
+export const EtcInput = styled(Input)`
+	width: 100%;
+	padding-left: 0px;
+	border-radius: 0px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-style: ${({ theme }) => theme.colors.gray[200]};
+	&:focus {
+		border-bottom: ${({ theme }) => `2px solid ${theme.colors.purple[500]}`};
+	}
+	&:read-only {
+		border-bottom: none;
+	}
+`;
+
+export const OptionText = styled.p`
+	flex-shrink: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+`;
+
 export const DeleteButton = styled(Button)`
 	width: 40px;
 	height: 40px;
