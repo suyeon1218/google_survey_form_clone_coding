@@ -12,7 +12,7 @@ const AddButton = () => {
 	}, shallowEqual);
 
 	useEffect(() => {
-		const $card = document.querySelector(`#${focusedCard}`) as HTMLElement;
+		const $card = document.getElementById(`${focusedCard}`);
 
 		if (buttonRef.current && $card) {
 			buttonRef.current.style.top = $card.offsetTop + 'px';
