@@ -237,7 +237,8 @@ const focusedCard = createSlice({
 		},
 		focus: (state, action) => {
 			const { id } = action.payload;
-			state.id = id;
+
+			state.id === null ? null : id;
 		}
 	}
 });
