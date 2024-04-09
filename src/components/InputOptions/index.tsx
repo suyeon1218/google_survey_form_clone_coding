@@ -1,4 +1,4 @@
-import { Stack, Radio, Checkbox } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import {
@@ -8,6 +8,7 @@ import {
 	addOption
 } from '../../store/index';
 import InputOptionItem from '../InputOptionItem';
+import OptionItemIcon from '../OptionItemIcon';
 import * as S from './index.style';
 
 interface InputOptionsProps {
@@ -41,22 +42,20 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 
 	return (
 		<Stack direction={'column'}>
-			{options.map((option) => (
+			{options.map((option, index) => (
 				<InputOptionItem
 					cardId={id}
 					optionId={option.id}
+					optionIndex={index}
 					key={option.id}
 				/>
 			))}
 			{focusedCard === id && (
 				<S.InputContainer>
-					{type === 'radio' && <Radio isDisabled={focusedCard !== 'write'} />}
-					{type === 'checkbox' && (
-						<Checkbox isDisabled={focusedCard !== 'write'} />
-					)}
-					{type === 'dropdown' && (
-						<S.IndexContainer>{options.length + 1}</S.IndexContainer>
-					)}
+					<OptionItemIcon
+						cardId={id}
+						optionIndex={options.length}
+					/>
 					<S.LastOptionContainer>
 						<S.AddOptionButton onClick={handleAddOption}>
 							옵션 추가

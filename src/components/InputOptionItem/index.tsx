@@ -1,46 +1,46 @@
 import { CloseIcon } from '@chakra-ui/icons';
-import { Checkbox, Radio } from '@chakra-ui/react';
 import { ChangeEvent, MouseEvent } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import {
 	CardType,
+	OptionType,
 	RootStateType,
 	checkOption,
 	deleteOption,
 	dragOption,
 	inputOption
 } from '~/store';
+import OptionItemIcon from '../OptionItemIcon';
 import * as S from './index.style';
 import useDraggable from '~/hooks/useDraggable';
 
 interface InputOptionItemProps {
 	cardId: string;
 	optionId: string;
+	optionIndex: number;
 }
 
-const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
+const InputOptionItem = ({
+	cardId,
+	optionId,
+	optionIndex
+}: InputOptionItemProps) => {
 	const dispatch = useDispatch();
 	const focusedCard = useSelector((state: RootStateType) => {
 		return state.focusedCard.id;
 	});
-	const { option, isDeletable, cardType, optionIndex } = useSelector(
-		(state: RootStateType) => {
-			const targetCard = state.cards.find(
-				(card) => card.id === cardId
-			) as CardType;
-			const targetOptionIndex = targetCard.options.findIndex(
-				(option) => option.id === optionId
-			);
-
-			return {
-				option: targetCard.options[targetOptionIndex],
-				isDeletable: targetCard.options.length > 1,
-				cardType: targetCard.type,
-				optionIndex: targetOptionIndex
-			};
-		},
-		shallowEqual
-	);
+	const { option, isDeletable } = useSelector((state: RootStateType) => {
+		const targetCard = state.cards.find(
+			(card) => card.id === cardId
+		) as CardType;
+		const targetOption = targetCard.options.find(
+			(option) => option.id === optionId
+		) as OptionType;
+		return {
+			option: targetOption,
+			isDeletable: targetCard.options.length > 1
+		};
+	}, shallowEqual);
 	const handleDragOption = (itemIndex: number, hoverIndex: number) => {
 		dispatch(dragOption({ cardId, itemIndex, hoverIndex }));
 	};
@@ -75,21 +75,11 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 			isDragging={isDragging}>
 			{typeof focusedCard === 'string' ? (
 				<>
-					{cardType === 'radio' && (
-						<Radio
-							isChecked={option.checked}
-							isDisabled={focusedCard !== null}
-						/>
-					)}
-					{cardType === 'checkbox' && (
-						<Checkbox
-							isChecked={option.checked}
-							isDisabled={focusedCard !== null}
-						/>
-					)}
-					{cardType === 'dropdown' && (
-						<S.IndexContainer>{optionIndex + 1}</S.IndexContainer>
-					)}
+					<OptionItemIcon
+						cardId={cardId}
+						optionId={optionId}
+						optionIndex={optionIndex}
+					/>
 					<S.OptionInput
 						type={option.type}
 						data-option-id={option.id}
@@ -105,21 +95,11 @@ const InputOptionItem = ({ cardId, optionId }: InputOptionItemProps) => {
 				</>
 			) : (
 				<S.OptionText onClick={handleCheckOption}>
-					{cardType === 'radio' && (
-						<Radio
-							isChecked={option.checked}
-							isDisabled={focusedCard !== null}
-						/>
-					)}
-					{cardType === 'checkbox' && (
-						<Checkbox
-							isChecked={option.checked}
-							isDisabled={focusedCard !== null}
-						/>
-					)}
-					{cardType === 'dropdown' && (
-						<S.IndexContainer>{optionIndex + 1}</S.IndexContainer>
-					)}
+					<OptionItemIcon
+						cardId={cardId}
+						optionId={optionId}
+						optionIndex={optionIndex}
+					/>
 					{option.type === 'normal' ? option.content : '기타: '}
 				</S.OptionText>
 			)}

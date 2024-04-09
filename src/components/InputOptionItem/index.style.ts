@@ -71,14 +71,6 @@ export const DeleteButton = styled(Button)`
 	}
 `;
 
-export const IndexContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 16px;
-	height: 16px;
-`;
-
 export const EtcSpan = styled.span`
 	width: 50px;
 `;
