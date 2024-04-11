@@ -6,7 +6,7 @@ import * as S from './index.style';
 interface CardMenuProps {
 	menuList: string[] | { [key: string]: string };
 	defaultValue?: string;
-	onClick?: (item: string) => void;
+	onClick?: (item: unknown) => void;
 	includeDefaultValue?: boolean;
 }
 
@@ -29,8 +29,13 @@ const DropDown = ({
 		const key = target.dataset.key as string;
 
 		if (Array.isArray(menuList)) {
-			setSelectedValue(menuList[Number(key)]);
-			onClick && onClick(key);
+			if (key === 'defaultOption') {
+				setSelectedValue(undefined);
+				onClick && onClick(undefined);
+			} else {
+				setSelectedValue(menuList[Number(key)]);
+				onClick && onClick(key);
+			}
 		} else {
 			setSelectedValue(menuList[key]);
 			onClick && onClick(key);

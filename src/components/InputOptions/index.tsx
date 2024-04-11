@@ -76,6 +76,14 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 		}
 	};
 
+	const handleClickDropDownItem = (key: unknown) => {
+		if (typeof key === 'string') {
+			dispatch(checkOption({ cardId: id, optionId: options[Number(key)].id }));
+		} else {
+			dispatch(checkOption({ cardId: id, optionId: 'defaultOption' }));
+		}
+	};
+
 	return (
 		<Stack direction={'column'}>
 			{focusedCard === null && type === 'dropdown' ? (
@@ -83,6 +91,7 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 					menuList={options.map((option) => option.content)}
 					includeDefaultValue={true}
 					defaultValue={undefined}
+					onClick={handleClickDropDownItem}
 				/>
 			) : (
 				options.map((option, index) => (

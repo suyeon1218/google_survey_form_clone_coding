@@ -249,7 +249,12 @@ const cardSlice = createSlice({
 				(option) => option.id === optionId
 			) as OptionType;
 
-			if (targetCard.type === 'radio' || targetCard.type === 'dropdown') {
+			if (targetCard.required && optionId === 'defaultOption') {
+				targetCard.errorMessage = '필수 질문입니다.';
+			} else if (
+				targetCard.type === 'radio' ||
+				targetCard.type === 'dropdown'
+			) {
 				targetCard.options = targetCard.options.map((option) => ({
 					...option,
 					checked:
@@ -259,8 +264,10 @@ const cardSlice = createSlice({
 								? false
 								: !targetOption.checked
 				}));
+				targetCard.errorMessage = undefined;
 			} else {
 				targetOption.checked = !targetOption.checked;
+				targetCard.errorMessage = undefined;
 			}
 		}
 	}
