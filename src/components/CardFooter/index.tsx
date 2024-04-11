@@ -19,9 +19,8 @@ const CardFooter = ({ id }: CardFooterProps) => {
 	const dispatch = useDispatch();
 	const required = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
-		const { required } = targetCard;
 
-		return required;
+		return targetCard.required;
 	}, shallowEqual);
 
 	const handleCopyCard = (event: MouseEvent<HTMLDivElement>) => {

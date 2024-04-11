@@ -17,16 +17,17 @@ interface CardProps {
 
 const Card = ({ id }: CardProps) => {
 	const dispatch = useDispatch();
-	const { type, index, errorMessage } = useSelector((state: RootStateType) => {
-		const index = state.cards.findIndex((card) => card.id === id);
-		const targetCard = state.cards[index] as CardType;
+	const { type, errorMessage } = useSelector((state: RootStateType) => {
+		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
-		return {
-			index,
-			type: targetCard.type,
-			errorMessage: targetCard.errorMessage
-		};
+		return targetCard;
 	}, shallowEqual);
+	const index = useSelector((state: RootStateType) => {
+		const targetCardIndex = state.cards.findIndex((card) => card.id === id);
+
+		return targetCardIndex;
+	});
+
 	const focusedCard = useSelector((state: RootStateType) => {
 		return state.focusedCard.id;
 	}, shallowEqual);

@@ -30,10 +30,7 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 	const { options, type } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
-		return {
-			type: targetCard.type,
-			options: targetCard.options
-		};
+		return targetCard;
 	}, shallowEqual);
 	const lastOption = useMemo(() => {
 		return options[options.length - 1];

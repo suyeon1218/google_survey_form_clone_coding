@@ -17,18 +17,15 @@ interface CardHeaderProps {
 const CardHeader = ({ id }: CardHeaderProps) => {
 	const dispatch = useDispatch();
 	const { title, type, required } = useSelector((state: RootStateType) => {
-		const currentCard = state.cards.find((card) => card.id === id) as CardType;
-		return {
-			title: currentCard.title,
-			type: currentCard.type,
-			required: currentCard.required
-		};
+		const targetCard = state.cards.find((card) => card.id === id) as CardType;
+
+		return targetCard;
 	}, shallowEqual);
 	const focusedCard = useSelector((state: RootStateType) => {
 		return state.focusedCard.id;
 	}, shallowEqual);
 
-	const handleClickItem = (item: string) => {
+	const handleClickItem = (item: unknown) => {
 		dispatch(changeCardType({ id, type: item }));
 	};
 
