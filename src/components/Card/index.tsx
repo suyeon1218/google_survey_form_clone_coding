@@ -1,4 +1,5 @@
 import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { memo } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import CardFooter from '../CardFooter';
@@ -15,7 +16,7 @@ interface CardProps {
 	index: number;
 }
 
-const Card = ({ id }: CardProps) => {
+const Card = memo(({ id }: CardProps) => {
 	const dispatch = useDispatch();
 	const { type, errorMessage } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
@@ -80,6 +81,6 @@ const Card = ({ id }: CardProps) => {
 			)}
 		</S.Container>
 	);
-};
+});
 
 export default Card;
