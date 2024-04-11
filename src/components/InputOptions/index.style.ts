@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 export const LastOptionContainer = styled.div`
@@ -29,6 +30,7 @@ export const AddEtcButton = styled.button`
 
 export const InputContainer = styled.div`
 	height: 40px;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	gap: 5px;
@@ -40,4 +42,15 @@ export const IndexContainer = styled.div`
 	align-items: center;
 	width: 16px;
 	height: 16px;
+`;
+
+export const DeleteButton = styled(Button)`
+	width: 40px;
+	height: 40px;
+	background-color: ${({ theme }) => theme.colors.white};
+
+	&:hover {
+		border-radius: 100%;
+		background-color: ${({ theme }) => theme.colors.gray[50]};
+	}
 `;

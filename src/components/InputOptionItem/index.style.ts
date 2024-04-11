@@ -1,4 +1,4 @@
-import { Input, Button } from '@chakra-ui/react';
+import { Input } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 interface InputContainerProps {
@@ -11,6 +11,7 @@ interface OptionInputProps {
 
 export const InputContainer = styled.div<InputContainerProps>`
 	height: 40px;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	gap: 5px;
@@ -58,17 +59,6 @@ export const OptionText = styled.p`
 	justify-content: center;
 	align-items: center;
 	gap: 5px;
-`;
-
-export const DeleteButton = styled(Button)`
-	width: 40px;
-	height: 40px;
-	background-color: ${({ theme }) => theme.colors.white};
-
-	&:hover {
-		border-radius: 100%;
-		background-color: ${({ theme }) => theme.colors.gray[50]};
-	}
 `;
 
 export const EtcSpan = styled.span`

@@ -1,5 +1,7 @@
+import { CloseIcon } from '@chakra-ui/icons';
 import { Stack } from '@chakra-ui/react';
 import { useMemo, ChangeEvent, MouseEvent } from 'react';
+
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import {
 	CardType,
@@ -80,17 +82,27 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 				<DropDown menuList={options.map((option) => option.content)} />
 			) : (
 				options.map((option, index) => (
-					<InputOptionItem
-						key={option.id}
-						type={type}
-						option={option}
-						optionIndex={index}
-						onSelect={handleCheckOption}
-						onDelete={handleDeleteOption}
-						onDrag={handleDragOption}
-						onChange={handleChangeOptionValue}
-						isDeletable={options.length > 1}
-					/>
+					<S.InputContainer>
+						<InputOptionItem
+							key={option.id}
+							type={type}
+							option={option}
+							optionIndex={index}
+							onSelect={handleCheckOption}
+							onDrag={handleDragOption}
+							onChange={handleChangeOptionValue}
+						/>
+						{options.length > 1 && focusedCard === id && (
+							<S.DeleteButton
+								data-option-id={option.id}
+								onClick={handleDeleteOption}>
+								<CloseIcon
+									color={'gray'}
+									boxSize={3}
+								/>
+							</S.DeleteButton>
+						)}
+					</S.InputContainer>
 				))
 			)}
 			{focusedCard === id && (

@@ -1,4 +1,3 @@
-import { CloseIcon } from '@chakra-ui/icons';
 import { ChangeEvent, MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { CardMenuType, OptionType, RootStateType } from '~/store';
@@ -10,9 +9,7 @@ interface InputOptionItemProps {
 	option: OptionType;
 	optionIndex: number;
 	type: CardMenuType;
-	isDeletable: boolean;
 	onSelect: (event: MouseEvent<HTMLDivElement>) => void;
-	onDelete: (event: MouseEvent<HTMLButtonElement>) => void;
 	onDrag: (itemIndex: number, hoverIndex: number) => void;
 	onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -21,9 +18,7 @@ const InputOptionItem = ({
 	option,
 	optionIndex,
 	type,
-	isDeletable,
 	onSelect,
-	onDelete,
 	onDrag,
 	onChange
 }: InputOptionItemProps) => {
@@ -84,16 +79,6 @@ const InputOptionItem = ({
 					variant='unstyle'
 					readOnly={typeof focusedCard === 'string' && option.type === 'etc'}
 				/>
-			)}
-			{isDeletable && typeof focusedCard === 'string' && (
-				<S.DeleteButton
-					data-option-id={option.id}
-					onClick={onDelete}>
-					<CloseIcon
-						color={'gray'}
-						boxSize={3}
-					/>
-				</S.DeleteButton>
 			)}
 		</S.InputContainer>
 	);
