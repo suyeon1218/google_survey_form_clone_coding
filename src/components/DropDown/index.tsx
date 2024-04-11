@@ -1,5 +1,5 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { Button } from '@chakra-ui/react';
+import { Button, MenuDivider } from '@chakra-ui/react';
 import { useState, MouseEvent } from 'react';
 import * as S from './index.style';
 
@@ -7,9 +7,15 @@ interface CardMenuProps {
 	menuList: string[] | { [key: string]: string };
 	defaultValue?: string;
 	onClick?: (item: string) => void;
+	includeDefaultValue?: boolean;
 }
 
-const DropDown = ({ defaultValue, menuList, onClick }: CardMenuProps) => {
+const DropDown = ({
+	defaultValue,
+	menuList,
+	onClick,
+	includeDefaultValue = false
+}: CardMenuProps) => {
 	const [selectedValue, setSelectedValue] = useState(
 		Array.isArray(menuList) && defaultValue === undefined
 			? menuList[0]
@@ -36,9 +42,19 @@ const DropDown = ({ defaultValue, menuList, onClick }: CardMenuProps) => {
 			<S.Button
 				rightIcon={<ChevronDownIcon />}
 				as={Button}>
-				{selectedValue}
+				{selectedValue ? selectedValue : '선택'}
 			</S.Button>
 			<S.List>
+				{includeDefaultValue && (
+					<>
+						<S.Item
+							isSelect={selectedValue === undefined}
+							onClick={handleClickItem}>
+							선택
+						</S.Item>
+						<MenuDivider />
+					</>
+				)}
 				{Object.entries(menuList).map(([key, value]) => (
 					<S.Item
 						key={key}

@@ -79,7 +79,11 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 	return (
 		<Stack direction={'column'}>
 			{focusedCard === null && type === 'dropdown' ? (
-				<DropDown menuList={options.map((option) => option.content)} />
+				<DropDown
+					menuList={options.map((option) => option.content)}
+					includeDefaultValue={true}
+					defaultValue={undefined}
+				/>
 			) : (
 				options.map((option, index) => (
 					<S.InputContainer>
