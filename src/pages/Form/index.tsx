@@ -1,15 +1,21 @@
 import { ViewIcon } from '@chakra-ui/icons';
+import { useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { RootStateType } from '~/store';
+import { RootStateType, initFocus } from '~/store';
 import * as S from './index.style';
 import AddButton from '~/components/AddButton';
 import Card from '~/components/Card';
 
 const Form = () => {
+	const dispatch = useDispatch();
 	const cards = useSelector((state: RootStateType) => state.cards);
+
+	useEffect(() => {
+		dispatch(initFocus());
+	}, []);
 
 	return (
 		<S.Container>
