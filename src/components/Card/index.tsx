@@ -45,7 +45,9 @@ const Card = ({ id }: CardProps) => {
 
 	return (
 		<S.Container
-			ref={id !== 'titleCard' ? dragRef : null}
+			ref={
+				id !== 'titleCard' && typeof focusedCard === 'string' ? dragRef : null
+			}
 			id={id}
 			onClick={handleClickCard}
 			isTitle={type === 'title'}
