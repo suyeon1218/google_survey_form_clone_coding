@@ -16,11 +16,12 @@ interface CardHeaderProps {
 
 const CardHeader = ({ id }: CardHeaderProps) => {
 	const dispatch = useDispatch();
-	const { title, type } = useSelector((state: RootStateType) => {
+	const { title, type, required } = useSelector((state: RootStateType) => {
 		const currentCard = state.cards.find((card) => card.id === id) as CardType;
 		return {
-			title: currentCard?.title,
-			type: currentCard?.type
+			title: currentCard.title,
+			type: currentCard.type,
+			required: currentCard.required
 		};
 	}, shallowEqual);
 	const focusedCard = useSelector((state: RootStateType) => {
@@ -37,12 +38,18 @@ const CardHeader = ({ id }: CardHeaderProps) => {
 
 	return (
 		<S.Header>
-			<TextField
-				value={title}
-				isTitle={focusedCard === id || type === 'title'}
-				onChange={handleChangeTitle}
-				readOnly={typeof focusedCard !== 'string'}
-			/>
+			{typeof focusedCard === 'string' && focusedCard === id ? (
+				<TextField
+					value={title}
+					isTitle={focusedCard === id || type === 'title'}
+					onChange={handleChangeTitle}
+				/>
+			) : (
+				<S.TitleTextContainer>
+					<S.TitleText>{title}</S.TitleText>
+					{required && <S.RequiredIcon>*</S.RequiredIcon>}
+				</S.TitleTextContainer>
+			)}
 			{typeof focusedCard === 'string' && type !== 'title' && (
 				<DropDown
 					menuList={cardMenu}

@@ -31,3 +31,14 @@ export const Header = styled(CardHeader)`
 		flex-grow: 1;
 	}
 `;
+
+export const TitleTextContainer = styled.div`
+	display: flex;
+	gap: 5px;
+`;
+
+export const TitleText = styled.span``;
+
+export const RequiredIcon = styled.span`
+	color: ${({ theme }) => theme.colors.red[500]};
+`;
