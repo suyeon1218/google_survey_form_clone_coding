@@ -1,3 +1,4 @@
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { useSelector, shallowEqual } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import CardFooter from '../CardFooter';
@@ -16,13 +17,14 @@ interface CardProps {
 
 const Card = ({ id }: CardProps) => {
 	const dispatch = useDispatch();
-	const { type, index } = useSelector((state: RootStateType) => {
+	const { type, index, errorMessage } = useSelector((state: RootStateType) => {
 		const index = state.cards.findIndex((card) => card.id === id);
 		const targetCard = state.cards[index] as CardType;
 
 		return {
 			index,
-			type: targetCard.type
+			type: targetCard.type,
+			errorMessage: targetCard.errorMessage
 		};
 	}, shallowEqual);
 	const focusedCard = useSelector((state: RootStateType) => {
@@ -51,6 +53,7 @@ const Card = ({ id }: CardProps) => {
 			id={id}
 			onClick={handleClickCard}
 			isTitle={type === 'title'}
+			isError={errorMessage !== undefined && focusedCard === null}
 			isFocus={focusedCard === id}
 			isDragging={isDragging}>
 			<CardHeader id={id} />
@@ -68,6 +71,12 @@ const Card = ({ id }: CardProps) => {
 				)}
 			</S.Body>
 			{type !== 'title' && focusedCard === id && <CardFooter id={id} />}
+			{errorMessage && focusedCard === null && (
+				<S.RequiredMessage>
+					<InfoOutlineIcon />
+					{errorMessage}
+				</S.RequiredMessage>
+			)}
 		</S.Container>
 	);
 };

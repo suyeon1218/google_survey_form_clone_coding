@@ -15,6 +15,7 @@ export type CardsType = CardType[];
 export interface CardType {
 	id: string;
 	title: string;
+	errorMessage: undefined | string;
 	type: CardMenuType;
 	required: boolean;
 	options: OptionType[];
@@ -36,6 +37,7 @@ const baseOption: Omit<OptionType, 'id'> = {
 const baseCard: Omit<CardType, 'id' | 'options'> = {
 	title: '제목없는 질문',
 	type: 'radio',
+	errorMessage: undefined,
 	required: false
 };
 
@@ -129,6 +131,17 @@ const cardSlice = createSlice({
 			) as OptionType;
 
 			option.content = value;
+
+			if (targetCard.type === 'long' || targetCard.type === 'short') {
+				if (option.content.length === 0) {
+					if (targetCard.required === true) {
+						targetCard.errorMessage = '필수 질문입니다.';
+					}
+				} else {
+					option.checked = true;
+					targetCard.errorMessage = undefined;
+				}
+			}
 		},
 		copyCard: (state, action) => {
 			const { id } = action.payload;
@@ -156,7 +169,10 @@ const cardSlice = createSlice({
 			const targetCard = state.find((card) => card.id === id) as CardType;
 
 			targetCard.required = !targetCard.required;
-			targetCard.options[0].checked = true;
+
+			if (!targetCard.required) {
+				targetCard.errorMessage = undefined;
+			}
 		},
 		addOption: (state, action) => {
 			const { id } = action.payload;

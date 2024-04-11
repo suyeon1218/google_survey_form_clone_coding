@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 interface ContainerProps {
 	isFocus: boolean;
 	isTitle: boolean;
+	isError: boolean;
 	isDragging?: boolean;
 }
 
@@ -20,10 +21,21 @@ export const Container = styled(Card)<ContainerProps>`
 		isTitle === true ? `10px solid ${theme.colors.purple[600]}` : ''};
 	border-left: ${({ theme, isFocus }) =>
 		isFocus === true ? `5px solid ${theme.colors.blue[500]}` : ``};
+	border: ${({ theme, isError }) =>
+		isError ? `1px solid ${theme.colors.red[500]}` : ''};
 	opacity: ${({ isDragging }) => (isDragging ? 0.5 : 1)};
 `;
 
 export const Body = styled(CardBody)`
 	width: 100%;
 	padding: 10px 0px;
+`;
+
+export const RequiredMessage = styled.div`
+	display: flex;
+	gap: 5px;
+	width: 100%;
+	height: 50px;
+	align-items: center;
+	color: ${({ theme }) => theme.colors.red[500]};
 `;

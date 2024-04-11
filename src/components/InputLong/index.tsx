@@ -23,12 +23,13 @@ const InputLong = ({ id, placeholder = '내 답변' }: InputLongProps) => {
 		dispatch(changeInputValue({ cardId: id, optionId: option.id, value }));
 	};
 
+	const editableTitleMode =
+		typeof focusedCard === 'string' && id === 'titleCard';
+	const editableLongInput = focusedCard === null && id !== 'titleCard';
+
 	return (
 		<TextField
-			readOnly={
-				!(typeof focusedCard === 'string' && id === 'titleCard') ||
-				(focusedCard !== null && id !== 'titleCard')
-			}
+			readOnly={!editableTitleMode && !editableLongInput}
 			value={option.content}
 			onChange={handleChangeValue}
 			placeholder={placeholder}
