@@ -156,6 +156,7 @@ const cardSlice = createSlice({
 			const targetCard = state.find((card) => card.id === id) as CardType;
 
 			targetCard.required = !targetCard.required;
+			targetCard.options[0].checked = true;
 		},
 		addOption: (state, action) => {
 			const { id } = action.payload;
