@@ -170,8 +170,11 @@ const cardSlice = createSlice({
 
 			targetCard.required = !targetCard.required;
 
-			if (!targetCard.required) {
+			if (targetCard.required === false) {
 				targetCard.errorMessage = undefined;
+			}
+			if (targetCard.type === 'radio') {
+				targetCard.options[0].checked = true;
 			}
 		},
 		addOption: (state, action) => {
@@ -249,24 +252,28 @@ const cardSlice = createSlice({
 				(option) => option.id === optionId
 			) as OptionType;
 
-			if (targetCard.required && optionId === 'defaultOption') {
-				targetCard.errorMessage = '필수 질문입니다.';
-			} else if (
-				targetCard.type === 'radio' ||
-				targetCard.type === 'dropdown'
-			) {
+			if (targetCard.type === 'radio') {
 				targetCard.options = targetCard.options.map((option) => ({
 					...option,
 					checked:
-						option.id === optionId && targetCard.required
+						targetCard.required && option.id === optionId
 							? true
-							: option.id !== optionId
+							: targetCard.required && option.id !== optionId
 								? false
 								: !targetOption.checked
 				}));
-				targetCard.errorMessage = undefined;
+			} else if (targetCard.type === 'dropdown') {
+				targetCard.options = targetCard.options.map((option) => ({
+					...option,
+					checked: option.id === optionId ? true : false
+				}));
 			} else {
 				targetOption.checked = !targetOption.checked;
+			}
+
+			if (targetCard.options.every((option) => option.checked === false)) {
+				targetCard.errorMessage = '필수 질문입니다.';
+			} else {
 				targetCard.errorMessage = undefined;
 			}
 		}
