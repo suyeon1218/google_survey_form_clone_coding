@@ -71,7 +71,7 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 		event.preventDefault();
 
 		if (focusedCard === null && event.target instanceof HTMLElement) {
-			const { optionId } = event.target.dataset;
+			const { optionId } = event.currentTarget.dataset;
 			dispatch(checkOption({ cardId: id, optionId }));
 		}
 	};

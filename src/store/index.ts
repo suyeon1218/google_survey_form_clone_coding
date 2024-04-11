@@ -245,17 +245,21 @@ const cardSlice = createSlice({
 		checkOption: (state, action) => {
 			const { cardId, optionId } = action.payload;
 			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const targetOption = targetCard.options.find(
+				(option) => option.id === optionId
+			) as OptionType;
 
 			if (targetCard.type === 'radio' || targetCard.type === 'dropdown') {
 				targetCard.options = targetCard.options.map((option) => ({
 					...option,
-					checked: option.id === optionId ? !option.checked : false
+					checked:
+						option.id === optionId && targetCard.required
+							? true
+							: option.id !== optionId
+								? false
+								: !targetOption.checked
 				}));
 			} else {
-				const targetOption = targetCard.options.find(
-					(option) => option.id === optionId
-				) as OptionType;
-
 				targetOption.checked = !targetOption.checked;
 			}
 		}
