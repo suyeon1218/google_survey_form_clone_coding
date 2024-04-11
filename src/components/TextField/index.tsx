@@ -14,7 +14,7 @@ const TextField = ({
 	isTitle = false,
 	placeholder = '',
 	onChange,
-	readOnly = true
+	readOnly = false
 }: TextFieldProps) => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
