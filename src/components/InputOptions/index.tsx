@@ -1,12 +1,17 @@
 import { Stack } from '@chakra-ui/react';
-import { useMemo } from 'react';
+import { useMemo, ChangeEvent, MouseEvent } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import {
 	CardType,
 	RootStateType,
+	checkOption,
+	deleteOption,
+	dragOption,
+	inputOption,
 	addEtcOption,
 	addOption
-} from '../../store/index';
+} from '~/store';
+import DropDown from '../DropDown';
 import InputOptionItem from '../InputOptionItem';
 import OptionItemIcon from '../OptionItemIcon';
 import * as S from './index.style';
@@ -40,20 +45,59 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 		dispatch(addEtcOption({ id }));
 	};
 
+	const handleDragOption = (itemIndex: number, hoverIndex: number) => {
+		dispatch(dragOption({ cardId: id, itemIndex, hoverIndex }));
+	};
+
+	const handleDeleteOption = (event: MouseEvent<HTMLButtonElement>) => {
+		if (event.target instanceof HTMLElement) {
+			const { optionId } = event.target.dataset;
+			dispatch(deleteOption({ cardId: id, optionId }));
+		}
+	};
+
+	const handleChangeOptionValue = (event: ChangeEvent<HTMLInputElement>) => {
+		if (event.target instanceof HTMLElement) {
+			const { value } = event.target;
+			const { optionId } = event.target.dataset;
+
+			dispatch(inputOption({ cardId: id, optionId, value }));
+		}
+	};
+
+	const handleCheckOption = (event: MouseEvent<HTMLDivElement>) => {
+		event.preventDefault();
+
+		if (focusedCard === null && event.target instanceof HTMLElement) {
+			const { optionId } = event.target.dataset;
+			dispatch(checkOption({ cardId: id, optionId }));
+		}
+	};
+
 	return (
 		<Stack direction={'column'}>
-			{options.map((option, index) => (
-				<InputOptionItem
-					cardId={id}
-					optionId={option.id}
-					optionIndex={index}
-					key={option.id}
-				/>
-			))}
+			{focusedCard === null && type === 'dropdown' ? (
+				<DropDown menuList={options.map((option) => option.content)} />
+			) : (
+				options.map((option, index) => (
+					<InputOptionItem
+						key={option.id}
+						type={type}
+						option={option}
+						optionIndex={index}
+						onSelect={handleCheckOption}
+						onDelete={handleDeleteOption}
+						onDrag={handleDragOption}
+						onChange={handleChangeOptionValue}
+						isDeletable={options.length > 1}
+					/>
+				))
+			)}
 			{focusedCard === id && (
 				<S.InputContainer>
 					<OptionItemIcon
-						cardId={id}
+						type={type}
+						isChecked={false}
 						optionIndex={options.length}
 					/>
 					<S.LastOptionContainer>

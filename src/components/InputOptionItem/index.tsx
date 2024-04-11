@@ -1,103 +1,75 @@
 import { CloseIcon } from '@chakra-ui/icons';
 import { ChangeEvent, MouseEvent } from 'react';
-import { shallowEqual, useSelector, useDispatch } from 'react-redux';
-import {
-	CardType,
-	OptionType,
-	RootStateType,
-	checkOption,
-	deleteOption,
-	dragOption,
-	inputOption
-} from '~/store';
+import { useSelector } from 'react-redux';
+import { CardMenuType, OptionType, RootStateType } from '~/store';
 import OptionItemIcon from '../OptionItemIcon';
 import * as S from './index.style';
 import useDraggable from '~/hooks/useDraggable';
 
 interface InputOptionItemProps {
-	cardId: string;
-	optionId: string;
+	option: OptionType;
 	optionIndex: number;
+	type: CardMenuType;
+	isDeletable: boolean;
+	onSelect: (event: MouseEvent<HTMLDivElement>) => void;
+	onDelete: (event: MouseEvent<HTMLButtonElement>) => void;
+	onDrag: (itemIndex: number, hoverIndex: number) => void;
+	onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputOptionItem = ({
-	cardId,
-	optionId,
-	optionIndex
+	option,
+	optionIndex,
+	type,
+	isDeletable,
+	onSelect,
+	onDelete,
+	onDrag,
+	onChange
 }: InputOptionItemProps) => {
-	const dispatch = useDispatch();
 	const focusedCard = useSelector((state: RootStateType) => {
 		return state.focusedCard.id;
 	});
-	const { option, isDeletable } = useSelector((state: RootStateType) => {
-		const targetCard = state.cards.find(
-			(card) => card.id === cardId
-		) as CardType;
-		const targetOption = targetCard.options.find(
-			(option) => option.id === optionId
-		) as OptionType;
-		return {
-			option: targetOption,
-			isDeletable: targetCard.options.length > 1
-		};
-	}, shallowEqual);
-	const handleDragOption = (itemIndex: number, hoverIndex: number) => {
-		dispatch(dragOption({ cardId, itemIndex, hoverIndex }));
-	};
+
 	const { dragRef, isDragging } = useDraggable({
-		id: optionId,
+		id: option.id,
 		itemName: 'option',
 		itemIndex: optionIndex,
-		onDrag: handleDragOption
+		onDrag: onDrag
 	});
-
-	const handleDeleteOption = () => {
-		dispatch(deleteOption({ cardId, optionId }));
-	};
-
-	const handleInputOptionValue = (event: ChangeEvent<HTMLInputElement>) => {
-		const { value } = event.target;
-
-		dispatch(inputOption({ cardId, optionId, value }));
-	};
-
-	const handleCheckOption = (event: MouseEvent<HTMLDivElement>) => {
-		event.preventDefault();
-
-		if (focusedCard === null) {
-			dispatch(checkOption({ cardId, optionId }));
-		}
-	};
 
 	return (
 		<S.InputContainer
-			ref={option.type === 'normal' ? dragRef : null}
+			ref={
+				option.type === 'normal' && typeof focusedCard === 'string'
+					? dragRef
+					: null
+			}
 			isDragging={isDragging}>
 			{typeof focusedCard === 'string' ? (
 				<>
 					<OptionItemIcon
-						cardId={cardId}
-						optionId={optionId}
+						type={type}
+						isChecked={false}
 						optionIndex={optionIndex}
 					/>
 					<S.OptionInput
 						type={option.type}
 						data-option-id={option.id}
-						onInput={handleInputOptionValue}
+						onChange={onChange}
 						value={option.content}
 						placeholder={option.type === 'etc' ? '기타...' : ''}
 						variant='unstyle'
-						readOnly={
-							typeof focusedCard !== 'string' ||
-							(typeof focusedCard === 'string' && option.type === 'etc')
-						}
+						readOnly={typeof focusedCard === 'string' && option.type === 'etc'}
 					/>
 				</>
 			) : (
-				<S.OptionText onClick={handleCheckOption}>
+				<S.OptionText
+					data-option-id={option.id}
+					onClick={onSelect}>
 					<OptionItemIcon
-						cardId={cardId}
-						optionId={optionId}
+						type={type}
+						isChecked={option.checked}
 						optionIndex={optionIndex}
 					/>
 					{option.type === 'normal' ? option.content : '기타: '}
@@ -107,14 +79,16 @@ const InputOptionItem = ({
 				<S.EtcInput
 					type={'normal'}
 					data-option-id={option.id}
-					onInput={handleInputOptionValue}
+					onChange={onChange}
 					value={option.content}
 					variant='unstyle'
 					readOnly={typeof focusedCard === 'string' && option.type === 'etc'}
 				/>
 			)}
 			{isDeletable && typeof focusedCard === 'string' && (
-				<S.DeleteButton onClick={handleDeleteOption}>
+				<S.DeleteButton
+					data-option-id={option.id}
+					onClick={onDelete}>
 					<CloseIcon
 						color={'gray'}
 						boxSize={3}
