@@ -15,7 +15,6 @@ export type CardsType = CardType[];
 export interface CardType {
 	id: string;
 	title: string;
-	errorMessage: undefined | string;
 	type: CardMenuType;
 	required: boolean;
 	options: OptionType[];
@@ -37,7 +36,6 @@ const baseOption: Omit<OptionType, 'id'> = {
 const baseCard: Omit<CardType, 'id' | 'options'> = {
 	title: '제목없는 질문',
 	type: 'radio',
-	errorMessage: undefined,
 	required: false
 };
 
@@ -154,9 +152,6 @@ const cardSlice = createSlice({
 
 			targetCard.required = !targetCard.required;
 
-			if (targetCard.required === false) {
-				targetCard.errorMessage = undefined;
-			}
 			if (targetCard.type === 'radio') {
 				targetCard.options[0].checked = true;
 			}
@@ -232,33 +227,21 @@ const cardSlice = createSlice({
 		checkOption: (state, action) => {
 			const { cardId, optionId } = action.payload;
 			const targetCard = state.find((card) => card.id === cardId) as CardType;
-			const targetOption = targetCard.options.find(
+			const targetOptionIndex = targetCard.options.findIndex(
 				(option) => option.id === optionId
-			) as OptionType;
+			);
 
 			if (targetCard.type === 'radio') {
-				targetCard.options = targetCard.options.map((option) => ({
+				const nextOptions = targetCard.options.map((option) => ({
 					...option,
-					checked:
-						targetCard.required && option.id === optionId
-							? true
-							: targetCard.required && option.id !== optionId
-								? false
-								: !targetOption.checked
+					checked: false
 				}));
-			} else if (targetCard.type === 'dropdown') {
-				targetCard.options = targetCard.options.map((option) => ({
-					...option,
-					checked: option.id === optionId ? true : false
-				}));
-			} else {
-				targetOption.checked = !targetOption.checked;
-			}
+				nextOptions[targetOptionIndex].checked = true;
 
-			if (targetCard.options.every((option) => option.checked === false)) {
-				targetCard.errorMessage = '필수 질문입니다.';
+				targetCard.options = nextOptions;
 			} else {
-				targetCard.errorMessage = undefined;
+				targetCard.options[targetOptionIndex].checked =
+					!targetCard.options[targetOptionIndex].checked;
 			}
 		}
 	}

@@ -11,9 +11,6 @@ interface InputOptionsProps {
 
 const InputOptions = ({ id }: InputOptionsProps) => {
 	const dispatch = useDispatch();
-	const focusedCard = useSelector((state: RootStateType) => {
-		return state.focusedCard.id;
-	});
 	const { options, type } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
@@ -30,7 +27,7 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 
 	return (
 		<Stack direction={'column'}>
-			{focusedCard === null && type === 'dropdown' ? (
+			{type === 'dropdown' ? (
 				<DropDown
 					menuList={options.map((option) => option.content)}
 					includeDefaultValue={true}
