@@ -1,6 +1,6 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { useEffect, useRef } from 'react';
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootStateType, addCard } from '~/store';
 import * as S from './index.style';
 
@@ -9,7 +9,7 @@ const AddButton = () => {
 	const dispatch = useDispatch();
 	const focusedCard = useSelector((state: RootStateType) => {
 		return state.focusedCard.id;
-	}, shallowEqual);
+	});
 
 	useEffect(() => {
 		const $card = document.getElementById(`${focusedCard}`);

@@ -31,14 +31,14 @@ const Card = memo(({ id }: CardProps) => {
 
 		return targetCardIndex;
 	});
-
 	const focusedCard = useSelector((state: RootStateType) => {
 		return state.focusedCard.id;
-	}, shallowEqual);
+	});
 
 	const handleCardSort = (itemIndex: number, hoverIndex: number) => {
 		dispatch(dragCard({ itemIndex, hoverIndex }));
 	};
+
 	const { dragRef, isDragging } = useDraggable({
 		id: id,
 		itemIndex: index,

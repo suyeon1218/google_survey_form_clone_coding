@@ -1,7 +1,7 @@
 import { ViewIcon } from '@chakra-ui/icons';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootStateType } from '~/store';
 import * as S from './index.style';
@@ -9,10 +9,7 @@ import AddButton from '~/components/AddButton';
 import Card from '~/components/Card';
 
 const Form = () => {
-	const cards = useSelector(
-		(state: RootStateType) => state.cards,
-		shallowEqual
-	);
+	const cards = useSelector((state: RootStateType) => state.cards);
 
 	return (
 		<S.Container>
