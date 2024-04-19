@@ -133,7 +133,7 @@ const cardSlice = createSlice({
 				id: generateID()
 			};
 
-			state.splice(targetCardIndex, 0, newCard);
+			state.splice(targetCardIndex + 1, 0, newCard);
 		},
 		deleteCard: (state, action) => {
 			const { id } = action.payload;
