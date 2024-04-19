@@ -9,30 +9,24 @@ interface InputLongProps {
 
 const InputLong = ({ id, placeholder = '내 답변' }: InputLongProps) => {
 	const dispatch = useDispatch();
-	const option = useSelector((state: RootStateType) => {
+	const { option } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
-		const { options } = targetCard;
 
-		return options[0];
-	});
-	const focusedCard = useSelector((state: RootStateType) => {
-		return state.focusedCard.id;
+		return {
+			option: targetCard.options[0]
+		};
 	}, shallowEqual);
 
 	const handleChangeValue = (value: string) => {
 		dispatch(changeInputValue({ cardId: id, optionId: option.id, value }));
 	};
 
-	const editableTitleMode =
-		typeof focusedCard === 'string' && id === 'titleCard';
-	const editableLongInput = focusedCard === null && id !== 'titleCard';
-
 	return (
 		<TextField
-			readOnly={!editableTitleMode && !editableLongInput}
+			readOnly={id === 'titleCard'}
 			value={option.content}
 			onChange={handleChangeValue}
-			placeholder={placeholder}
+			placeholder={id !== 'titleCard' ? placeholder : ''}
 		/>
 	);
 };

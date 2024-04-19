@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 interface ContainerProps {
 	isTitle: boolean;
-	isError: boolean;
+	isError?: boolean;
 }
 
 export const Container = styled(Card)<ContainerProps>`
@@ -24,6 +24,13 @@ export const Container = styled(Card)<ContainerProps>`
 export const Body = styled(CardBody)`
 	width: 100%;
 	padding: 10px 0px;
+`;
+
+export const Header = styled.div`
+	display: flex;
+	width: 100%;
+	height: 50px;
+	align-items: center;
 `;
 
 export const RequiredMessage = styled.div`
