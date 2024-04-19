@@ -62,17 +62,6 @@ const initialCards: CardsType = [
 	}
 ];
 
-function getInitialFocusedCard() {
-	const { pathname } = location;
-
-	if (pathname === '/') {
-		return 'titleCard';
-	} else if (pathname === '/response') {
-		return null;
-	}
-	return undefined;
-}
-
 const cardSlice = createSlice({
 	name: 'card',
 	initialState: initialCards,
@@ -282,19 +271,12 @@ const cardSlice = createSlice({
 
 const focusedCard = createSlice({
 	name: 'focusedCard',
-	initialState: { id: getInitialFocusedCard() },
+	initialState: { id: 'titleCard' },
 	reducers: {
-		initFocus: (state) => {
-			state.id = getInitialFocusedCard();
-		},
 		focus: (state, action) => {
 			const { id } = action.payload;
 
-			if (state.id === null) {
-				state.id = null;
-			} else {
-				state.id = id;
-			}
+			state.id = id;
 		}
 	}
 });
@@ -324,6 +306,6 @@ export const {
 	checkOption
 } = cardSlice.actions;
 
-export const { focus, initFocus } = focusedCard.actions;
+export const { focus } = focusedCard.actions;
 
 export default store;
