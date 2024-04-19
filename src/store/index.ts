@@ -112,6 +112,12 @@ const cardSlice = createSlice({
 
 			targetCard.title = value;
 		},
+		changeOptionContent: (state, action) => {
+			const { cardId, value } = action.payload;
+			const targetCard = state.find((card) => card.id === cardId) as CardType;
+
+			targetCard.options[0].content = value;
+		},
 		changeInputValue: (state, action) => {
 			const { cardId, optionId, value } = action.payload;
 			const targetCard = state.find((card) => card.id === cardId) as CardType;
@@ -120,17 +126,6 @@ const cardSlice = createSlice({
 			) as OptionType;
 
 			option.content = value;
-
-			if (targetCard.type === 'long' || targetCard.type === 'short') {
-				if (option.content.length === 0) {
-					if (targetCard.required === true) {
-						targetCard.errorMessage = '필수 질문입니다.';
-					}
-				} else {
-					option.checked = true;
-					targetCard.errorMessage = undefined;
-				}
-			}
 		},
 		copyCard: (state, action) => {
 			const { id } = action.payload;
@@ -303,7 +298,8 @@ export const {
 	dragCard,
 	dragOption,
 	addEtcOption,
-	checkOption
+	checkOption,
+	changeOptionContent
 } = cardSlice.actions;
 
 export const { focus } = focusedCard.actions;

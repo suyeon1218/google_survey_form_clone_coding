@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import CardHeader from '../CardHeader';
 import InputLong from '../InputLong';
-import InputOption from '../InputOptions';
+import InputOptions from '../InputOptions';
 import InputShort from '../InputShort';
 import { CardType, RootStateType } from './../../store/index';
 import * as S from './index.style';
@@ -36,7 +36,7 @@ const ResponseCard = memo(({ id }: ResponseCardProps) => {
 				{type === 'short' && <InputShort id={id} />}
 				{type === 'long' && <InputLong id={id} />}
 				{(type === 'radio' || type === 'checkbox' || type === 'dropdown') && (
-					<InputOption id={id} />
+					<InputOptions id={id} />
 				)}
 			</S.Body>
 			{errorMessage && (

@@ -2,10 +2,15 @@ import { memo } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import CardFooter from '../CardFooter';
 import CardHeader from '../CardHeader';
-import InputLong from '../InputLong';
-import InputOption from '../InputOptions';
-import InputShort from '../InputShort';
-import { CardType, RootStateType, dragCard, focus } from './../../store/index';
+import OptionFields from '../OptionFields';
+import TextField from '../TextField';
+import {
+	CardType,
+	RootStateType,
+	changeOptionContent,
+	dragCard,
+	focus
+} from './../../store/index';
 import * as S from './index.style';
 import useDraggable from '~/hooks/useDraggable';
 
@@ -45,6 +50,10 @@ const Card = memo(({ id }: CardProps) => {
 		dispatch(focus({ id }));
 	};
 
+	const handleChangeTitleExplain = (value: string) => {
+		dispatch(changeOptionContent({ cardId: id, value }));
+	};
+
 	return (
 		<S.Container
 			ref={id !== 'titleCard' ? dragRef : null}
@@ -56,15 +65,19 @@ const Card = memo(({ id }: CardProps) => {
 			<CardHeader id={id} />
 			<S.Body>
 				{type === 'title' && (
-					<InputLong
-						id={id}
-						placeholder={'설명을 작성해주세요'}
+					<TextField
+						placeholder='설명을 입력해주세요'
+						onChange={handleChangeTitleExplain}
 					/>
 				)}
-				{type === 'short' && <InputShort id={id} />}
-				{type === 'long' && <InputLong id={id} />}
+				{(type === 'short' || type === 'long') && (
+					<TextField
+						placeholder='내 답변'
+						readOnly={true}
+					/>
+				)}
 				{(type === 'radio' || type === 'checkbox' || type === 'dropdown') && (
-					<InputOption id={id} />
+					<OptionFields id={id} />
 				)}
 			</S.Body>
 			{type !== 'title' && focusedCard === id && <CardFooter id={id} />}
