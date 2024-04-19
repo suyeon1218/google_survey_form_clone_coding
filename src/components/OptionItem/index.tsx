@@ -37,7 +37,8 @@ const OptionItem = ({ cardId, optionId }: OptionItemProps) => {
 				optionIndex: targetOptionIndex,
 				isDeletable: targetCard.options.length > 1
 			};
-		}
+		},
+		shallowEqual
 	);
 
 	const handleChangeOptionValue = (event: ChangeEvent<HTMLInputElement>) => {
