@@ -41,3 +41,7 @@ export const RequiredMessage = styled.div`
 	align-items: center;
 	color: ${({ theme }) => theme.colors.red[500]};
 `;
+
+export const RequiredIcon = styled.span`
+	color: ${({ theme }) => theme.colors.red[500]};
+`;

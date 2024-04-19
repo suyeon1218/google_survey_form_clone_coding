@@ -12,12 +12,13 @@ interface ResponseCardProps {
 }
 
 const ResponseCard = memo(({ id }: ResponseCardProps) => {
-	const { type, title } = useSelector((state: RootStateType) => {
+	const { type, title, required } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 		return {
 			type: targetCard.type,
-			title: targetCard.title
+			title: targetCard.title,
+			required: targetCard.required
 		};
 	}, shallowEqual);
 
@@ -25,7 +26,10 @@ const ResponseCard = memo(({ id }: ResponseCardProps) => {
 		<S.Container
 			id={id}
 			isTitle={type === 'title'}>
-			<S.Header>{title}</S.Header>
+			<S.Header>
+				<S.RequiredIcon>{required ? '*' : ''}</S.RequiredIcon>
+				{title}
+			</S.Header>
 			<S.Body>
 				{type === 'title' && <InputLong id={id} />}
 				{type === 'short' && <InputShort id={id} />}
