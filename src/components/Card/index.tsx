@@ -1,7 +1,5 @@
-import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { memo } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import CardFooter from '../CardFooter';
 import CardHeader from '../CardHeader';
 import InputLong from '../InputLong';
@@ -18,7 +16,7 @@ interface CardProps {
 
 const Card = memo(({ id }: CardProps) => {
 	const dispatch = useDispatch();
-	const { type, errorMessage } = useSelector((state: RootStateType) => {
+	const { type } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 		return targetCard;
@@ -49,13 +47,10 @@ const Card = memo(({ id }: CardProps) => {
 
 	return (
 		<S.Container
-			ref={
-				id !== 'titleCard' && typeof focusedCard === 'string' ? dragRef : null
-			}
+			ref={id !== 'titleCard' ? dragRef : null}
 			id={id}
 			onClick={handleClickCard}
 			isTitle={type === 'title'}
-			isError={errorMessage !== undefined && focusedCard === null}
 			isFocus={focusedCard === id}
 			isDragging={isDragging}>
 			<CardHeader id={id} />
@@ -73,12 +68,6 @@ const Card = memo(({ id }: CardProps) => {
 				)}
 			</S.Body>
 			{type !== 'title' && focusedCard === id && <CardFooter id={id} />}
-			{errorMessage && focusedCard === null && (
-				<S.RequiredMessage>
-					<InfoOutlineIcon />
-					{errorMessage}
-				</S.RequiredMessage>
-			)}
 		</S.Container>
 	);
 });
