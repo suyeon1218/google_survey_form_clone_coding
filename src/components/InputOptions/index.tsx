@@ -36,9 +36,8 @@ const InputOptions = ({ id }: InputOptionsProps) => {
 				/>
 			) : (
 				options.map((option) => (
-					<S.InputContainer>
+					<S.InputContainer key={option.id}>
 						<InputOptionItem
-							key={option.id}
 							cardId={id}
 							optionId={option.id}
 						/>

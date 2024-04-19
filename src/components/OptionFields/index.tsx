@@ -36,9 +36,8 @@ const OptionFields = ({ id }: OptionFieldsProps) => {
 	return (
 		<Stack direction={'column'}>
 			{options.map((option) => (
-				<S.InputContainer>
+				<S.InputContainer key={option.id}>
 					<OptionItem
-						key={option.id}
 						cardId={id}
 						optionId={option.id}
 					/>
