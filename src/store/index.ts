@@ -62,22 +62,22 @@ const initialCards: CardsType = [
 
 const cardSlice = createSlice({
 	name: 'card',
-	initialState: initialCards,
+	initialState: { focus: 'titleCard', cards: initialCards },
 	reducers: {
 		addCard: (state, action) => {
 			const { id } = action.payload;
-			const targetCardIndex = state.findIndex((card) => card.id === id);
+			const targetCardIndex = state.cards.findIndex((card) => card.id === id);
 			const newCard: CardType = {
 				...baseCard,
 				id: generateID(),
 				options: [{ ...baseOption, id: generateID() }]
 			};
 
-			state.splice(targetCardIndex + 1, 0, newCard);
+			state.cards.splice(targetCardIndex + 1, 0, newCard);
 		},
 		changeCardType: (state, action) => {
 			const { id, type } = action.payload;
-			const targetCard = state.find((card) => card.id === id) as CardType;
+			const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 			if (
 				(targetCard.type === 'long' || targetCard.type === 'short') &&
@@ -106,19 +106,23 @@ const cardSlice = createSlice({
 		},
 		changeTitle: (state, action) => {
 			const { id, value } = action.payload;
-			const targetCard = state.find((card) => card.id === id) as CardType;
+			const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 			targetCard.title = value;
 		},
 		changeOptionContent: (state, action) => {
 			const { cardId, value } = action.payload;
-			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const targetCard = state.cards.find(
+				(card) => card.id === cardId
+			) as CardType;
 
 			targetCard.options[0].content = value;
 		},
 		changeInputValue: (state, action) => {
 			const { cardId, optionId, value } = action.payload;
-			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const targetCard = state.cards.find(
+				(card) => card.id === cardId
+			) as CardType;
 			const option = targetCard.options.find(
 				(option) => option.id === optionId
 			) as OptionType;
@@ -127,28 +131,28 @@ const cardSlice = createSlice({
 		},
 		copyCard: (state, action) => {
 			const { id } = action.payload;
-			const targetCardIndex = state.findIndex((card) => card.id === id);
+			const targetCardIndex = state.cards.findIndex((card) => card.id === id);
 			const newCard: CardType = {
-				...state[targetCardIndex],
+				...state.cards[targetCardIndex],
 				id: generateID()
 			};
 
-			state.splice(targetCardIndex + 1, 0, newCard);
+			state.cards.splice(targetCardIndex + 1, 0, newCard);
 		},
 		deleteCard: (state, action) => {
 			const { id } = action.payload;
-			const cardIndex = state.findIndex((card) => card.id === id);
-			const nextState = state.map((card, index) => ({
+			const cardIndex = state.cards.findIndex((card) => card.id === id);
+			const nextCards = state.cards.map((card, index) => ({
 				...card,
 				isFocused: index === cardIndex - 1 ? true : false
 			}));
-			nextState.splice(cardIndex, 1);
+			nextCards.splice(cardIndex, 1);
 
-			return nextState;
+			state.cards = nextCards;
 		},
 		setRequired: (state, action) => {
 			const { id } = action.payload;
-			const targetCard = state.find((card) => card.id === id) as CardType;
+			const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 			targetCard.required = !targetCard.required;
 
@@ -158,7 +162,7 @@ const cardSlice = createSlice({
 		},
 		addOption: (state, action) => {
 			const { id } = action.payload;
-			const targetCard = state.find((card) => card.id === id) as CardType;
+			const targetCard = state.cards.find((card) => card.id === id) as CardType;
 			const lastOption = targetCard.options[targetCard.options.length - 1];
 
 			if (lastOption.type === 'etc') {
@@ -177,7 +181,9 @@ const cardSlice = createSlice({
 		},
 		deleteOption: (state, action) => {
 			const { cardId, optionId } = action.payload;
-			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const targetCard = state.cards.find(
+				(card) => card.id === cardId
+			) as CardType;
 			const targetOptionIndex = targetCard.options.findIndex(
 				(option) => option.id === optionId
 			);
@@ -186,7 +192,9 @@ const cardSlice = createSlice({
 		},
 		inputOption: (state, action) => {
 			const { cardId, optionId, value } = action.payload;
-			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const targetCard = state.cards.find(
+				(card) => card.id === cardId
+			) as CardType;
 			const targetOption = targetCard.options.find(
 				(option) => option.id === optionId
 			) as OptionType;
@@ -195,17 +203,19 @@ const cardSlice = createSlice({
 		},
 		dragCard: (state, action) => {
 			const { itemIndex, hoverIndex } = action.payload;
-			const nextState = [...state];
-			const changeCard = state[itemIndex];
+			const nextCards = [...state.cards];
+			const changeCard = state.cards[itemIndex];
 
-			nextState.splice(itemIndex, 1);
-			nextState.splice(hoverIndex, 0, changeCard);
+			nextCards.splice(itemIndex, 1);
+			nextCards.splice(hoverIndex, 0, changeCard);
 
-			return nextState;
+			state.cards = nextCards;
 		},
 		dragOption: (state, action) => {
 			const { cardId, itemIndex, hoverIndex } = action.payload;
-			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const targetCard = state.cards.find(
+				(card) => card.id === cardId
+			) as CardType;
 			const nextOption = [...targetCard.options];
 			const changeOption = nextOption[itemIndex];
 
@@ -215,7 +225,7 @@ const cardSlice = createSlice({
 		},
 		addEtcOption: (state, action) => {
 			const { id } = action.payload;
-			const targetCard = state.find((card) => card.id === id) as CardType;
+			const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 			targetCard.options.push({
 				...baseOption,
@@ -226,7 +236,9 @@ const cardSlice = createSlice({
 		},
 		checkOption: (state, action) => {
 			const { cardId, optionId } = action.payload;
-			const targetCard = state.find((card) => card.id === cardId) as CardType;
+			const targetCard = state.cards.find(
+				(card) => card.id === cardId
+			) as CardType;
 			const targetOptionIndex = targetCard.options.findIndex(
 				(option) => option.id === optionId
 			);
@@ -243,26 +255,18 @@ const cardSlice = createSlice({
 				targetCard.options[targetOptionIndex].checked =
 					!targetCard.options[targetOptionIndex].checked;
 			}
-		}
-	}
-});
-
-const focusedCard = createSlice({
-	name: 'focusedCard',
-	initialState: { id: 'titleCard' },
-	reducers: {
+		},
 		focus: (state, action) => {
 			const { id } = action.payload;
 
-			state.id = id;
+			state.focus = id;
 		}
 	}
 });
 
 const store = configureStore({
 	reducer: {
-		cards: cardSlice.reducer,
-		focusedCard: focusedCard.reducer
+		cards: cardSlice.reducer
 	}
 });
 
@@ -282,9 +286,8 @@ export const {
 	dragOption,
 	addEtcOption,
 	checkOption,
-	changeOptionContent
+	changeOptionContent,
+	focus
 } = cardSlice.actions;
-
-export const { focus } = focusedCard.actions;
 
 export default store;

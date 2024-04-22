@@ -9,7 +9,7 @@ import * as S from './index.style';
 import ResponseCard from '~/components/ResponseCard';
 
 const Response = () => {
-	const cards = useSelector((state: RootStateType) => state.cards);
+	const cards = useSelector((state: RootStateType) => state.cards.cards);
 	const methods = useForm();
 
 	const handleSubmitForm = (event: FormEvent<HTMLButtonElement>) => {

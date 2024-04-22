@@ -17,14 +17,14 @@ const OptionItemIcon = ({
 	defaultIndex = undefined
 }: OptionItemIcon) => {
 	const type = useSelector((state: RootStateType) => {
-		const targetCard = state.cards.find(
+		const targetCard = state.cards.cards.find(
 			(card) => card.id === cardId
 		) as CardType;
 
 		return targetCard.type;
 	});
 	const { isChecked, optionIndex } = useSelector((state: RootStateType) => {
-		const targetCard = state.cards.find(
+		const targetCard = state.cards.cards.find(
 			(card) => card.id === cardId
 		) as CardType;
 		const optionIndex = targetCard.options.findIndex(

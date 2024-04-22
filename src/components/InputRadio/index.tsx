@@ -10,7 +10,9 @@ interface InputRadioProps {
 const InputRadio = ({ id }: InputRadioProps) => {
 	const { control } = useFormContext();
 	const { options } = useSelector((state: RootStateType) => {
-		const targetCard = state.cards.find((card) => card.id === id) as CardType;
+		const targetCard = state.cards.cards.find(
+			(card) => card.id === id
+		) as CardType;
 
 		return { options: targetCard.options };
 	}, shallowEqual);
