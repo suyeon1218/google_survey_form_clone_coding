@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup } from '@chakra-ui/react';
+import { Checkbox, CheckboxGroup, Stack } from '@chakra-ui/react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { CardType, RootStateType } from '~/store';
@@ -23,13 +23,16 @@ const InputCheckbox = ({ id }: InputCheckbox) => {
 				<CheckboxGroup
 					onChange={onChange}
 					value={value}>
-					{options.map((option) => (
-						<Checkbox
-							key={option.id}
-							value={option.id}>
-							{option.content}
-						</Checkbox>
-					))}
+					<Stack direction={'column'}>
+						{options.map((option) => (
+							<Checkbox
+								colorScheme='purple'
+								key={option.id}
+								value={option.id}>
+								{option.content}
+							</Checkbox>
+						))}
+					</Stack>
 				</CheckboxGroup>
 			)}
 		/>

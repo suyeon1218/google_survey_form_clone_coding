@@ -1,4 +1,4 @@
-import { Radio, RadioGroup } from '@chakra-ui/react';
+import { Radio, RadioGroup, Stack } from '@chakra-ui/react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useSelector, shallowEqual } from 'react-redux';
 import { CardType, RootStateType } from '~/store';
@@ -23,13 +23,16 @@ const InputRadio = ({ id }: InputRadioProps) => {
 				<RadioGroup
 					value={value}
 					onChange={onChange}>
-					{options.map((option) => (
-						<Radio
-							key={option.id}
-							value={option.id}>
-							{option.content}
-						</Radio>
-					))}
+					<Stack direction={'column'}>
+						{options.map((option) => (
+							<Radio
+								colorScheme='purple'
+								key={option.id}
+								value={option.id}>
+								{option.content}
+							</Radio>
+						))}
+					</Stack>
 				</RadioGroup>
 			)}
 		/>
