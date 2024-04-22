@@ -45,7 +45,10 @@ const OptionFields = ({ id }: OptionFieldsProps) => {
 			))}
 			{focusedCard === id && (
 				<S.InputContainer>
-					<OptionItemIcon cardId={id} />
+					<OptionItemIcon
+						cardId={id}
+						defaultIndex={options.length + 1}
+					/>
 					<S.LastOptionContainer>
 						<S.AddOptionButton onClick={handleAddOption}>
 							옵션 추가

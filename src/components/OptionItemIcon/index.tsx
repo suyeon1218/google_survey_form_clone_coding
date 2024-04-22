@@ -7,12 +7,14 @@ interface OptionItemIcon {
 	cardId: string;
 	optionId?: string;
 	isDisable?: boolean;
+	defaultIndex?: number;
 }
 
 const OptionItemIcon = ({
 	cardId,
 	optionId = undefined,
-	isDisable = false
+	isDisable = false,
+	defaultIndex = undefined
 }: OptionItemIcon) => {
 	const type = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find(
@@ -47,7 +49,9 @@ const OptionItemIcon = ({
 				/>
 			)}
 			{type === 'dropdown' && (
-				<S.IndexContainer>{optionIndex + 1}</S.IndexContainer>
+				<S.IndexContainer>
+					{defaultIndex ? defaultIndex : optionIndex + 1}
+				</S.IndexContainer>
 			)}
 		</>
 	);
