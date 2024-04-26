@@ -12,15 +12,13 @@ interface OptionFieldsProps {
 
 const OptionFields = ({ id }: OptionFieldsProps) => {
 	const dispatch = useDispatch();
-	const focusedCard = useSelector((state: RootStateType) => {
-		return state.focusedCard.id;
-	});
-	const { options, type } = useSelector((state: RootStateType) => {
+	const { options, type, isFocus } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 		return {
 			options: targetCard.options,
-			type: targetCard.type
+			type: targetCard.type,
+			isFocus: targetCard.isFocus
 		};
 	}, shallowEqual);
 	const lastOption = options[options.length - 1];
@@ -43,7 +41,7 @@ const OptionFields = ({ id }: OptionFieldsProps) => {
 					/>
 				</S.InputContainer>
 			))}
-			{focusedCard === id && (
+			{isFocus && (
 				<S.InputContainer>
 					<OptionItemIcon
 						cardId={id}

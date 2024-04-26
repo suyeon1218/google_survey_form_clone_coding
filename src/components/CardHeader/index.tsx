@@ -16,14 +16,19 @@ interface CardHeaderProps {
 
 const CardHeader = ({ id }: CardHeaderProps) => {
 	const dispatch = useDispatch();
-	const { title, type, required } = useSelector((state: RootStateType) => {
-		const targetCard = state.cards.find((card) => card.id === id) as CardType;
+	const { title, type, required, isFocus } = useSelector(
+		(state: RootStateType) => {
+			const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
-		return targetCard;
-	}, shallowEqual);
-	const focusedCard = useSelector((state: RootStateType) => {
-		return state.focusedCard.id;
-	}, shallowEqual);
+			return {
+				title: targetCard.title,
+				type: targetCard.type,
+				required: targetCard.required,
+				isFocus: targetCard.isFocus
+			};
+		},
+		shallowEqual
+	);
 
 	const handleClickItem = (item: unknown) => {
 		dispatch(changeCardType({ id, type: item }));
@@ -35,10 +40,10 @@ const CardHeader = ({ id }: CardHeaderProps) => {
 
 	return (
 		<S.Header>
-			{typeof focusedCard === 'string' && focusedCard === id ? (
+			{isFocus ? (
 				<TextField
 					value={title}
-					isTitle={focusedCard === id || type === 'title'}
+					isTitle={type === 'title'}
 					onChange={handleChangeTitle}
 				/>
 			) : (
@@ -47,7 +52,7 @@ const CardHeader = ({ id }: CardHeaderProps) => {
 					{required && <S.RequiredIcon>*</S.RequiredIcon>}
 				</S.TitleTextContainer>
 			)}
-			{typeof focusedCard === 'string' && type !== 'title' && (
+			{isFocus && type !== 'title' && (
 				<DropDown
 					menuList={cardMenu}
 					defaultValue={cardMenu[type]}

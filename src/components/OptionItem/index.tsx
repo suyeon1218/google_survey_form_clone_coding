@@ -19,9 +19,6 @@ interface OptionItemProps {
 
 const OptionItem = ({ cardId, optionId }: OptionItemProps) => {
 	const dispatch = useDispatch();
-	const focusedCard = useSelector(
-		(state: RootStateType) => state.focusedCard.id
-	);
 	const { option, optionIndex, isDeletable } = useSelector(
 		(state: RootStateType) => {
 			const targetCard = state.cards.find(
@@ -35,7 +32,7 @@ const OptionItem = ({ cardId, optionId }: OptionItemProps) => {
 			return {
 				option: targetCard.options[targetOptionIndex],
 				optionIndex: targetOptionIndex,
-				isDeletable: targetCard.options.length > 1
+				isDeletable: targetCard.options.length > 1 && targetCard.isFocus
 			};
 		},
 		shallowEqual
@@ -80,7 +77,7 @@ const OptionItem = ({ cardId, optionId }: OptionItemProps) => {
 				variant='unstyle'
 				readOnly={option.type === 'etc'}
 			/>
-			{isDeletable && focusedCard === cardId && (
+			{isDeletable && (
 				<S.DeleteButton
 					data-option-id={option.id}
 					onClick={handleDeleteOption}>

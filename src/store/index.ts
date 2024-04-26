@@ -17,6 +17,7 @@ export interface CardType {
 	title: string;
 	type: CardMenuType;
 	required: boolean;
+	isFocus: boolean;
 	options: OptionType[];
 }
 
@@ -36,7 +37,8 @@ const baseOption: Omit<OptionType, 'id'> = {
 const baseCard: Omit<CardType, 'id' | 'options'> = {
 	title: '제목없는 질문',
 	type: 'radio',
-	required: false
+	required: false,
+	isFocus: false
 };
 
 const titleCard: CardType = {
@@ -44,6 +46,7 @@ const titleCard: CardType = {
 	id: 'titleCard',
 	title: '제목 없는 설문지',
 	type: 'title',
+	isFocus: true,
 	options: [{ ...baseOption, content: '', id: generateID() }]
 };
 
@@ -140,7 +143,7 @@ const cardSlice = createSlice({
 			const cardIndex = state.findIndex((card) => card.id === id);
 			const nextState = state.map((card, index) => ({
 				...card,
-				isFocused: index === cardIndex - 1 ? true : false
+				isFocus: index === cardIndex - 1 ? true : false
 			}));
 			nextState.splice(cardIndex, 1);
 
@@ -243,26 +246,22 @@ const cardSlice = createSlice({
 				targetCard.options[targetOptionIndex].checked =
 					!targetCard.options[targetOptionIndex].checked;
 			}
-		}
-	}
-});
-
-const focusedCard = createSlice({
-	name: 'focusedCard',
-	initialState: { id: 'titleCard' },
-	reducers: {
+		},
 		focus: (state, action) => {
 			const { id } = action.payload;
+			const nextState = state.map((card) => ({
+				...card,
+				isFocus: card.id === id ? true : false
+			}));
 
-			state.id = id;
+			return nextState;
 		}
 	}
 });
 
 const store = configureStore({
 	reducer: {
-		cards: cardSlice.reducer,
-		focusedCard: focusedCard.reducer
+		cards: cardSlice.reducer
 	}
 });
 
@@ -282,9 +281,8 @@ export const {
 	dragOption,
 	addEtcOption,
 	checkOption,
-	changeOptionContent
+	changeOptionContent,
+	focus
 } = cardSlice.actions;
-
-export const { focus } = focusedCard.actions;
 
 export default store;

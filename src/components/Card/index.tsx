@@ -21,18 +21,19 @@ interface CardProps {
 
 const Card = memo(({ id }: CardProps) => {
 	const dispatch = useDispatch();
-	const { type } = useSelector((state: RootStateType) => {
+	const { type, isFocus } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
-		return targetCard;
+		return {
+			type: targetCard.type,
+			isFocus: targetCard.isFocus
+		};
 	}, shallowEqual);
+
 	const index = useSelector((state: RootStateType) => {
 		const targetCardIndex = state.cards.findIndex((card) => card.id === id);
 
 		return targetCardIndex;
-	});
-	const focusedCard = useSelector((state: RootStateType) => {
-		return state.focusedCard.id;
 	});
 
 	const handleCardSort = (itemIndex: number, hoverIndex: number) => {
@@ -60,7 +61,7 @@ const Card = memo(({ id }: CardProps) => {
 			id={id}
 			onClick={handleClickCard}
 			isTitle={type === 'title'}
-			isFocus={focusedCard === id}
+			isFocus={isFocus}
 			isDragging={isDragging}>
 			<CardHeader id={id} />
 			<S.Body>
@@ -80,7 +81,7 @@ const Card = memo(({ id }: CardProps) => {
 					<OptionFields id={id} />
 				)}
 			</S.Body>
-			{type !== 'title' && focusedCard === id && <CardFooter id={id} />}
+			{type !== 'title' && isFocus && <CardFooter id={id} />}
 		</S.Container>
 	);
 });
