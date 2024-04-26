@@ -46,6 +46,7 @@ const OptionFields = ({ id }: OptionFieldsProps) => {
 					<OptionItemIcon
 						cardId={id}
 						defaultIndex={options.length + 1}
+						isDisable={true}
 					/>
 					<S.LastOptionContainer>
 						<S.AddOptionButton onClick={handleAddOption}>
