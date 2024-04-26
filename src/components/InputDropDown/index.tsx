@@ -1,4 +1,5 @@
 import { Stack } from '@chakra-ui/react';
+import { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useSelector, shallowEqual } from 'react-redux';
 import { CardType, RootStateType } from '~/store';
@@ -16,6 +17,14 @@ const InputDropDown = ({ id }: InputDropDownProps) => {
 		return { options: targetCard.options, required: targetCard.required };
 	}, shallowEqual);
 
+	const newOptions = useMemo(() => {
+		const memo: { [key: string]: string } = {};
+
+		options.forEach((option) => (memo[option.id] = option.content));
+
+		return memo;
+	}, [options]);
+
 	return (
 		<Stack direction={'column'}>
 			<Controller
@@ -24,7 +33,7 @@ const InputDropDown = ({ id }: InputDropDownProps) => {
 				rules={{ required }}
 				render={({ field: { onChange, value } }) => (
 					<DropDown
-						menuList={options.map((option) => option.content)}
+						menuList={newOptions}
 						includeDefaultValue={true}
 						defaultValue={value}
 						onClick={onChange}
