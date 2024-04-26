@@ -19,10 +19,12 @@ interface OptionItemProps {
 
 const OptionItem = ({ cardId, optionId }: OptionItemProps) => {
 	const dispatch = useDispatch();
-	const focusedCard = useSelector((state: RootStateType) => state.cards.focus);
+	const focusedCard = useSelector(
+		(state: RootStateType) => state.focusedCard.id
+	);
 	const { option, optionIndex, isDeletable } = useSelector(
 		(state: RootStateType) => {
-			const targetCard = state.cards.cards.find(
+			const targetCard = state.cards.find(
 				(card) => card.id === cardId
 			) as CardType;
 			const targetOptionIndex = targetCard.options.findIndex(

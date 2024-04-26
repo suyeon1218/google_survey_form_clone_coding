@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import InputCheckbox from '../InputCheckbox';
+import InputDropDown from '../InputDropDown';
 import InputLong from '../InputLong';
-import InputDropDown from '../InputOptions';
 import InputRadio from '../InputRadio';
 import InputShort from '../InputShort';
 import { CardType, RootStateType } from './../../store/index';
@@ -15,9 +15,7 @@ interface ResponseCardProps {
 
 const ResponseCard = memo(({ id }: ResponseCardProps) => {
 	const { type, title, required } = useSelector((state: RootStateType) => {
-		const targetCard = state.cards.cards.find(
-			(card) => card.id === id
-		) as CardType;
+		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 		return {
 			type: targetCard.type,

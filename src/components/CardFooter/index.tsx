@@ -18,9 +18,7 @@ interface CardFooterProps {
 const CardFooter = ({ id }: CardFooterProps) => {
 	const dispatch = useDispatch();
 	const required = useSelector((state: RootStateType) => {
-		const targetCard = state.cards.cards.find(
-			(card) => card.id === id
-		) as CardType;
+		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 		return targetCard.required;
 	}, shallowEqual);

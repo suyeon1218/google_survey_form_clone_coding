@@ -8,7 +8,7 @@ const AddButton = () => {
 	const buttonRef = useRef<HTMLDivElement | null>();
 	const dispatch = useDispatch();
 	const focusedCard = useSelector((state: RootStateType) => {
-		return state.cards.focus;
+		return state.focusedCard.id;
 	});
 
 	useEffect(() => {

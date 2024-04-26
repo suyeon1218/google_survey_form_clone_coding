@@ -22,21 +22,17 @@ interface CardProps {
 const Card = memo(({ id }: CardProps) => {
 	const dispatch = useDispatch();
 	const { type } = useSelector((state: RootStateType) => {
-		const targetCard = state.cards.cards.find(
-			(card) => card.id === id
-		) as CardType;
+		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 		return targetCard;
 	}, shallowEqual);
 	const index = useSelector((state: RootStateType) => {
-		const targetCardIndex = state.cards.cards.findIndex(
-			(card) => card.id === id
-		);
+		const targetCardIndex = state.cards.findIndex((card) => card.id === id);
 
 		return targetCardIndex;
 	});
 	const focusedCard = useSelector((state: RootStateType) => {
-		return state.cards.focus;
+		return state.focusedCard.id;
 	});
 
 	const handleCardSort = (itemIndex: number, hoverIndex: number) => {

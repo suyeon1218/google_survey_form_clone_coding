@@ -13,12 +13,10 @@ interface OptionFieldsProps {
 const OptionFields = ({ id }: OptionFieldsProps) => {
 	const dispatch = useDispatch();
 	const focusedCard = useSelector((state: RootStateType) => {
-		return state.cards.focus;
+		return state.focusedCard.id;
 	});
 	const { options, type } = useSelector((state: RootStateType) => {
-		const targetCard = state.cards.cards.find(
-			(card) => card.id === id
-		) as CardType;
+		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 		return {
 			options: targetCard.options,

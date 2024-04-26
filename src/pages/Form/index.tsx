@@ -9,7 +9,7 @@ import AddButton from '~/components/AddButton';
 import Card from '~/components/Card';
 
 const Form = () => {
-	const cards = useSelector((state: RootStateType) => state.cards.cards);
+	const cards = useSelector((state: RootStateType) => state.cards);
 
 	return (
 		<S.Container>
