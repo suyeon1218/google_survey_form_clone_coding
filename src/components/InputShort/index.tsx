@@ -21,7 +21,7 @@ const InputShort = ({ id }: InputShortProps) => {
 		<Controller
 			name={id}
 			control={control}
-			rules={{ required }}
+			rules={{ required, minLength: 1 }}
 			render={({ field: { onChange } }) => (
 				<S.InputShort
 					onChange={onChange}

@@ -23,7 +23,7 @@ const InputLong = ({ id, placeholder = '내 답변' }: InputLongProps) => {
 		<Controller
 			control={control}
 			name={id}
-			rules={{ required }}
+			rules={{ required, minLength: 1 }}
 			render={({ field: { onChange, value } }) => (
 				<TextField
 					readOnly={id === 'titleCard'}
