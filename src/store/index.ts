@@ -38,7 +38,7 @@ const baseCard: Omit<CardType, 'id' | 'options'> = {
 	title: '제목없는 질문',
 	type: 'radio',
 	required: false,
-	isFocus: false
+	isFocus: true
 };
 
 const titleCard: CardType = {
@@ -46,7 +46,6 @@ const titleCard: CardType = {
 	id: 'titleCard',
 	title: '제목 없는 설문지',
 	type: 'title',
-	isFocus: true,
 	options: [{ ...baseOption, content: '', id: generateID() }]
 };
 
@@ -59,6 +58,7 @@ const initialCards: CardsType = [
 	{
 		...baseCard,
 		id: generateID(),
+		isFocus: false,
 		options: [{ ...baseOption, id: generateID() }]
 	}
 ];
@@ -70,13 +70,16 @@ const cardSlice = createSlice({
 		addCard: (state, action) => {
 			const { id } = action.payload;
 			const targetCardIndex = state.findIndex((card) => card.id === id);
+			const nextState = state.map((card) => ({ ...card, isFocus: false }));
 			const newCard: CardType = {
 				...baseCard,
 				id: generateID(),
 				options: [{ ...baseOption, id: generateID() }]
 			};
 
-			state.splice(targetCardIndex + 1, 0, newCard);
+			nextState.splice(targetCardIndex + 1, 0, newCard);
+
+			return nextState;
 		},
 		changeCardType: (state, action) => {
 			const { id, type } = action.payload;
