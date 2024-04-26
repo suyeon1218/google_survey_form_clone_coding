@@ -1,6 +1,6 @@
 import { Checkbox, CheckboxGroup, Stack } from '@chakra-ui/react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { CardType, RootStateType } from '~/store';
 
 interface InputCheckbox {
@@ -13,7 +13,7 @@ const InputCheckbox = ({ id }: InputCheckbox) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 		return { options: targetCard.options, required: targetCard.required };
-	});
+	}, shallowEqual);
 
 	return (
 		<Controller
