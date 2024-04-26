@@ -23,7 +23,9 @@ const InputRadio = ({ id }: InputRadioProps) => {
 				<RadioGroup
 					value={value}
 					onChange={onChange}>
-					<Stack direction={'column'}>
+					<Stack
+						gap={3}
+						direction={'column'}>
 						{options.map((option) => (
 							<Radio
 								colorScheme='purple'

@@ -23,7 +23,9 @@ const InputCheckbox = ({ id }: InputCheckbox) => {
 				<CheckboxGroup
 					onChange={onChange}
 					value={value}>
-					<Stack direction={'column'}>
+					<Stack
+						gap={3}
+						direction={'column'}>
 						{options.map((option) => (
 							<Checkbox
 								colorScheme='purple'
