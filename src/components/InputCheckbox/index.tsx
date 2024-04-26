@@ -9,16 +9,17 @@ interface InputCheckbox {
 
 const InputCheckbox = ({ id }: InputCheckbox) => {
 	const { control } = useFormContext();
-	const { options } = useSelector((state: RootStateType) => {
+	const { options, required } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
-		return { options: targetCard.options };
+		return { options: targetCard.options, required: targetCard.required };
 	});
 
 	return (
 		<Controller
 			control={control}
 			name={id}
+			rules={{ required }}
 			render={({ field: { onChange, value } }) => (
 				<CheckboxGroup
 					onChange={onChange}

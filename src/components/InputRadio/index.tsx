@@ -9,15 +9,16 @@ interface InputRadioProps {
 
 const InputRadio = ({ id }: InputRadioProps) => {
 	const { control } = useFormContext();
-	const { options } = useSelector((state: RootStateType) => {
+	const { options, required } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
-		return { options: targetCard.options };
+		return { options: targetCard.options, required: targetCard.required };
 	}, shallowEqual);
 
 	return (
 		<Controller
 			name={id}
+			rules={{ required }}
 			control={control}
 			render={({ field: { onChange, value } }) => (
 				<RadioGroup
