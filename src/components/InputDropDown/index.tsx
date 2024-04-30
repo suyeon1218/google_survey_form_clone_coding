@@ -44,7 +44,8 @@ const InputDropDown = ({ id }: InputDropDownProps) => {
 							const option = options.find(
 								(option) => option.id === (key as string)
 							) as OptionType;
-							onChange(option.content);
+
+							onChange(key ? option.content : undefined);
 							onBlur();
 						}}
 					/>
