@@ -34,7 +34,7 @@ const InputCheckbox = ({ id }: InputCheckbox) => {
 								onChange={onBlur}
 								colorScheme='purple'
 								key={option.id}
-								value={option.id}>
+								value={option.content}>
 								{option.content}
 							</Checkbox>
 						))}

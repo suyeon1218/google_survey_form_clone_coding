@@ -25,7 +25,7 @@ const InputRadio = ({ id }: InputRadioProps) => {
 				}
 			}}
 			control={control}
-			defaultValue={required ? options[0].id : undefined}
+			defaultValue={required ? options[0].content : undefined}
 			render={({ field: { onChange, value } }) => (
 				<RadioGroup
 					defaultValue={required ? options[0].id : undefined}
@@ -38,7 +38,7 @@ const InputRadio = ({ id }: InputRadioProps) => {
 							<Radio
 								colorScheme='purple'
 								key={option.id}
-								value={option.id}>
+								value={option.content}>
 								{option.content}
 							</Radio>
 						))}
