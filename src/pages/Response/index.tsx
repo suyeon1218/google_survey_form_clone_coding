@@ -16,7 +16,6 @@ const Response = () => {
 	const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const { getValues, trigger, formState } = methods;
-		const { errors } = formState;
 		const values = getValues();
 		const cardId = Object.keys(values);
 
@@ -24,11 +23,12 @@ const Response = () => {
 			if ((await trigger(id)) === false) {
 				const targetCard = document.getElementById(id) as HTMLElement;
 				targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-				break;
+
+				return;
 			}
 		}
 
-		if (errors && Object.entries(errors).length === 0) {
+		if (Object.entries(formState.errors).length === 0) {
 			navigate('/result', { state: { responses: values } });
 		}
 	};
