@@ -3,6 +3,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { RootStateType } from '~/store';
 import * as S from './index.style';
 import ResponseCard from '~/components/ResponseCard';
@@ -10,12 +11,26 @@ import ResponseCard from '~/components/ResponseCard';
 const Response = () => {
 	const cards = useSelector((state: RootStateType) => state.cards);
 	const methods = useForm({ mode: 'onBlur' });
+	const navigate = useNavigate();
 
-	const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
+	const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const values = methods.getValues();
+		const { getValues, trigger, formState } = methods;
+		const { errors } = formState;
+		const values = getValues();
+		const cardId = Object.keys(values);
 
-		console.log(values);
+		for (const id of cardId) {
+			if ((await trigger(id)) === false) {
+				const targetCard = document.getElementById(id) as HTMLElement;
+				targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+				break;
+			}
+		}
+
+		if (errors && Object.entries(errors).length === 0) {
+			navigate('/result', { state: { responses: values } });
+		}
 	};
 
 	return (
