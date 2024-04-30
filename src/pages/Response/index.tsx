@@ -11,16 +11,19 @@ const Response = () => {
 	const cards = useSelector((state: RootStateType) => state.cards);
 	const methods = useForm({ mode: 'onBlur' });
 
-	const handleSubmitForm = (event: FormEvent<HTMLButtonElement>) => {
+	const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		const values = methods.getValues();
+
+		console.log(values);
 	};
 
 	return (
 		<S.Container>
-			<form>
+			<form onSubmit={handleSubmitForm}>
 				<S.Header>
 					<S.SubmitTooltip label='보내기'>
-						<S.SubmitButton onSubmit={handleSubmitForm}>보내기</S.SubmitButton>
+						<S.SubmitButton type='submit'>보내기</S.SubmitButton>
 					</S.SubmitTooltip>
 				</S.Header>
 				<S.Main>
