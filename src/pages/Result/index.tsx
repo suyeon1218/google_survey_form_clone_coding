@@ -17,9 +17,9 @@ const Result = () => {
 	const location = useLocation();
 	const cards = useSelector((state: RootStateType) => state.cards);
 	const { state } = location;
-	const response = state.response as Response;
+	const responses = state.response as Response;
 
-	const cardData: Card[] = Object.entries(response).map(([cardId, values]) => {
+	const cardData: Card[] = Object.entries(responses).map(([cardId, values]) => {
 		const targetCard = cards.find((card) => card.id === cardId) as CardType;
 		const responses = Array.isArray(values) ? [...values] : [values];
 
