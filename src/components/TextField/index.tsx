@@ -1,26 +1,27 @@
-import { ChangeEvent, useRef } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import * as S from './index.style';
 
 interface TextFieldProps {
 	value?: string;
 	isTitle?: boolean;
 	placeholder?: string;
-	onChange?: (value: string) => void;
+	onChange?: (inputValue: string) => void;
 	onBlur?: () => void;
 	readOnly?: boolean;
 }
 
 const TextField = ({
-	value = '',
+	value,
 	isTitle = false,
 	placeholder = '',
 	onChange,
 	onBlur,
 	readOnly = false
 }: TextFieldProps) => {
+	const [inputValue, setInputValue] = useState<string>(value ? value : '');
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-	const handleChangeValue = (event: ChangeEvent<HTMLTextAreaElement>) => {
+	const handleChangeinputValue = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (textareaRef.current) {
 			textareaRef.current.style.height = 'auto';
 			textareaRef.current.style.height =
@@ -28,6 +29,7 @@ const TextField = ({
 		}
 		if (onChange) {
 			const { value } = event.target;
+			setInputValue(value);
 			onChange(value);
 		}
 	};
@@ -41,8 +43,8 @@ const TextField = ({
 				ref={textareaRef}
 				onBlur={onBlur}
 				placeholder={placeholder}
-				onChange={handleChangeValue}
-				value={value}></S.TextArea>
+				onChange={handleChangeinputValue}
+				value={inputValue}></S.TextArea>
 		</S.Container>
 	);
 };

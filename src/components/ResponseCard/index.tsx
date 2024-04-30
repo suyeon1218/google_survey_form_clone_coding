@@ -6,6 +6,7 @@ import InputDropDown from '../InputDropDown';
 import InputLong from '../InputLong';
 import InputRadio from '../InputRadio';
 import InputShort from '../InputShort';
+import TitleCardInfo from '../TitleCardInfo/TitleCardInfo';
 import { CardType, RootStateType } from './../../store/index';
 import * as S from './index.style';
 
@@ -37,7 +38,7 @@ const ResponseCard = memo(({ id }: ResponseCardProps) => {
 				<S.RequiredIcon>{required ? '*' : ''}</S.RequiredIcon>
 			</S.Header>
 			<S.Body>
-				{type === 'title' && <InputLong id={id} />}
+				{type === 'title' && <TitleCardInfo id={id} />}
 				{type === 'short' && <InputShort id={id} />}
 				{type === 'long' && <InputLong id={id} />}
 				{type === 'radio' && <InputRadio id={id} />}
