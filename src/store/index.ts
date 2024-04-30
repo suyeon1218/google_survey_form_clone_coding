@@ -29,7 +29,7 @@ export interface OptionType {
 }
 
 const baseOption: Omit<OptionType, 'id'> = {
-	content: '옵션 1',
+	content: '옵션1',
 	checked: false,
 	type: 'normal'
 };
