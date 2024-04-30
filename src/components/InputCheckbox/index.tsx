@@ -21,7 +21,10 @@ const InputCheckbox = ({ id }: InputCheckbox) => {
 			name={id}
 			rules={{
 				validate: (value) => {
-					return !required || value.length > 0 || '필수 입력 값입니다.';
+					return (
+						(value !== undefined && (!required || value.length > 0)) ||
+						'필수 입력 값입니다.'
+					);
 				}
 			}}
 			render={({ field: { onChange, onBlur } }) => (

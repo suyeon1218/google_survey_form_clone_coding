@@ -16,13 +16,19 @@ const DropDown = ({
 	onClick,
 	includeDefaultValue = false
 }: CardMenuProps) => {
-	const [selectedValue, setSelectedValue] = useState(
-		Array.isArray(menuList) && defaultValue === undefined
-			? menuList[0]
-			: !Array.isArray(menuList) && defaultValue === undefined
-				? menuList[Object.keys(menuList)[0]]
-				: defaultValue
-	);
+	const [selectedValue, setSelectedValue] = useState(() => {
+		if (includeDefaultValue) {
+			return undefined;
+		}
+		if (defaultValue) {
+			return defaultValue;
+		}
+		if (Array.isArray(menuList)) {
+			return menuList[0];
+		}
+
+		return Object.values(menuList)[0];
+	});
 
 	const handleClickItem = (event: MouseEvent<HTMLButtonElement>) => {
 		const target = event.target as HTMLElement;
@@ -53,6 +59,7 @@ const DropDown = ({
 				{includeDefaultValue && (
 					<>
 						<S.Item
+							value={undefined}
 							isSelect={selectedValue === undefined}
 							onClick={handleClickItem}>
 							선택
@@ -63,6 +70,7 @@ const DropDown = ({
 				{Object.entries(menuList).map(([key, value]) => (
 					<S.Item
 						key={key}
+						value={value}
 						isSelect={value === selectedValue}
 						onClick={handleClickItem}
 						data-key={key}>
