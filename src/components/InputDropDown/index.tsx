@@ -30,13 +30,20 @@ const InputDropDown = ({ id }: InputDropDownProps) => {
 			<Controller
 				name={id}
 				control={control}
-				rules={{ required }}
-				render={({ field: { onChange, value } }) => (
+				rules={{
+					required: {
+						value: required,
+						message: '필수 입력 값입니다.'
+					}
+				}}
+				render={({ field: { onChange, onBlur } }) => (
 					<DropDown
 						menuList={newOptions}
 						includeDefaultValue={true}
-						defaultValue={value}
-						onClick={onChange}
+						onClick={(value: unknown) => {
+							onChange(value);
+							onBlur();
+						}}
 					/>
 				)}
 			/>

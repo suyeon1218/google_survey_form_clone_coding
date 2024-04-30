@@ -19,16 +19,19 @@ const InputCheckbox = ({ id }: InputCheckbox) => {
 		<Controller
 			control={control}
 			name={id}
-			rules={{ required }}
-			render={({ field: { onChange, value } }) => (
-				<CheckboxGroup
-					onChange={onChange}
-					value={value}>
+			rules={{
+				validate: (value) => {
+					return !required || value.length > 0 || '필수 입력 값입니다.';
+				}
+			}}
+			render={({ field: { onChange, onBlur } }) => (
+				<CheckboxGroup onChange={onChange}>
 					<Stack
 						gap={3}
 						direction={'column'}>
 						{options.map((option) => (
 							<Checkbox
+								onChange={onBlur}
 								colorScheme='purple'
 								key={option.id}
 								value={option.id}>

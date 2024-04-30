@@ -27,12 +27,3 @@ export const Body = styled(CardBody)`
 	width: 100%;
 	padding: 10px 0px;
 `;
-
-export const RequiredMessage = styled.div`
-	display: flex;
-	gap: 5px;
-	width: 100%;
-	height: 50px;
-	align-items: center;
-	color: ${({ theme }) => theme.colors.red[500]};
-`;

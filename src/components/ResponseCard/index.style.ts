@@ -1,3 +1,4 @@
+import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { Card, CardBody } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
@@ -43,5 +44,11 @@ export const RequiredMessage = styled.div`
 `;
 
 export const RequiredIcon = styled.span`
+	margin-left: 5px;
+	font-weight: bolder;
+	color: ${({ theme }) => theme.colors.red[500]};
+`;
+
+export const ErrorIcon = styled(InfoOutlineIcon)`
 	color: ${({ theme }) => theme.colors.red[500]};
 `;

@@ -34,11 +34,12 @@ export const Header = styled(CardHeader)`
 
 export const TitleTextContainer = styled.div`
 	display: flex;
-	gap: 5px;
 `;
 
 export const TitleText = styled.span``;
 
 export const RequiredIcon = styled.span`
+	margin-left: 5px;
+	font-weight: bolder;
 	color: ${({ theme }) => theme.colors.red[500]};
 `;

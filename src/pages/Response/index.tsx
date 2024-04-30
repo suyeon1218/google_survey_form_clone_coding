@@ -3,14 +3,13 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { RootStateType } from '~/store';
 import * as S from './index.style';
 import ResponseCard from '~/components/ResponseCard';
 
 const Response = () => {
 	const cards = useSelector((state: RootStateType) => state.cards);
-	const methods = useForm();
+	const methods = useForm({ mode: 'onBlur' });
 
 	const handleSubmitForm = (event: FormEvent<HTMLButtonElement>) => {
 		event.preventDefault();
@@ -21,9 +20,7 @@ const Response = () => {
 			<form>
 				<S.Header>
 					<S.SubmitTooltip label='보내기'>
-						<S.SubmitButton onSubmit={handleSubmitForm}>
-							<Link to='result'>보내기</Link>
-						</S.SubmitButton>
+						<S.SubmitButton onSubmit={handleSubmitForm}>보내기</S.SubmitButton>
 					</S.SubmitTooltip>
 				</S.Header>
 				<S.Main>

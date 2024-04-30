@@ -1,4 +1,4 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { useSelector, shallowEqual } from 'react-redux';
 import { RootStateType, CardType } from '~/store';
 import * as S from './index.style';
@@ -15,20 +15,16 @@ const InputShort = ({ id }: InputShortProps) => {
 			required: targetCard.required
 		};
 	}, shallowEqual);
-	const { control } = useFormContext();
+	const { register } = useFormContext();
 
 	return (
-		<Controller
-			name={id}
-			control={control}
-			rules={{ required, minLength: 1 }}
-			render={({ field: { onChange } }) => (
-				<S.InputShort
-					onChange={onChange}
-					variant='flushed'
-					placeholder='내 답변'
-				/>
-			)}
+		<S.InputShort
+			{...register(id, {
+				validate: (value) =>
+					!required || value.length > 0 || '필수 입력 값입니다.'
+			})}
+			variant='flushed'
+			placeholder='내 답변'
 		/>
 	);
 };

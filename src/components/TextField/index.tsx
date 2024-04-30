@@ -6,6 +6,7 @@ interface TextFieldProps {
 	isTitle?: boolean;
 	placeholder?: string;
 	onChange?: (value: string) => void;
+	onBlur?: () => void;
 	readOnly?: boolean;
 }
 
@@ -14,6 +15,7 @@ const TextField = ({
 	isTitle = false,
 	placeholder = '',
 	onChange,
+	onBlur,
 	readOnly = false
 }: TextFieldProps) => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -37,9 +39,10 @@ const TextField = ({
 				rows={1}
 				isTitle={isTitle}
 				ref={textareaRef}
+				onBlur={onBlur}
 				placeholder={placeholder}
 				onChange={handleChangeValue}
-				defaultValue={value}></S.TextArea>
+				value={value}></S.TextArea>
 		</S.Container>
 	);
 };

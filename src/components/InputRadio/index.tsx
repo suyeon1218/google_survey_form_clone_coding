@@ -18,10 +18,17 @@ const InputRadio = ({ id }: InputRadioProps) => {
 	return (
 		<Controller
 			name={id}
-			rules={{ required }}
+			rules={{
+				required: {
+					value: required,
+					message: '필수 입력 값입니다.'
+				}
+			}}
 			control={control}
+			defaultValue={required ? options[0].id : undefined}
 			render={({ field: { onChange, value } }) => (
 				<RadioGroup
+					defaultValue={required ? options[0].id : undefined}
 					value={value}
 					onChange={onChange}>
 					<Stack

@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useSelector, shallowEqual } from 'react-redux';
 import InputCheckbox from '../InputCheckbox';
 import InputDropDown from '../InputDropDown';
@@ -23,14 +24,17 @@ const ResponseCard = memo(({ id }: ResponseCardProps) => {
 			required: targetCard.required
 		};
 	}, shallowEqual);
+	const { formState } = useFormContext();
+	const { errors } = formState;
 
 	return (
 		<S.Container
 			id={id}
+			isError={!!errors[id]}
 			isTitle={type === 'title'}>
 			<S.Header>
-				<S.RequiredIcon>{required ? '*' : ''}</S.RequiredIcon>
 				{title}
+				<S.RequiredIcon>{required ? '*' : ''}</S.RequiredIcon>
 			</S.Header>
 			<S.Body>
 				{type === 'title' && <InputLong id={id} />}
@@ -40,6 +44,12 @@ const ResponseCard = memo(({ id }: ResponseCardProps) => {
 				{type === 'checkbox' && <InputCheckbox id={id} />}
 				{type === 'dropdown' && <InputDropDown id={id} />}
 			</S.Body>
+			{errors[id] && (
+				<S.RequiredMessage>
+					<S.ErrorIcon />
+					필수 입력 값입니다.
+				</S.RequiredMessage>
+			)}
 		</S.Container>
 	);
 });
