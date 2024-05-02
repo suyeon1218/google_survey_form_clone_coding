@@ -57,7 +57,10 @@ const InputRadio = ({ id }: InputRadioProps) => {
 								</Radio>
 							) : (
 								<S.EtcContainer key={option.id}>
-									<Radio value={option.content} />
+									<Radio
+										colorScheme='purple'
+										value={option.content}
+									/>
 									<S.EtcText>기타:</S.EtcText>
 									<S.EtcInput
 										ref={EtcRef}
