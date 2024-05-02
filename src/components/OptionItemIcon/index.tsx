@@ -23,7 +23,7 @@ const OptionItemIcon = ({
 
 		return targetCard.type;
 	});
-	const { isChecked, optionIndex } = useSelector((state: RootStateType) => {
+	const { optionIndex } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find(
 			(card) => card.id === cardId
 		) as CardType;
@@ -31,23 +31,13 @@ const OptionItemIcon = ({
 			(option) => option.id === optionId
 		);
 
-		return { isChecked: targetCard.options[optionIndex]?.checked, optionIndex };
+		return { optionIndex };
 	}, shallowEqual);
 
 	return (
 		<>
-			{type === 'radio' && (
-				<Radio
-					isChecked={!!isChecked}
-					isDisabled={isDisable}
-				/>
-			)}
-			{type === 'checkbox' && (
-				<Checkbox
-					isChecked={!!isChecked}
-					isDisabled={isDisable}
-				/>
-			)}
+			{type === 'radio' && <Radio isDisabled={isDisable} />}
+			{type === 'checkbox' && <Checkbox isDisabled={isDisable} />}
 			{type === 'dropdown' && (
 				<S.IndexContainer>
 					{defaultIndex ? defaultIndex : optionIndex + 1}

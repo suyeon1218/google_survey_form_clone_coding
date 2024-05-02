@@ -25,12 +25,10 @@ export interface OptionType {
 	id: string;
 	type: 'normal' | 'etc';
 	content: string;
-	checked: boolean;
 }
 
 const baseOption: Omit<OptionType, 'id'> = {
 	content: '옵션1',
-	checked: false,
 	type: 'normal'
 };
 
@@ -156,10 +154,6 @@ const cardSlice = createSlice({
 			const targetCard = state.find((card) => card.id === id) as CardType;
 
 			targetCard.required = !targetCard.required;
-
-			if (targetCard.type === 'radio') {
-				targetCard.options[0].checked = true;
-			}
 		},
 		addOption: (state, action) => {
 			const { id } = action.payload;
@@ -229,26 +223,6 @@ const cardSlice = createSlice({
 				content: ''
 			});
 		},
-		checkOption: (state, action) => {
-			const { cardId, optionId } = action.payload;
-			const targetCard = state.find((card) => card.id === cardId) as CardType;
-			const targetOptionIndex = targetCard.options.findIndex(
-				(option) => option.id === optionId
-			);
-
-			if (targetCard.type === 'radio') {
-				const nextOptions = targetCard.options.map((option) => ({
-					...option,
-					checked: false
-				}));
-				nextOptions[targetOptionIndex].checked = true;
-
-				targetCard.options = nextOptions;
-			} else {
-				targetCard.options[targetOptionIndex].checked =
-					!targetCard.options[targetOptionIndex].checked;
-			}
-		},
 		focus: (state, action) => {
 			const { id } = action.payload;
 			const nextState = state.map((card) => ({
@@ -282,7 +256,6 @@ export const {
 	dragCard,
 	dragOption,
 	addEtcOption,
-	checkOption,
 	focus
 } = cardSlice.actions;
 
