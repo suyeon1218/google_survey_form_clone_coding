@@ -23,7 +23,28 @@ const Result = () => {
 
 	const cardData: Card[] = Object.entries(responses).map(([cardId, values]) => {
 		const targetCard = cards.find((card) => card.id === cardId) as CardType;
-		const responses = Array.isArray(values) ? [...values] : [values];
+		const responses: (string | undefined)[] = [];
+		const { options } = targetCard;
+
+		if (values === undefined) {
+			responses.push(undefined);
+		} else if (typeof values === 'string') {
+			for (let i = 0; i < options.length; i++) {
+				if (options[i].id === values) {
+					responses.push(options[i].content);
+					break;
+				}
+			}
+		} else {
+			for (let i = 0; i < values.length; i++) {
+				for (let j = 0; j < options.length; j++) {
+					if (options[j].id === values[i]) {
+						responses.push(options[j].content);
+						break;
+					}
+				}
+			}
+		}
 
 		return {
 			id: cardId,
