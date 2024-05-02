@@ -10,6 +10,7 @@ interface Response {
 }
 
 interface Card {
+	id: string;
 	title: string;
 	responses: (string | undefined)[];
 }
@@ -25,6 +26,7 @@ const Result = () => {
 		const responses = Array.isArray(values) ? [...values] : [values];
 
 		return {
+			id: cardId,
 			title: targetCard.title,
 			responses
 		};
@@ -40,7 +42,7 @@ const Result = () => {
 			<S.Main>
 				{cardData.map((card) => {
 					return (
-						<S.StyledCard>
+						<S.StyledCard key={card.id}>
 							<S.StyledCardHeader>{card.title}</S.StyledCardHeader>
 							<CardBody>
 								{card.responses.map((response) => (
