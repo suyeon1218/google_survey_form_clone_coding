@@ -1,5 +1,5 @@
 import { Radio, RadioGroup, Stack } from '@chakra-ui/react';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { CardType, RootStateType, changeInputValue } from '~/store';
@@ -10,6 +10,7 @@ interface InputRadioProps {
 }
 
 const InputRadio = ({ id }: InputRadioProps) => {
+	const EtcRef = useRef<HTMLInputElement | null>(null);
 	const dispatch = useDispatch();
 	const { control } = useFormContext();
 	const { options, required } = useSelector((state: RootStateType) => {
@@ -53,15 +54,17 @@ const InputRadio = ({ id }: InputRadioProps) => {
 									{option.content}
 								</Radio>
 							) : (
-								<S.EtcContainer
-									key={option.id}
-									onClick={onChange}>
+								<S.EtcContainer key={option.id}>
 									<Radio value={option.content} />
 									<S.EtcText>기타:</S.EtcText>
 									<S.EtcInput
+										ref={EtcRef}
 										variant={'flushed'}
 										data-option-id={option.id}
-										onChange={handleChangeEtc}
+										onChange={(event) => {
+											handleChangeEtc(event);
+											onChange(EtcRef && EtcRef.current?.value);
+										}}
 									/>
 								</S.EtcContainer>
 							);
