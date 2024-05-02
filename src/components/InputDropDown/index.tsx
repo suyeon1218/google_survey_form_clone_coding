@@ -2,7 +2,7 @@ import { Stack } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useSelector, shallowEqual } from 'react-redux';
-import { CardType, OptionType, RootStateType } from '~/store';
+import { CardType, RootStateType } from '~/store';
 import DropDown from '../DropDown';
 
 interface InputDropDownProps {
@@ -41,11 +41,7 @@ const InputDropDown = ({ id }: InputDropDownProps) => {
 						menuList={newOptions}
 						includeDefaultValue={true}
 						onClick={(key: unknown) => {
-							const option = options.find(
-								(option) => option.id === (key as string)
-							) as OptionType;
-
-							onChange(key ? option.content : undefined);
+							onChange(key ? key : undefined);
 							onBlur();
 						}}
 					/>

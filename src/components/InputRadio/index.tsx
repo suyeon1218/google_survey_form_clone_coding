@@ -1,5 +1,5 @@
 import { Radio, RadioGroup, Stack } from '@chakra-ui/react';
-import { ChangeEvent, useRef } from 'react';
+import { useRef } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { CardType, RootStateType, changeInputValue } from '~/store';
@@ -19,10 +19,7 @@ const InputRadio = ({ id }: InputRadioProps) => {
 		return { options: targetCard.options, required: targetCard.required };
 	}, shallowEqual);
 
-	const handleChangeEtc = (event: ChangeEvent<HTMLInputElement>) => {
-		const { value, dataset } = event.target;
-		const { optionId } = dataset;
-
+	const handleChangeEtc = (optionId: string, value: string) => {
 		dispatch(changeInputValue({ cardId: id, optionId, value }));
 	};
 
@@ -52,14 +49,14 @@ const InputRadio = ({ id }: InputRadioProps) => {
 									colorScheme='purple'
 									key={option.id}
 									onChange={onBlur}
-									value={option.content}>
+									value={option.id}>
 									{option.content}
 								</Radio>
 							) : (
 								<S.EtcContainer key={option.id}>
 									<Radio
 										colorScheme='purple'
-										value={option.content}
+										value={option.id}
 									/>
 									<S.EtcText>기타:</S.EtcText>
 									<S.EtcInput
@@ -67,9 +64,12 @@ const InputRadio = ({ id }: InputRadioProps) => {
 										variant={'flushed'}
 										data-option-id={option.id}
 										onBlur={onBlur}
-										onChange={(event) => {
-											handleChangeEtc(event);
-											onChange(EtcRef && EtcRef.current?.value);
+										onChange={() => {
+											handleChangeEtc(
+												option.id,
+												EtcRef?.current?.value as string
+											);
+											onChange(option.id);
 										}}
 									/>
 								</S.EtcContainer>
