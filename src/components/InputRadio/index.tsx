@@ -33,11 +33,12 @@ const InputRadio = ({ id }: InputRadioProps) => {
 				required: {
 					value: required,
 					message: '필수 입력 값입니다.'
-				}
+				},
+				validate: (value) => value.length > 0 || '필수 입력 값입니다.'
 			}}
 			control={control}
 			defaultValue={required ? options[0].content : undefined}
-			render={({ field: { onChange, value } }) => (
+			render={({ field: { onChange, value, onBlur } }) => (
 				<RadioGroup
 					defaultValue={required ? options[0].id : undefined}
 					value={value}
@@ -61,6 +62,7 @@ const InputRadio = ({ id }: InputRadioProps) => {
 										ref={EtcRef}
 										variant={'flushed'}
 										data-option-id={option.id}
+										onBlur={onBlur}
 										onChange={(event) => {
 											handleChangeEtc(event);
 											onChange(EtcRef && EtcRef.current?.value);
