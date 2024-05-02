@@ -32,15 +32,23 @@ const InputRadio = ({ id }: InputRadioProps) => {
 					message: '필수 입력 값입니다.'
 				},
 				validate: (value) => {
-					return (
-						value !== EtcRef?.current?.id ||
-						value.length > 0 ||
-						'필수 입력 값입니다.'
-					);
+					if (required === true && value === undefined) {
+						return '필수 입력 값입니다.';
+					}
+					if (
+						EtcRef &&
+						EtcRef.current &&
+						EtcRef.current.id === value &&
+						EtcRef.current.value.length === 0
+					) {
+						return '필수 입력 값입니다.';
+					}
+
+					return true;
 				}
 			}}
 			control={control}
-			defaultValue={required ? options[0].content : undefined}
+			defaultValue={required ? options[0].id : undefined}
 			render={({ field: { onChange, value, onBlur } }) => (
 				<RadioGroup
 					defaultValue={required ? options[0].id : undefined}
@@ -69,13 +77,16 @@ const InputRadio = ({ id }: InputRadioProps) => {
 										id={option.id}
 										ref={EtcRef}
 										variant={'flushed'}
-										onBlur={onBlur}
+										onFocus={() => {
+											onChange(option.id);
+										}}
 										onChange={() => {
 											handleChangeEtc(
 												option.id,
 												EtcRef?.current?.value as string
 											);
 											onChange(option.id);
+											onBlur();
 										}}
 									/>
 								</S.EtcContainer>
