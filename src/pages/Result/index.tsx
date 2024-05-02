@@ -29,10 +29,14 @@ const Result = () => {
 		if (values === undefined) {
 			responses.push(undefined);
 		} else if (typeof values === 'string') {
-			for (let i = 0; i < options.length; i++) {
-				if (options[i].id === values) {
-					responses.push(options[i].content);
-					break;
+			if (targetCard.type === 'long' || targetCard.type === 'short') {
+				responses.push(values);
+			} else {
+				for (let i = 0; i < options.length; i++) {
+					if (options[i].id === values) {
+						responses.push(options[i].content);
+						break;
+					}
 				}
 			}
 		} else {
