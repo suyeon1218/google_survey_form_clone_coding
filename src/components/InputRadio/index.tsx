@@ -31,7 +31,13 @@ const InputRadio = ({ id }: InputRadioProps) => {
 					value: required,
 					message: '필수 입력 값입니다.'
 				},
-				validate: (value) => value.length > 0 || '필수 입력 값입니다.'
+				validate: (value) => {
+					return (
+						value !== EtcRef?.current?.id ||
+						value.length > 0 ||
+						'필수 입력 값입니다.'
+					);
+				}
 			}}
 			control={control}
 			defaultValue={required ? options[0].content : undefined}
@@ -60,9 +66,9 @@ const InputRadio = ({ id }: InputRadioProps) => {
 									/>
 									<S.EtcText>기타:</S.EtcText>
 									<S.EtcInput
+										id={option.id}
 										ref={EtcRef}
 										variant={'flushed'}
-										data-option-id={option.id}
 										onBlur={onBlur}
 										onChange={() => {
 											handleChangeEtc(

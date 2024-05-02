@@ -2,7 +2,6 @@ import { Input } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 export const EtcContainer = styled.div`
-	height: 40px;
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -15,6 +14,7 @@ export const EtcText = styled.span`
 
 export const EtcInput = styled(Input)`
 	width: 100%;
+	height: 20px;
 	padding-left: 0px;
 	border-radius: 0px;
 	&:hover {
