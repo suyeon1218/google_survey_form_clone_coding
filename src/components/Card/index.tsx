@@ -7,7 +7,7 @@ import TextField from '../TextField';
 import {
 	CardType,
 	RootStateType,
-	changeOptionContent,
+	changeInputValue,
 	dragCard,
 	focus
 } from './../../store/index';
@@ -52,7 +52,7 @@ const Card = memo(({ id }: CardProps) => {
 	};
 
 	const handleChangeTitleExplain = (value: string) => {
-		dispatch(changeOptionContent({ cardId: id, value }));
+		dispatch(changeInputValue({ cardId: id, value }));
 	};
 
 	return (

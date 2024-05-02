@@ -116,20 +116,19 @@ const cardSlice = createSlice({
 
 			targetCard.title = value;
 		},
-		changeOptionContent: (state, action) => {
-			const { cardId, value } = action.payload;
-			const targetCard = state.find((card) => card.id === cardId) as CardType;
-
-			targetCard.options[0].content = value;
-		},
 		changeInputValue: (state, action) => {
 			const { cardId, optionId, value } = action.payload;
 			const targetCard = state.find((card) => card.id === cardId) as CardType;
-			const option = targetCard.options.find(
-				(option) => option.id === optionId
-			) as OptionType;
 
-			option.content = value;
+			if (optionId === undefined) {
+				targetCard.options[0].content = value;
+			} else {
+				const option = targetCard.options.find(
+					(option) => option.id === optionId
+				) as OptionType;
+
+				option.content = value;
+			}
 		},
 		copyCard: (state, action) => {
 			const { id } = action.payload;
@@ -284,7 +283,6 @@ export const {
 	dragOption,
 	addEtcOption,
 	checkOption,
-	changeOptionContent,
 	focus
 } = cardSlice.actions;
 
