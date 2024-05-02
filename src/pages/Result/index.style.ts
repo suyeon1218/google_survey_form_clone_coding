@@ -40,7 +40,8 @@ export const Main = styled.main`
 	top: 65px;
 	overflow: scroll;
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 	background-color: ${({ theme }) => theme.colors.purple[50]};
 `;
 
@@ -53,5 +54,5 @@ export const StyledCard = styled(Card)`
 	max-width: 768px;
 	min-height: 100px;
 	height: fit-content;
-	margin: 20px auto;
+	margin: 10px auto;
 `;
