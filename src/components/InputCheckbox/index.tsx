@@ -72,13 +72,13 @@ const InputCheckbox = ({ id }: InputCheckbox) => {
 										id={option.id}
 										ref={EtcRef}
 										variant={'flushed'}
-										onBlur={onBlur}
 										onChange={() => {
 											handleChangeEtc(
 												option.id,
 												EtcRef?.current?.value as string
 											);
 											onChange(option.id);
+											onBlur();
 										}}
 									/>
 								</S.EtcContainer>
