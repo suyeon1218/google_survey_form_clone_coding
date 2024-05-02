@@ -29,10 +29,22 @@ const InputCheckbox = ({ id }: InputCheckbox) => {
 			name={id}
 			rules={{
 				validate: (value) => {
-					return (
-						(value !== undefined && (!required || value.length > 0)) ||
-						'필수 입력 값입니다.'
-					);
+					if (
+						required === true &&
+						(value === undefined || value.length === 0)
+					) {
+						return '필수 입력 값입니다.';
+					}
+					if (
+						EtcRef &&
+						EtcRef.current &&
+						value.includes(EtcRef.current.id) &&
+						EtcRef.current.value.length === 0
+					) {
+						return '필수 입력 값입니다.';
+					}
+
+					return true;
 				}
 			}}
 			render={({ field: { onChange, onBlur } }) => (
