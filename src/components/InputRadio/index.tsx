@@ -51,6 +51,7 @@ const InputRadio = ({ id }: InputRadioProps) => {
 								<Radio
 									colorScheme='purple'
 									key={option.id}
+									onChange={onBlur}
 									value={option.content}>
 									{option.content}
 								</Radio>
