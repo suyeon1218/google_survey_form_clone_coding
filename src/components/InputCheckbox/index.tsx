@@ -1,19 +1,27 @@
 import { Checkbox, CheckboxGroup, Stack } from '@chakra-ui/react';
+import { useRef } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { useSelector, shallowEqual } from 'react-redux';
-import { CardType, RootStateType } from '~/store';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { CardType, RootStateType, changeInputValue } from '~/store';
+import * as S from './index.style';
 
 interface InputCheckbox {
 	id: string;
 }
 
 const InputCheckbox = ({ id }: InputCheckbox) => {
+	const EtcRef = useRef<HTMLInputElement | null>(null);
+	const dispatch = useDispatch();
 	const { control } = useFormContext();
 	const { options, required } = useSelector((state: RootStateType) => {
 		const targetCard = state.cards.find((card) => card.id === id) as CardType;
 
 		return { options: targetCard.options, required: targetCard.required };
 	}, shallowEqual);
+
+	const handleChangeEtc = (optionId: string, value: string) => {
+		dispatch(changeInputValue({ cardId: id, optionId, value }));
+	};
 
 	return (
 		<Controller
@@ -32,15 +40,38 @@ const InputCheckbox = ({ id }: InputCheckbox) => {
 					<Stack
 						gap={3}
 						direction={'column'}>
-						{options.map((option) => (
-							<Checkbox
-								onChange={onBlur}
-								colorScheme='purple'
-								key={option.id}
-								value={option.id}>
-								{option.content}
-							</Checkbox>
-						))}
+						{options.map((option) =>
+							option.type === 'normal' ? (
+								<Checkbox
+									onChange={onBlur}
+									colorScheme='purple'
+									key={option.id}
+									value={option.id}>
+									{option.content}
+								</Checkbox>
+							) : (
+								<S.EtcContainer>
+									<Checkbox
+										colorScheme='purple'
+										value={option.id}
+									/>
+									<S.EtcText>기타: </S.EtcText>
+									<S.EtcInput
+										id={option.id}
+										ref={EtcRef}
+										variant={'flushed'}
+										onBlur={onBlur}
+										onChange={() => {
+											handleChangeEtc(
+												option.id,
+												EtcRef?.current?.value as string
+											);
+											onChange(option.id);
+										}}
+									/>
+								</S.EtcContainer>
+							)
+						)}
 					</Stack>
 				</CheckboxGroup>
 			)}
