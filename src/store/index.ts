@@ -130,13 +130,16 @@ const cardSlice = createSlice({
 		},
 		copyCard: (state, action) => {
 			const { id } = action.payload;
+			const nextCard = state.map((card) => ({ ...card, isFocus: false }));
 			const targetCardIndex = state.findIndex((card) => card.id === id);
 			const newCard: CardType = {
 				...state[targetCardIndex],
 				id: generateID()
 			};
 
-			state.splice(targetCardIndex + 1, 0, newCard);
+			nextCard.splice(targetCardIndex + 1, 0, newCard);
+
+			return nextCard;
 		},
 		deleteCard: (state, action) => {
 			const { id } = action.payload;
