@@ -7,11 +7,11 @@ import store from './store';
 import { theme } from './styles/theme';
 
 createRoot(document.getElementById('root')!).render(
-	<StrictMode>
-		<ChakraProvider theme={theme}>
-			<Provider store={store}>
-				<App />
-			</Provider>
-		</ChakraProvider>
-	</StrictMode>
+  <StrictMode>
+    <ChakraProvider theme={theme}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ChakraProvider>
+  </StrictMode>
 );
